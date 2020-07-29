@@ -8,7 +8,6 @@
 * WALTERS, Matthew (s3780012) 
 * HUY, Sovatharo (s3783867)
 * PIRRONE, Giacomo (s3658746)
-* SURNAME, GivenName (sXXXX)
 
 ## Records
 
