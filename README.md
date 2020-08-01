@@ -12,7 +12,7 @@
 ## Records
 
 * Github repository : https://github.com/RMIT-SEPT/majorproject-7-tues-14-30-7
-* ClickUp Workspace : https://app.clickup.com/6915646
+* Jira Workspace : https://scrumoftheearth.atlassian.net/secure/RapidBoard.jspa?rapidView=1&projectKey=ST7BS&view=planning.nodetail&issueLimit=100
 
 
 ## Code documentation
