@@ -1,18 +1,32 @@
 package com.scrumoftheearth.springbootapi.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
+@Entity
 public class Worker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Size(min = 3, max = 20, message = "Please enter a first name between 3 and 20 characters")
+    @NotBlank(message = "Workers first name is required")
     private String firstName;
+    @Size(min = 3, max = 20, message = "Please enter a family name between 3 and 20 characters")
+    @NotBlank(message = "Workers family name is required")
     private String familyName;
-    private String[] services;
+    //Might have to change this later to a collection later, requires a bit more to add
+    @NotBlank(message = "Workers provided service is required")
+    private String services;
+    @NotBlank(message = "Worker must have a worker id")
     private String workerId;
 
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date created_At;
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updated_At;
 
     public Worker(){
@@ -43,16 +57,20 @@ public class Worker {
         this.familyName = familyName;
     }
 
-    public String[] getServices(){
+    public String getServices(){
         return services;
     }
 
-    public void setServices(String[] services){
+    public void setServices(String services){
         this.services = services;
     }
 
     public String getWorkerId(){
         return workerId;
+    }
+
+    public void setWorkerId(String workerId){
+        this.workerId = workerId;
     }
 
     public Date getCreated_At(){
