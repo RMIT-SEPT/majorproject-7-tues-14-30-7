@@ -1,2 +1,8 @@
-package com.scrumoftheearth.springbootapi.model;public class WorkerState {
+package com.scrumoftheearth.springbootapi.model;
+
+public class WorkerState {
+
+    public WorkerState() {
+
+    }
 }
