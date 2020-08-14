@@ -5,7 +5,7 @@ public class BusinessBState {
     // Business this state belongs to
     private Business business;
     // business state
-    //private BusinessState businessState **for later**
+    private BState BState;
     // State message
     private String messsage;
 

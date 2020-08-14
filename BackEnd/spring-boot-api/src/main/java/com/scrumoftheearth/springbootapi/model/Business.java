@@ -17,8 +17,8 @@ public class Business {
     private Long id;
     // state of the business
 //    private BusinessBState businessBState;
-//    // List of workers *need to change to Worker object*
-//    private List<String> workerList;
+//    // List of workers
+//    private List<Worker> workerList;
     @NotBlank(message = "Business name is required")
     // name of business
     private String name;
