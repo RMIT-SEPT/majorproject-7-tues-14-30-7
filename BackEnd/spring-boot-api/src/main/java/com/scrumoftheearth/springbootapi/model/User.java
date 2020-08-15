@@ -1,6 +1,7 @@
 package com.scrumoftheearth.springbootapi.model;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
@@ -10,7 +11,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //TODO: the userName uniqueness must be enforced by the controller!
     @Column(nullable = false, unique = true)
     @NotBlank(message = "User Name cannot be blank!")
     private String userName;
@@ -42,6 +42,15 @@ public class User {
     }
 
     public User() { }
+
+    public User(String userName, String firstName, String lastName,
+                String homeAddress, String phoneNumber) {
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.homeAddress = homeAddress;
+        this.phoneNumber = phoneNumber;
+    }
 
     public Long getId() {
         return id;

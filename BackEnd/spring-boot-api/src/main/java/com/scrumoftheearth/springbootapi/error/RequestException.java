@@ -1,8 +1,8 @@
-package com.scrumoftheearth.springbootapi.exceptions;
+package com.scrumoftheearth.springbootapi.error;
 
 import org.springframework.http.HttpStatus;
 
-public class RequestException extends Exception {
+public class RequestException extends RuntimeException {
 
     private final HttpStatus errorStatusCode;
 
@@ -21,8 +21,8 @@ public class RequestException extends Exception {
         this.errorStatusCode = errorStatusCode;
     }
 
-    public RequestException(String message, HttpStatus errorStatusCode, Throwable error) {
-        super(message, error);
+    public RequestException(String message, HttpStatus errorStatusCode, Throwable cause) {
+        super(message, cause);
         this.errorStatusCode = errorStatusCode;
     }
 
