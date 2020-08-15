@@ -3,6 +3,7 @@ package com.scrumoftheearth.springbootapi.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
@@ -11,10 +12,13 @@ public class Worker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    @OneToOne
+    private WorkerWState workerWState;
     @OneToMany
-    private List<Service> service;
+    private List<Service> services;
+    @NotBlank
     private String description;
+
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date created_At;
     @JsonFormat(pattern = "yyyy-mm-dd")
@@ -23,20 +27,23 @@ public class Worker {
     public Worker(){
     }
 
+    public Worker(Long id, WorkerWState workerWState,
+                  List<Service> services, @NotBlank String description,
+                  Date created_At, Date updated_At) {
+        this.id = id;
+        this.workerWState = workerWState;
+        this.services = services;
+        this.description = description;
+        this.created_At = created_At;
+        this.updated_At = updated_At;
+    }
+
     public Long getId(){
         return id;
     }
 
     public void setId(Long id){
         this.id = id;
-    }
-
-    public String getName(){
-        return name;
-    }
-
-    public void setName(){
-        this.name = name;
     }
 
     public String getDescription(){
