@@ -9,14 +9,14 @@ export default class HomePageContent extends React.Component {
                     <div className="hero-body">
                         <div className="container">
                             <h1 className="title has-text-centered">
-                                placeholder hero
+                                placeholder banner
                             </h1>
                         </div>
                     </div>
                 </section>
                 <br/>
                 <div className="container is-fluid">
-                    <div className="box">test</div>
+                    <div className="box">placeholder</div>
                 </div>
             </div>
         )
