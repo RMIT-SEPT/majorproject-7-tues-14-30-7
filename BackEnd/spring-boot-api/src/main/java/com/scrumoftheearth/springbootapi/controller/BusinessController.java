@@ -37,6 +37,7 @@ public class BusinessController {
     }
 
     // for searching for a business by ID
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/findById={id}")
     public Business getById(@PathVariable long id){
         Optional<Business> business = businessService.getById(id);
