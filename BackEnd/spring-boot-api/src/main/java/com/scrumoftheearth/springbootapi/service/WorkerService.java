@@ -23,7 +23,7 @@ public class WorkerService {
     public Worker getById(long Id) throws Throwable {
         Optional<Worker> result = workerRepository.findById(Id);
         return result.orElseThrow(() -> {
-           throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource " + Long.toString(Id) + " Not Found!");
+           throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource " + Id + " Not Found!");
         });
     }
 
