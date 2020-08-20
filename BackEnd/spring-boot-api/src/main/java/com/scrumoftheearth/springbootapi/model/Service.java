@@ -39,6 +39,16 @@ public class Service {
         this.updated_At = updated_At;
     }
 
+    @PrePersist
+    protected void onCreate(){
+        this.created_At = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate(){
+        this.updated_At = new Date();
+    }
+
     public Long getId(){
         return id;
     }
