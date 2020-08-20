@@ -27,15 +27,11 @@ public class Worker {
     public Worker(){
     }
 
-    public Worker(Long id, WorkerWState workerWState,
-                  List<Service> services, @NotBlank String description,
-                  Date created_At, Date updated_At) {
-        this.id = id;
+    public Worker(WorkerWState workerWState,
+                  List<Service> services, @NotBlank String description) {
         this.workerWState = workerWState;
         this.services = services;
         this.description = description;
-        this.created_At = created_At;
-        this.updated_At = updated_At;
     }
 
     public Long getId(){
@@ -77,5 +73,25 @@ public class Worker {
     @PreUpdate
     protected void onUpdate(){
         this.updated_At = new Date();
+    }
+
+    public WorkerWState getWorkerWState() {
+        return workerWState;
+    }
+
+    public void setWorkerWState(WorkerWState workerWState) {
+        this.workerWState = workerWState;
+    }
+
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Service> services) {
+        this.services = services;
+    }
+
+    public void addService(Service service){
+        this.services.add(service);
     }
 }
