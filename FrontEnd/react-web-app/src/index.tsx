@@ -1,10 +1,10 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import BusinessPage from "./Componets/businessPage/BusinessPage"
+import App from "./App"
 
 ReactDOM.render(
   <React.StrictMode>
-    <BusinessPage />
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 )
