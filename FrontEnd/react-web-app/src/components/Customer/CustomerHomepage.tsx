@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import CustomerPageHeader from './CustomerPageHeader'
+import CustomerBookingHistory from './CustomerBookingHistory'
 
 class CustomerHomepage extends Component {
     render() {
@@ -10,14 +11,16 @@ class CustomerHomepage extends Component {
                     <div className="hero-body">
                         <div className="container">
                             <h1 className="title has-text-centered">
-                                Customer Dashboard
+                                "Customer Name" Dashboard
                             </h1>
                         </div>
                     </div>
                 </section>
                 <br/>
                 <div className="container is-fluid">
-                    <div className="box">Customer Booking History:</div>
+                    <div className="box">Customer Booking History:
+                    <CustomerBookingHistory/>
+                    </div>
                 </div>
             </div>
         )
