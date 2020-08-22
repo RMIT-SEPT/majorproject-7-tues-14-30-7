@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import '../../App.scss';
+import { Link } from 'react-router-dom';
 
 export default class HomePage extends React.Component {
     render() {
@@ -26,13 +27,17 @@ export default class HomePage extends React.Component {
                         </div>
                     </div>
                     </div>
-                    <a className="navbar-item">
-                    Dashboard
-                    </a>
+                    <Link to="/Worker" className="navbar-item">
+                        <a>Worker</a>
+                    </Link>
 
-                    <a className="navbar-item">
-                    placeholder
-                    </a>
+                    <Link to="/CustomerHomepage" className="navbar-item">
+                        <a>Customer</a>
+                    </Link>
+
+                    <Link to="/BusinessPage" className="navbar-item">
+                        <a>BusinessPage</a>
+                    </Link>
 
                     <div className="navbar-item has-dropdown is-hoverable">
                     <a className="navbar-link">
