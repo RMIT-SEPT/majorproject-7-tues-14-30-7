@@ -1,24 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.scss';
+import HomePageContent from './components/HomePage/HomePageContent';
+import HomePageHeader from './components/HomePage/HomePageHeader';
+import Worker from './components/Worker/Worker';
+import CustomerHomepage from './components/Customer/CustomerHomepage';
+import BusinessPage from './components/Business/BusinessPage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <HomePageHeader/>
+      <HomePageContent/>
+      <Worker/>
+      <CustomerHomepage/>
+      <BusinessPage/>
     </div>
   );
 }
