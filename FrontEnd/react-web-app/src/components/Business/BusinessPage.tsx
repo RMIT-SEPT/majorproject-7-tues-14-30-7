@@ -1,5 +1,5 @@
 import React from "react"
-import "./BusinessPage.scss"
+import "../../App.scss"
 
 export default class BusinessPage extends React.Component<{},any>{
     constructor(props: number) {
@@ -23,11 +23,16 @@ export default class BusinessPage extends React.Component<{},any>{
     render(){
         return( 
             <body>
-                <h1>{this.state.business.name}</h1>
-                <div className="practice">
-                    <section className="table">
-                        <h3>Worker List:</h3>
-                        <table>
+                <div className="has-text-centered is-size-1">
+                    <h1>{this.state.business.name}</h1>
+                </div>
+                <br></br>
+                <div className="is-size-4">
+                    <h3>Worker List:</h3>
+                </div>
+                <div className="columns">
+                    <div className="column is-narrow">
+                        <table className="table">
                             <tr>
                                 <th>Name</th>
                                 <th>Number</th>
@@ -41,15 +46,23 @@ export default class BusinessPage extends React.Component<{},any>{
                                 <td>PlzHd@pass.com</td>
                             </tr>
                         </table>
-                    </section>
-                    <section>
+                    </div>
+                    <div className="column">
                         <p>{this.state.business.blurb}</p>
+                        <br></br>
                         <p>{this.state.business.description}</p>
-                    </section>
+                    </div>
                 </div>
-                <h4>Contact us:</h4>
-                <p>Address: {this.state.business.address}</p>
-                <p>Mobile Number: {this.state.business.phoneNumber}</p>
+                <div className="is-size-4">
+                    <h4>Contact us:</h4>
+                </div>
+                <br></br>
+                <div className="is-size-6">
+                    <p className="has-text-weight-bold">Address:</p>
+                    <p>{this.state.business.address}</p>
+                    <p className="has-text-weight-bold">Mobile Number:</p>
+                    <p>{this.state.business.phoneNumber}</p>
+                </div>
             </body>
         )
     }
