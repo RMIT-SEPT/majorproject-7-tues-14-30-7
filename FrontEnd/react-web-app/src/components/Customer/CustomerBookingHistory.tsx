@@ -19,7 +19,7 @@ export default class CustomerBookingHistory extends Component {
                 </div>
 
                 <br></br>
-                
+
                 <div className = "card">
                     <header className="card-header">
                         <p className = "card-header-title">Dentist Service</p>
