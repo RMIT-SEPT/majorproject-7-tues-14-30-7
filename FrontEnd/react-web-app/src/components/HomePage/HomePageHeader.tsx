@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../../App.scss';
 import { Link } from 'react-router-dom';
+import HomePageContent from './HomePageContent';
 
 export default class HomePage extends React.Component {
     render() {
@@ -66,6 +67,8 @@ export default class HomePage extends React.Component {
                     </div>
                 </div>
             </nav>
+
+            <HomePageContent/>
             </div>
         )
     }
