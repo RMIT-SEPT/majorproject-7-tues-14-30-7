@@ -13,12 +13,15 @@ public class Worker {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
+    private User user;
+    @OneToOne
+    private Business business;
+    @OneToOne
     private WorkerWState workerWState;
     @OneToMany
     private List<Service> services;
     @NotBlank
     private String description;
-
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date created_At;
     @JsonFormat(pattern = "yyyy-mm-dd")
@@ -27,7 +30,7 @@ public class Worker {
     public Worker(){
     }
 
-    public Worker(WorkerWState workerWState,
+    public Worker(WorkerWState workerWState, User user,
                   List<Service> services, @NotBlank String description) {
         this.workerWState = workerWState;
         this.services = services;
@@ -93,5 +96,25 @@ public class Worker {
 
     public void addService(Service service){
         this.services.add(service);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Business business) {
+        this.business = business;
+    }
+
+    public void setCreated_At(Date created_At) {
+        this.created_At = created_At;
     }
 }
