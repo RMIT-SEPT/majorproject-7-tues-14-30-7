@@ -27,16 +27,10 @@ public class Service {
 
     }
 
-    public Service(Long id, Worker worker,
-                   ServiceSState serviceSState,
-                   @NotBlank String description,
-                   Date created_At, Date updated_At) {
-        this.id = id;
+    public Service(Worker worker, ServiceSState serviceSState, @NotBlank String description) {
         this.worker = worker;
         this.serviceSState = serviceSState;
         this.description = description;
-        this.created_At = created_At;
-        this.updated_At = updated_At;
     }
 
     @PrePersist
