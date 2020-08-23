@@ -27,6 +27,11 @@ public class WorkerService {
         });
     }
 
+    public List<Worker> getAllWorkers(){
+        List<Worker> workers = workerRepository.findAll();
+        return workers;
+    }
+
     public Worker saveWorker(Worker worker) {
         return workerRepository.save(worker);
     }
