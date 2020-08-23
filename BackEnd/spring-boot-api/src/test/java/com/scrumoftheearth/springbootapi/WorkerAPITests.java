@@ -17,6 +17,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -28,27 +30,37 @@ public class WorkerAPITests {
     private WorkerService workerService;
 
     @MockBean
-    private WorkerRepository repository;
+    private WorkerRepository workerRepository;
 
     @Test
     public void getWorkerTest(){
-        when(repository.findAll()).thenReturn(Stream.of(new Worker(null,null,"Hello")).collect(Collectors.toList()));
-        assertEquals(1, workerService.getAllWorkers().size());
+        Worker testCase1 = new Worker(null, null, null, "Test Case 1");
+        Worker testCase2 = new Worker(null, null, null, "Test Case 2");
+        Worker testCase3 = new Worker(null, null, null, "Test Case 3");
+        List<Worker> testRepo = new ArrayList<Worker>();
+        testRepo.add(testCase1);
+        testRepo.add(testCase2);
+        testRepo.add(testCase3);
+
+        //Test code to mock a stream (Using a reference for if needed in the future)
+        //when(repository.findAll()).thenReturn(Stream.of(new Worker(null, null, null, "Hello")).collect(Collectors.toList()));
+
+        when(workerRepository.findAll()).thenReturn(testRepo);
+        assertEquals(3, workerService.getAllWorkers().size());
     }
 
     @Test
     public void createWorkerTest(){
-        Worker worker = new Worker(null, null, "TEST DUMMY WORKER INSTANCE");
-        when(repository.save(worker)).thenReturn(worker);
+        Worker worker = new Worker(null, null, null, "TEST DUMMY WORKER INSTANCE");
+        when(workerRepository.save(worker)).thenReturn(worker);
         assertEquals(worker, workerService.saveWorker(worker));
     }
 
     @Test
-    public void getUserByIdTest() throws Throwable {
-        Worker worker = new Worker(null, null, "TEST DUMMY WORKER INSTANCE");
+    public void getWorkerByIdTest() throws Throwable {
+        Worker worker = new Worker(null, null, null, "TEST DUMMY WORKER INSTANCE");
         worker.setId((long)1);
-        when(repository.findById((long)1)).thenReturn(java.util.Optional.of(worker));
+        when(workerRepository.findById((long)1)).thenReturn(java.util.Optional.of(worker));
         assertEquals(worker, workerService.getById((long)1));
     }
-
 }
