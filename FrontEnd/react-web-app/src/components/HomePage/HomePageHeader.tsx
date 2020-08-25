@@ -7,9 +7,10 @@ export default class HomePage extends React.Component {
             <div>
             <nav className="navbar" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
+            
                 <a className="navbar-item" href="//localhost:3000">
-                    <img src={require("./Images/brand.png")} width="112" height="28"/>
                 </a>
+                
                 
                 <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                     <span aria-hidden="true"></span>
