@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.naming.Binding;
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -44,6 +45,11 @@ public class WorkerController {
 
         worker = workerService.saveWorker(worker);
         return new ResponseEntity<Worker>(worker, HttpStatus.CREATED);
+    }
+
+    @GetMapping("")
+    public List<Worker> getAllWorkers(){
+        return workerService.getAllWorkers();
     }
 
     @PutMapping("/update={id}")
