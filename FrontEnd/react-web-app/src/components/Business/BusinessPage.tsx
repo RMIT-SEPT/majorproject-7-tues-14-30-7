@@ -49,40 +49,57 @@ export default class BusinessPage extends React.Component<{},any>{
     
     render(){
         return( 
-            <div>
-                <div className="has-text-centered">
-                    <h1 className="title is-1">{this.state.business.name}</h1>
+            <section className="hero is-fullheight is-default is-bold">
+                <div className="hero is-primary is-bold">
+                    <h1 className="title is-1 has-text-centered py-6">{this.state.business.name}</h1>
                 </div>
-                <h3 className="subtitle is-4">Worker List:</h3>
-                <div className="columns">
-                    <div className="column is-narrow">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Home Address</th>
-                                    <th>Number</th>
-                                    <th>Email</th>  
-                                </tr>
-                            </thead>
-                            <tbody id="workertable"></tbody>
-                        </table>
+                <div className="hero-body">
+                    <div className="container has-text-centered">
+                        <div className="columns is-ventered">
+                            <div className="column is-narrow">
+                                <h3 className="subtitle is-4">Worker List:</h3>
+                                <table className="table">
+                                    <thead>
+                                        <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Home Address</th>
+                                        <th>Number</th>
+                                        <th>Email</th>  
+                                    </tr>
+                                    </thead>
+                                    <tbody id="workertable"></tbody>
+                                </table>
+                            </div>
+                            <div className="colum is-6 is-offset-1">
+                                <p>{this.state.business.blurb}</p>
+                                <br></br>
+                                <p>{this.state.business.description}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            <div className="hero-foot">
+                <div className="container">
+                    <div className="columns">
+                        <div className="column">
+                    <div className="notification is-link">
+                        <p className="has-text-weight-bold">Address:</p>
+                        <p>{this.state.business.address}</p>
+                        </div>
                     </div>
                     <div className="column">
-                        <p>{this.state.business.blurb}</p>
-                        <br></br>
-                        <p>{this.state.business.description}</p>
+                    <div className="notification is-link">
+                        <p className="has-text-weight-bold">Mobile Number:</p>
+                        <p>{this.state.business.phoneNumber}</p>
+                        </div>
+                    </div>
                     </div>
                 </div>
-                <h4 className="subtitle is-4">Contact us:</h4>
-                <div className="is-size-6">
-                    <p className="has-text-weight-bold">Address:</p>
-                    <p>{this.state.business.address}</p>
-                    <p className="has-text-weight-bold">Mobile Number:</p>
-                    <p>{this.state.business.phoneNumber}</p>
-                </div>
             </div>
+            </section>
         )
     }
 }
