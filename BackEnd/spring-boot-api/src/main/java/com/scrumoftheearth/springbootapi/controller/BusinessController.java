@@ -31,6 +31,7 @@ public class BusinessController {
     }
 
     // for getting a list of all businesses
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("")
     public List<Business> getAllBusiness(){
         return businessService.getAll();
