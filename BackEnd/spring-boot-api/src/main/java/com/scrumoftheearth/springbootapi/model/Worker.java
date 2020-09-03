@@ -1,23 +1,25 @@
 package com.scrumoftheearth.springbootapi.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-@Entity(name = "Worker")
-public class Worker {
+@Entity
+@Table(name = "worker")
+public class Worker implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @MapsId
     private User user;
     @OneToOne
     private Business business;
     @OneToOne
+    @JoinColumn(name = "workerWState_id")
     private WorkerWState workerWState;
     @OneToMany
     private List<Service> services;

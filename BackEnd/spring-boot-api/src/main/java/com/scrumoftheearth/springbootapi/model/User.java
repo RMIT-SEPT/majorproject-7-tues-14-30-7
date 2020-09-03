@@ -1,15 +1,15 @@
 package com.scrumoftheearth.springbootapi.model;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class User {
+@Table(name = "USER")
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -27,6 +27,12 @@ public class User {
 
     @NotBlank(message = "Home Address cannot be blank!")
     private String homeAddress;
+
+    //CascadeType.ALL - This means if the user is deleted so is the worker
+    //We will never actually "delete" the user however this is just good measure
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Worker worker;
+
 
     private Date createdAt;
 

@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
+@Table(name = "service")
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +15,7 @@ public class Service {
     @OneToOne
     private Worker worker;
     @OneToOne
+    @JoinColumn(name = "serviceSState_id")
     private ServiceSState serviceSState;
     @NotBlank
     private String description;
