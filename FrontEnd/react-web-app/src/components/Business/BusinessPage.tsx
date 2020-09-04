@@ -6,12 +6,13 @@ export default class BusinessPage extends React.Component<{},any>{
         super(props)
         this.state = {
             business: {},
-            businessId: 1
         }
     }
     
-    componentDidMount(){
-        fetch("http://localhost:8080/api/Business/findById=1")
+    async componentDidMount(){
+        const pathname = window.location.pathname
+        const tofind = pathname.charAt(pathname.length-1)
+        fetch("http://localhost:8080/api/Business/findById="+tofind)
             .then(response => response.json())
             .then(data => {
                 this.setState({
