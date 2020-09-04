@@ -1,11 +1,10 @@
 import React from 'react';
 import './App.scss';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import HomePageContent from './components/HomePage/HomePageContent';
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import HomePageHeader from './components/HomePage/HomePageHeader';
 import Worker from './components/Worker/Worker';
-import CustomerHomepage from './components/Customer/CustomerHomepage';
 import BusinessPage from './components/Business/BusinessPage';
+import UserHomepage from './components/Customer/UserHomepage';
 
 function App() {
   return (
@@ -14,8 +13,8 @@ function App() {
         <Switch>
           <Route path="/" exact component={HomePageHeader} />
           <Route path="/Worker" component={Worker} />
-          <Route path="/CustomerHomepage" component={CustomerHomepage} />
           <Route path="/BusinessPage" component={BusinessPage} />
+          <Route exact path='/UserHomepage/:id' component={UserHomepage}/>
         </Switch>
       </Router>
     </div>
