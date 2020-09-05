@@ -1,39 +1,46 @@
 package com.scrumoftheearth.springbootapi.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 // POJO for business
 public class Business {
+    // business ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // business ID
     private Long id;
+
     // state of the business
 //    private BusinessBState businessBState;
+
 //    // List of workers
 //    private List<Worker> workerList;
-    @NotBlank(message = "Business name is required")
+
     // name of business
+    @NotBlank(message = "Business name is required")
     private String name;
-    @NotBlank(message = "Business blurb is required")
+
     // blurb the business provides
+    @NotBlank(message = "Business blurb is required")
     private String blurb;
-    @NotBlank(message = "Business description is required")
+
     // description of the business
+    @NotBlank(message = "Business description is required")
     private String description;
-    @NotBlank(message = "Business address is required")
+
     // address of the business
+    @NotBlank(message = "Business address is required")
     private String address;
-    @NotBlank(message = "Business contact number is required")
+
     // contact info of the business
+    @NotBlank(message = "Business contact number is required")
     private String phoneNumber;
+
+    // List of business hours
+    @OneToMany(mappedBy = "BusinessHours",cascade = CascadeType.ALL)
+    private List<BusinessHours> openinghours;
 
     // blank constructor for production uses
     protected Business() {
@@ -41,7 +48,7 @@ public class Business {
 //        businessBState = new BusinessBState();
     }
 
-    // constructor for testing
+    // constructor for junit testing
     public Business(long id,String name,String blurb,String description,String address,String phoneNumber){
         this.id = id;
 //        businessBState = new BusinessBState();
