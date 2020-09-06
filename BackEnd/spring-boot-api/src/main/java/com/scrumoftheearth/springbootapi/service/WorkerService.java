@@ -1,22 +1,27 @@
 package com.scrumoftheearth.springbootapi.service;
 
+import com.scrumoftheearth.springbootapi.model.User;
 import com.scrumoftheearth.springbootapi.model.Worker;
+import com.scrumoftheearth.springbootapi.model.WorkerWState;
+import com.scrumoftheearth.springbootapi.repository.UserRepository;
 import com.scrumoftheearth.springbootapi.repository.WorkerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class WorkerService {
-
+    private UserRepository userRepository;
     private final WorkerRepository workerRepository;
 
     @Autowired
-    public WorkerService(WorkerRepository workerRepository){
+    public WorkerService(WorkerRepository workerRepository, UserRepository userRepository){
+        this.userRepository = userRepository;
         this.workerRepository = workerRepository;
     }
 
@@ -32,8 +37,10 @@ public class WorkerService {
         return workers;
     }
 
-    public Worker saveWorker(Worker worker) {
-        return workerRepository.save(worker);
+    public Worker saveWorker(WorkerWState workerWState, Long userId, @NotBlank String description, List<com.scrumoftheearth.springbootapi.model.Service> services) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User does not exist: " + userId));
+
+        return workerRepository.save(new Worker(workerWState, user , services, description));
     }
 
     public Worker updateWorker(Worker oldWorker, Worker newWorker){

@@ -1,6 +1,9 @@
 package com.scrumoftheearth.springbootapi.controller;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.scrumoftheearth.springbootapi.model.Service;
 import com.scrumoftheearth.springbootapi.model.Worker;
+import com.scrumoftheearth.springbootapi.model.WorkerWState;
 import com.scrumoftheearth.springbootapi.service.WorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +13,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.Binding;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +49,7 @@ public class WorkerController {
             return fieldErrors.get();
         }
 
-        worker = workerService.saveWorker(worker);
+        worker = workerService.saveWorker(worker.getWorkerWState(), worker.getUser().getId() , worker.getDescription(), worker.getServices());
         return new ResponseEntity<Worker>(worker, HttpStatus.CREATED);
     }
 
