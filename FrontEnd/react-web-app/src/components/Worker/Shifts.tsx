@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import './Worker.scss'
 
-class Shifts extends Component {
-
+class Shifts extends Component<any, any> {
+    
     render() {
+        
         return (
-            <div className="columns is-mobile">
+            <div className="columns is-mobile shifts">
                 <div className="column is-2-tablet is--mobile">
                     <div className="card">
                         <div className="card-image">
