@@ -33,7 +33,7 @@ export default class HomePage extends React.Component {
                     </Link>
 
                     <Link to="/UserHomepage/1" className="navbar-item">
-                        <a>Customer</a>
+                        <a>User</a>
                     </Link>
 
                     <Link to="/BusinessPage" className="navbar-item">

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import HomePageHeader from './components/HomePage/HomePageHeader';
 import Worker from './components/Worker/Worker';
 import BusinessPage from './components/Business/BusinessPage';
-import UserHomepage from './components/Customer/UserHomepage';
+import UserHomepage from './components/User/UserHomepage';
 
 function App() {
   return (

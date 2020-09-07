@@ -15,10 +15,8 @@ export default function UserHomepage() {
 
     const fetchUser = async () => {
         const fetchUser = await fetch(`http://localhost:8080/user/${id}`);
-        console.log(fetchUser);
         const user = await fetchUser.json();
         setUser(user);
-        console.log(user);
         console.log(user);
     };
 
