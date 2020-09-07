@@ -16,8 +16,8 @@ public class Worker implements Serializable {
     @OneToOne
     @MapsId
     private User user;
-    @OneToOne
-    private Business business;
+    @ManyToMany
+    private List<Business> businesses;
     @OneToOne
     @JoinColumn(name = "workerWState_id")
     private WorkerWState workerWState;
@@ -34,9 +34,10 @@ public class Worker implements Serializable {
     }
 
     public Worker(WorkerWState workerWState, User user,
-                  List<Service> services, @NotBlank String description) {
+                  List<Service> services, @NotBlank String description, List<Business> businesses) {
         this.workerWState = workerWState;
         this.user = user;
+        this.businesses = businesses;
         this.services = services;
         this.description = description;
     }
@@ -56,6 +57,7 @@ public class Worker implements Serializable {
     public void setDescription(String description){
         this.description = description;
     }
+
     public Date getCreated_At(){
         return created_At;
     }
@@ -110,15 +112,11 @@ public class Worker implements Serializable {
         this.user = user;
     }
 
-    public Business getBusiness() {
-        return business;
+    public List<Business> getBusinesses() {
+        return businesses;
     }
 
-    public void setBusiness(Business business) {
-        this.business = business;
-    }
-
-    public void setCreated_At(Date created_At) {
-        this.created_At = created_At;
+    public void setBusinesses(List<Business> business) {
+        this.businesses = business;
     }
 }

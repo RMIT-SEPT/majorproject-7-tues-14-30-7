@@ -34,9 +34,9 @@ public class WorkerAPITests {
 
     @Test
     public void getWorkerTest(){
-        Worker testCase1 = new Worker(null, null, null, "Test Case 1");
-        Worker testCase2 = new Worker(null, null, null, "Test Case 2");
-        Worker testCase3 = new Worker(null, null, null, "Test Case 3");
+        Worker testCase1 = new Worker(null, null, null, "Test Case 1", null);
+        Worker testCase2 = new Worker(null, null, null, "Test Case 2", null);
+        Worker testCase3 = new Worker(null, null, null, "Test Case 3", null);
         List<Worker> testRepo = new ArrayList<Worker>();
         testRepo.add(testCase1);
         testRepo.add(testCase2);
@@ -61,7 +61,7 @@ public class WorkerAPITests {
 
     @Test
     public void getWorkerByIdTest() throws Throwable {
-        Worker worker = new Worker(null, null, null, "TEST DUMMY WORKER INSTANCE");
+        Worker worker = new Worker(null, null, null, "TEST DUMMY WORKER INSTANCE", null);
         worker.setId((long)1);
         when(workerRepository.findById((long)1)).thenReturn(java.util.Optional.of(worker));
         assertEquals(worker, workerService.getById((long)1));

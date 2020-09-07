@@ -1,5 +1,6 @@
 package com.scrumoftheearth.springbootapi.service;
 
+import com.scrumoftheearth.springbootapi.model.Business;
 import com.scrumoftheearth.springbootapi.model.User;
 import com.scrumoftheearth.springbootapi.model.Worker;
 import com.scrumoftheearth.springbootapi.model.WorkerWState;
@@ -37,17 +38,22 @@ public class WorkerService {
         return workers;
     }
 
-    public Worker saveWorker(WorkerWState workerWState, Long userId, @NotBlank String description, List<com.scrumoftheearth.springbootapi.model.Service> services) {
+    public Worker saveWorker(WorkerWState workerWState, Long userId, @NotBlank String description, List<com.scrumoftheearth.springbootapi.model.Service> services
+    , List<Business> businesses) {
+        
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User does not exist: " + userId));
 
-        return workerRepository.save(new Worker(workerWState, user , services, description));
+        return workerRepository.save(new Worker(workerWState, user , services, description, businesses));
     }
 
-    public Worker updateWorker(Worker oldWorker, Worker newWorker){
-        oldWorker.setWorkerWState(newWorker.getWorkerWState());
-        oldWorker.setServices(newWorker.getServices());
-        oldWorker.setDescription(newWorker.getDescription());
-        return workerRepository.save(oldWorker);
+    public Worker updateWorker(Worker updatedWorker){
+
+        Optional<Worker> oldWorker = workerRepository.findById(updatedWorker.getId());
+
+        //if(!updatedWorker.getBusiness().equals(oldWorker)){
+        //    for()
+        //}
+        return workerRepository.save(updatedWorker);
     }
 
     public Worker addService(com.scrumoftheearth.springbootapi.model.Service service, Worker worker){

@@ -1,9 +1,6 @@
 package com.scrumoftheearth.springbootapi.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +14,8 @@ public class Business {
     private Long id;
     // state of the business
 //    private BusinessBState businessBState;
-//    // List of workers
-//    private List<Worker> workerList;
+    @ManyToMany
+    private List<Worker> worker;
     @NotBlank(message = "Business name is required")
     // name of business
     private String name;
