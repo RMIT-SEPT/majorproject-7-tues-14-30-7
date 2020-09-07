@@ -40,7 +40,7 @@ public class WorkerService {
 
     public Worker saveWorker(WorkerWState workerWState, Long userId, @NotBlank String description, List<com.scrumoftheearth.springbootapi.model.Service> services
     , List<Business> businesses) {
-        
+
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User does not exist: " + userId));
 
         return workerRepository.save(new Worker(workerWState, user , services, description, businesses));
