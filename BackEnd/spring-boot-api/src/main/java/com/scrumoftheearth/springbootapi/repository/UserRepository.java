@@ -1,11 +1,9 @@
 package com.scrumoftheearth.springbootapi.repository;
 
 import com.scrumoftheearth.springbootapi.model.User;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Iterator;
 import java.util.Optional;
 
 @Repository

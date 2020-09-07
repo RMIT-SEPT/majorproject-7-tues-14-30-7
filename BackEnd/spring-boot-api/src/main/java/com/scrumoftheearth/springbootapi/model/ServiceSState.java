@@ -6,13 +6,15 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "serviceSState")
 public class ServiceSState {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @OneToOne(mappedBy = "serviceSState")
     private Service service;
     @OneToOne
+    @JoinColumn(name = "service_state_id")
     private ServiceState serviceState;
 
     @JsonFormat(pattern = "yyyy-mm-dd")

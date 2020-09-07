@@ -6,9 +6,11 @@ import Worker from './components/Worker/Worker';
 import BusinessPage from './components/Business/BusinessPage';
 import UserHomepage from './components/User/UserHomepage';
 
+
 function App() {
   return (
     <div>
+
       <Router>
         <Switch>
           <Route path="/" exact component={HomePageHeader} />
@@ -17,6 +19,7 @@ function App() {
           <Route exact path='/UserHomepage/:id' component={UserHomepage}/>
         </Switch>
       </Router>
+
     </div>
   );
 }
