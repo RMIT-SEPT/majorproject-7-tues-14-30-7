@@ -13,11 +13,9 @@ public class Business {
     // business ID
     private Long id;
     // state of the business
-    @OneToOne
-    private BusinessBState businessBState;
-    // List of workers
-    @OneToMany
-    private List<Worker> workerList;
+//    private BusinessBState businessBState;
+    @ManyToMany
+    private List<Worker> worker;
     @NotBlank(message = "Business name is required")
     // name of business
     private String name;

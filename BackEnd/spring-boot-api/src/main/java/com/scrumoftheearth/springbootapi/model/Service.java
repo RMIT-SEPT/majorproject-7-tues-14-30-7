@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
+@Table(name = "service")
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +15,7 @@ public class Service {
     @OneToOne
     private Worker worker;
     @OneToOne
+    @JoinColumn(name = "serviceSState_id")
     private ServiceSState serviceSState;
     @NotBlank
     private String description;
@@ -27,16 +29,10 @@ public class Service {
 
     }
 
-    public Service(Long id, Worker worker,
-                   ServiceSState serviceSState,
-                   @NotBlank String description,
-                   Date created_At, Date updated_At) {
-        this.id = id;
+    public Service(Worker worker, ServiceSState serviceSState, @NotBlank String description) {
         this.worker = worker;
         this.serviceSState = serviceSState;
         this.description = description;
-        this.created_At = created_At;
-        this.updated_At = updated_At;
     }
 
     @PrePersist

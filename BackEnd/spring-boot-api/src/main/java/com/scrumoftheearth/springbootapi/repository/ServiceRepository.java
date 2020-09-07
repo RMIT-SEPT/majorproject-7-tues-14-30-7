@@ -4,7 +4,10 @@ import com.scrumoftheearth.springbootapi.model.Service;
 import com.scrumoftheearth.springbootapi.model.Worker;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 public interface ServiceRepository extends CrudRepository<Service, Long> {
+
     @Override
-    Iterable<Service> findAllById(Iterable<Long> iterable);
+    List<Service> findAll();
 }
