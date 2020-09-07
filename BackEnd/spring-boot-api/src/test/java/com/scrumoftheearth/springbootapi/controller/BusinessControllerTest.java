@@ -12,9 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.scrumoftheearth.springbootapi.model.Business;
 import com.scrumoftheearth.springbootapi.service.BusinessService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -25,7 +24,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Arrays;
 import java.util.List;
 
-@RunWith(SpringRunner.class)
 @WebMvcTest(BusinessController.class)
 public class BusinessControllerTest{
 
@@ -35,16 +33,17 @@ public class BusinessControllerTest{
     @MockBean
     private BusinessService businessService;
 
-    @Before
-    public void setup(){
-        Business testcase1 = new Business(1,"bus1","blurb1","description1","address1","123");
-        Business testcase2 = new Business(2,"bus2","blurb2","description2","address2","123");
-        Business testcase3 = new Business(3,"bus3","blurb3","description3","address3","123");
-
-        businessService.saveOrUpdate(testcase1);
-        businessService.saveOrUpdate(testcase2);
-        businessService.saveOrUpdate(testcase3);
-    }
+    // TODO: Fix @Before annotation
+//    @Before
+//    public void setup(){
+//        Business testcase1 = new Business(1,"bus1","blurb1","description1","address1","123");
+//        Business testcase2 = new Business(2,"bus2","blurb2","description2","address2","123");
+//        Business testcase3 = new Business(3,"bus3","blurb3","description3","address3","123");
+//
+//        businessService.saveOrUpdate(testcase1);
+//        businessService.saveOrUpdate(testcase2);
+//        businessService.saveOrUpdate(testcase3);
+//    }
 
     @Test
     public void Test_POST() throws Exception{

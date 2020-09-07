@@ -1,6 +1,5 @@
 package com.scrumoftheearth.springbootapi;
 
-import com.scrumoftheearth.springbootapi.model.Worker;
 import com.scrumoftheearth.springbootapi.repository.WorkerRepository;
 import com.scrumoftheearth.springbootapi.service.WorkerService;
 import static org.junit.Assert.*;
@@ -22,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@RunWith(SpringRunner.class)
+
 @SpringBootTest
 public class WorkerAPITests {
 
@@ -31,6 +30,7 @@ public class WorkerAPITests {
 
     @MockBean
     private WorkerRepository workerRepository;
+
 
     @Test
     public void getWorkerTest(){

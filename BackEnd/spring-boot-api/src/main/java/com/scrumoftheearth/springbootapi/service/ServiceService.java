@@ -19,7 +19,7 @@ public class ServiceService {
     public Service getById(long Id) throws Throwable {
         Optional<Service> result = serviceRepository.findById(Id);
         return result.orElseThrow(() -> {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource " + Long.toString(Id) + " Not Found!");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource " + Id + " Not Found!");
         });
     }
 

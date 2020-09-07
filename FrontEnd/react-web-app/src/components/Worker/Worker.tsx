@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+
 import {BrowserRouter, Router} from "react-router-dom"
 import 'bulma/css/bulma.css'
 import './Worker.scss'
@@ -190,6 +191,7 @@ class Worker extends Component<any, any> {
                 </body>
             )
         }
+
     }
 }
 
