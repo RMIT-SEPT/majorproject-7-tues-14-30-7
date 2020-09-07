@@ -6,10 +6,15 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "service_state")
 public class ServiceState {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+
+    @OneToOne(mappedBy = "serviceState")
+    private ServiceSState serviceSState;
 
     public ServiceState(){
 

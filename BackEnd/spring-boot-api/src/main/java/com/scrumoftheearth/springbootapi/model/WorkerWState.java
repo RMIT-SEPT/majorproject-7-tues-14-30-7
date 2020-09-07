@@ -3,13 +3,17 @@ package com.scrumoftheearth.springbootapi.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "workerWState")
 public class WorkerWState {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    //Connect relationship workerWState to worker, owned by worker
+    @OneToOne(mappedBy = "workerWState")
     private Worker worker;
     @OneToOne
+    //Connect relationship worker_state to workerWState, owned by workerWState
+    @JoinColumn(name = "worker_state_id")
     private WorkerState workerState;
 
     public WorkerWState() {
