@@ -32,9 +32,8 @@ public class Business {
     // contact info of the business
     private String phoneNumber;
 
-    // blank constructor for production uses
+    // constructor for production uses
     protected Business() {
-//        workerList = new ArrayList<>();
 //        businessBState = new BusinessBState();
     }
 
@@ -42,7 +41,6 @@ public class Business {
     public Business(long id,String name,String blurb,String description,String address,String phoneNumber){
         this.id = id;
 //        businessBState = new BusinessBState();
-//        workerList = new ArrayList<>();
         this.name = name;
         this.blurb = blurb;
         this.description = description;
