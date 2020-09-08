@@ -1,5 +1,6 @@
 import React from "react"
 import "../../App.scss"
+import { Link } from 'react-router-dom'
 
 export default class BusinessPage extends React.Component<{},any>{
     constructor(props: number) {
@@ -75,6 +76,21 @@ export default class BusinessPage extends React.Component<{},any>{
                                 <p>{this.state.business.blurb}</p>
                                 <br></br>
                                 <p>{this.state.business.description}</p>
+                                <div className="py-6">
+                                    <div className="notification is-primary">
+                                        <p className="has-text-weight-bold">Business Hours</p>
+                                        <p>Monday: 9:00 to 17:00</p>
+                                        <p>Tuesday: 9:00 to 17:00</p>
+                                        <p>Wednesday: 9:00 to 17:00</p>
+                                        <p>Thursday: 9:00 to 17:00</p>
+                                        <p>Firday: 9:00 to 17:00</p>
+                                        <p>Saturday: CLOSED</p>
+                                        <p>Sunday: CLOSED</p>
+                                    </div>
+                                </div>
+                                <Link to="/worker">
+                                    <div className="button is-primary">Edit Business</div>
+                                </Link>
                             </div>
                         </div>
                     </div>

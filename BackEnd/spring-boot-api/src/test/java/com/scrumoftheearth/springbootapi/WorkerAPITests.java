@@ -1,5 +1,6 @@
 package com.scrumoftheearth.springbootapi;
 
+import com.scrumoftheearth.springbootapi.model.Worker;
 import com.scrumoftheearth.springbootapi.repository.WorkerRepository;
 import com.scrumoftheearth.springbootapi.service.WorkerService;
 import static org.junit.Assert.*;
