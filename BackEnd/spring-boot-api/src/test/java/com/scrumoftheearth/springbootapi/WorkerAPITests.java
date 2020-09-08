@@ -19,10 +19,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-@RunWith(SpringRunner.class)
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @SpringBootTest
 public class WorkerAPITests {
 
@@ -42,12 +41,10 @@ public class WorkerAPITests {
         testRepo.add(testCase2);
         testRepo.add(testCase3);
 
-        //Test code to mock a stream (Using a reference for if needed in the future)
-        //when(repository.findAll()).thenReturn(Stream.of(new Worker(null, null, null, "Hello")).collect(Collectors.toList()));
-
         when(workerRepository.findAll()).thenReturn(testRepo);
         assertEquals(3, workerService.getAllWorkers().size());
     }
+
 
     /*
     @Test
@@ -55,6 +52,7 @@ public class WorkerAPITests {
         Worker worker = new Worker();
         when(workerRepository.save(worker)).thenReturn(worker);
         assertEquals(worker, workerService.saveWorker(null, 1, null, "TEST DUMMY WORKER INSTANCE"));
+
     }
     */
 
