@@ -1,35 +1,24 @@
 import React from 'react';
 import './App.scss';
-import HomePageContent from './components/HomePage/HomePageContent';
 import HomePageHeader from './components/HomePage/HomePageHeader';
 import Worker from './components/Worker/Worker';
-import CustomerHomepage from './components/Customer/CustomerHomepage';
-<<<<<<< HEAD
-<<<<<<< HEAD
-import BusinessPage from './components/businessPage/BusinessPage';
-=======
 import BusinessPage from './components/Business/BusinessPage';
->>>>>>> origin/develop
-=======
-import BusinessPage from './components/businessPage/BusinessPage';
+import UserHomepage from './components/User/UserHomepage';
+import { BrowserRouter as Router,Switch,Route,Link } from "react-router-dom";
+import HomePageContent from './components/HomePage/HomePageContent';
 
->>>>>>> 3ff3ce14cd38052bcfa4727328306a3a8a8f320e
 
 function App() {
   return (
     <div>
-      <HomePageHeader/>
-      <HomePageContent/>
-      <CustomerHomepage/>
-      <Worker/>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-      <CustomerHomepage/>
->>>>>>> origin/develop
-=======
->>>>>>> 3ff3ce14cd38052bcfa4727328306a3a8a8f320e
-      <BusinessPage/>
+      <Router>
+        <Switch>
+          <Route path="/" exact component={HomePageContent} />
+          <Route path="/Worker" component={Worker} />
+          <Route path="/BusinessPage" component={BusinessPage} />
+          <Route exact path='/UserHomepage/:id' component={UserHomepage}/>
+        </Switch>
+      </Router>
     </div>
   );
 }

@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 3ff3ce14cd38052bcfa4727328306a3a8a8f320e
 import {BrowserRouter, Router} from "react-router-dom"
 import 'bulma/css/bulma.css'
 import './Worker.scss'
 import Shifts from './Shifts'
 import DropDown from './DropDown'
+import HomePageHeader from '../HomePage/HomePageHeader'
+import TimePicker from 'react-time-picker'
 
 class Worker extends Component<any, any> {
 
@@ -96,6 +93,7 @@ class Worker extends Component<any, any> {
         else {
             return (
                 <body className="worker-body">
+                    <HomePageHeader/>
                     <div className="section profile-heading">
                         <div className="columns is-mobile is-multiline">
                             <div className="column is-2">
@@ -187,7 +185,23 @@ class Worker extends Component<any, any> {
                         }
                         {
                             !this.state.showShifts?
-                            <DropDown/>
+                            <div className="shift-change-div">
+                                <div className="columns">
+                                    <div className="column">
+                                        <DropDown/>
+                                    </div>
+                                    <div className="column">
+                                        Start Time:
+                                        <TimePicker />
+                                    </div>
+                                    <div className="column">
+                                        End Time: 
+                                        <TimePicker />
+                                    </div>
+                                </div>
+                                <br/>
+                                
+                            </div>
                             :null
                         }
                         
@@ -195,31 +209,6 @@ class Worker extends Component<any, any> {
                 </body>
             )
         }
-<<<<<<< HEAD
-=======
-import 'bulma/css/bulma.css'
-
-class Worker extends Component {
-    render() {
-        return (
-            <div className="Background">
-            <section className="hero is-medium"> 
-                <div className="hero-body">
-                    <div className="container">
-                        <h1 className="title is-1 ">Worker Profile Page</h1> 
-                        <h2 className="subtitle">Name:</h2>
-                        <h2 className="subtitle">Last Name:</h2>
-                        <h2 className="subtitle">Services Offered:</h2>
-                        <h2 className="subtitle">Upcoming Shifts:</h2>
-                    </div>
-                </div>
-            </section>
-            </div>
-        )
->>>>>>> origin/develop
-=======
-
->>>>>>> 3ff3ce14cd38052bcfa4727328306a3a8a8f320e
     }
 }
 

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import './Worker.scss'
+import 'bulma/css/bulma.css'
+
 
 class DropDown extends Component<any, any> {
 
@@ -48,9 +50,9 @@ class DropDown extends Component<any, any> {
                         //Creates a day element for the dropdown box for each day of the week
                     }
                         {days.map(function(day, index){
-                            return <a className="dropdown-item">
+                            return (<a className="dropdown-item">
                                         {day}
-                                    </a>
+                                    </a>)
                         })}
                     </div>
                 </div>
