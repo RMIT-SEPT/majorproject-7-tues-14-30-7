@@ -1,6 +1,9 @@
 package com.scrumoftheearth.springbootapi.controller;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.scrumoftheearth.springbootapi.model.Service;
 import com.scrumoftheearth.springbootapi.model.Worker;
+import com.scrumoftheearth.springbootapi.model.WorkerWState;
 import com.scrumoftheearth.springbootapi.service.WorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,14 +12,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.Binding;
+
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/worker")
 public class WorkerController {
 
@@ -42,35 +47,22 @@ public class WorkerController {
             return fieldErrors.get();
         }
 
-        worker = workerService.saveWorker(worker);
+        worker = workerService.saveWorker(worker.getWorkerWState(), worker.getUser().getId(), worker.getDescription(), worker.getServices(), worker.getBusinesses());
         return new ResponseEntity<Worker>(worker, HttpStatus.CREATED);
     }
 
+    @GetMapping("")
+    public List<Worker> getAllWorkers(){
+        return workerService.getAllWorkers();
+    }
+
     @PutMapping("/update={id}")
-    public ResponseEntity<?> UPDATEWorker(@PathVariable("id") Long id, @Valid @RequestBody Worker updatedWorker,
+    public ResponseEntity<?> UPDATEWorker(@Valid @RequestBody Worker updatedWorker,
                                           BindingResult bindingResult) throws Throwable {
 
-        //Optional variable to hold worker found by Id, need an optional version to check if worker exists
-        Optional<Worker> worker = Optional.ofNullable(workerService.getById(id));
+        Worker worker = workerService.updateWorker(updatedWorker);
 
-        //Optional variable to hold worker which will be updated
-        Worker workerToChange = workerService.getById(id);
-
-        Optional<ResponseEntity<Map<String, Map<String, String>>>> fieldErrors = getFieldErrors(bindingResult);
-
-        //If no worker was found by the Id provided then return an error that this worker to update does not exist
-        if(!worker.isPresent()) {
-            return new ResponseEntity<String>("Worker doesnt exist", HttpStatus.BAD_REQUEST);
-        }
-
-        if(fieldErrors.isPresent()) {
-            return fieldErrors.get();
-        }
-
-        //Updates worker with relative information to the updatedWorker variable specifications and values
-        workerToChange = workerService.updateWorker(workerToChange, updatedWorker);
-
-        return new ResponseEntity<>(workerToChange, HttpStatus.OK);
+        return new ResponseEntity<>(updatedWorker, HttpStatus.OK);
 
     }
 
