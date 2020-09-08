@@ -7,20 +7,13 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
-
-import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-import org.springframework.test.context.junit4.SpringRunner;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 public class WorkerAPITests {
@@ -45,14 +38,12 @@ public class WorkerAPITests {
         assertEquals(3, workerService.getAllWorkers().size());
     }
 
-
     /*
     @Test
     public void createWorkerTest(){
         Worker worker = new Worker();
         when(workerRepository.save(worker)).thenReturn(worker);
         assertEquals(worker, workerService.saveWorker(null, 1, null, "TEST DUMMY WORKER INSTANCE"));
-
     }
     */
 

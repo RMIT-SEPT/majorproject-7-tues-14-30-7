@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3ff3ce14cd38052bcfa4727328306a3a8a8f320e
 import {BrowserRouter, Router} from "react-router-dom"
 import 'bulma/css/bulma.css'
 import './Worker.scss'
@@ -191,6 +195,7 @@ class Worker extends Component<any, any> {
                 </body>
             )
         }
+<<<<<<< HEAD
 =======
 import 'bulma/css/bulma.css'
 
@@ -212,6 +217,9 @@ class Worker extends Component {
             </div>
         )
 >>>>>>> origin/develop
+=======
+
+>>>>>>> 3ff3ce14cd38052bcfa4727328306a3a8a8f320e
     }
 }
 

@@ -1,7 +1,11 @@
 import React from "react"
 import "./BusinessPage.scss"
 
+<<<<<<< HEAD
 export default class BusinessPage extends React.Component<{},any>{
+=======
+class BusinessPageBody extends React.Component<{},any>{
+>>>>>>> 3ff3ce14cd38052bcfa4727328306a3a8a8f320e
     constructor(props: number) {
         super(props)
         this.state = {
@@ -23,6 +27,10 @@ export default class BusinessPage extends React.Component<{},any>{
     render(){
         return( 
             <body>
+<<<<<<< HEAD
+=======
+                <h1>****HEADER and NAV GOES HERE****</h1>
+>>>>>>> 3ff3ce14cd38052bcfa4727328306a3a8a8f320e
                 <h1>{this.state.business.name}</h1>
                 <div className="practice">
                     <section className="table">
@@ -50,7 +58,17 @@ export default class BusinessPage extends React.Component<{},any>{
                 <h4>Contact us:</h4>
                 <p>Address: {this.state.business.address}</p>
                 <p>Mobile Number: {this.state.business.phoneNumber}</p>
+<<<<<<< HEAD
             </body>
         )
     }
 }
+=======
+                <h1>****FOOTER GOES HERE****</h1>
+            </body>
+        )
+    }
+}
+
+export default BusinessPageBody;
+>>>>>>> 3ff3ce14cd38052bcfa4727328306a3a8a8f320e
