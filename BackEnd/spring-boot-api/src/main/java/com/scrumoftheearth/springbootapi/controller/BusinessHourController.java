@@ -1,7 +1,7 @@
 package com.scrumoftheearth.springbootapi.controller;
 
 import com.scrumoftheearth.springbootapi.model.BusinessHours;
-import com.scrumoftheearth.springbootapi.service.BusinessTimeService;
+import com.scrumoftheearth.springbootapi.service.BusinessHourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +14,9 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/BusinessHours")
-public class BusinessTimeController {
+public class BusinessHourController {
     @Autowired
-    private BusinessTimeService businessTimeService;
+    private BusinessHourService businessTimeService;
 
     // for adding a new business time
     @PostMapping("")
@@ -30,7 +30,7 @@ public class BusinessTimeController {
 
     // for getting the business time for a particular business
     @GetMapping("/findByBusId={busId}")
-    public List<BusinessHours> getByBusinessId(long busId){
+    public List<BusinessHours> getByBusinessId(Long busId){
         return businessTimeService.getByBusinessId(busId);
     }
 

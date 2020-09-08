@@ -39,7 +39,7 @@ public class Business {
     private String phoneNumber;
 
     // List of business hours
-    @OneToMany(mappedBy = "BusinessHours",cascade = CascadeType.ALL)
+    @OneToMany()
     private List<BusinessHours> openinghours;
 
     // blank constructor for production uses

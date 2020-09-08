@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BusinessTimeService {
+public class BusinessHourService {
     @Autowired
     private BusinessHourRepository businessHourRepository;
 
@@ -19,7 +19,7 @@ public class BusinessTimeService {
     }
 
     //for getByBusinessId
-    public List<BusinessHours> getByBusinessId(long busId){
+    public List<BusinessHours> getByBusinessId(Long busId){
         return businessHourRepository.findbyBusinessId(busId);
     }
 

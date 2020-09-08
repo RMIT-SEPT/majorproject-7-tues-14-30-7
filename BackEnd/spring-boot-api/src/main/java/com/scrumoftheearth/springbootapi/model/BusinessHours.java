@@ -1,10 +1,7 @@
 package com.scrumoftheearth.springbootapi.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.Date;
+import java.sql.Time;
 
 @Entity
 public class BusinessHours {
@@ -14,25 +11,29 @@ public class BusinessHours {
     private long id;
 
     // foreign key to business table
-    private long business_id;
+    private Long business_id;
 
-    // int to save day (monday = 1, tuesday = 2 etc)
-    @NotBlank(message = "Day integer is required")
+    // long to save day (monday = 1, tuesday = 2 etc)
     private int day;
 
     // opening time
-    @JsonFormat(pattern = "HH:mm")
-    @Temporal(TemporalType.TIME)
-    private Date openingTime;
+    private Time openingTime;
 
     // closing time
-    @JsonFormat(pattern = "HH:mm")
-    @Temporal(TemporalType.TIME)
-    private Date closingTime;
+    private Time closingTime;
 
     // blank constructor for production uses
     protected BusinessHours(){
 
+    }
+
+    // constructor for junit testing
+    public BusinessHours(long id,long business_id,int day,Time openingTime,Time closingTime){
+        this.id = id;
+        this.business_id = business_id;
+        this.day = day;
+        this.openingTime = openingTime;
+        this.closingTime = closingTime;
     }
 
     public long getId() {
@@ -59,19 +60,19 @@ public class BusinessHours {
         this.day = day;
     }
 
-    public Date getOpeningTime() {
+    public Time getOpeningTime() {
         return openingTime;
     }
 
-    public void setOpeningTime(Date openingTime) {
+    public void setOpeningTime(Time openingTime) {
         this.openingTime = openingTime;
     }
 
-    public Date getClosingTime() {
+    public Time getClosingTime() {
         return closingTime;
     }
 
-    public void setClosingTime(Date closingTime) {
+    public void setClosingTime(Time closingTime) {
         this.closingTime = closingTime;
     }
 }
