@@ -8,44 +8,54 @@ import java.util.List;
 @Entity
 // POJO for business
 public class Business {
+    // business ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // business ID
     private Long id;
+
     // state of the business
 //    private BusinessBState businessBState;
+
+    // list of worker for the business
     @ManyToMany
     private List<Worker> worker;
-    @NotBlank(message = "Business name is required")
+
     // name of business
+    @NotBlank(message = "Business name is required")
     private String name;
-    @NotBlank(message = "Business blurb is required")
+
     // blurb the business provides
+    @NotBlank(message = "Business blurb is required")
     private String blurb;
-    @NotBlank(message = "Business description is required")
+
     // description of the business
+    @NotBlank(message = "Business description is required")
     private String description;
-    @NotBlank(message = "Business address is required")
+
     // address of the business
+    @NotBlank(message = "Business address is required")
     private String address;
-    @NotBlank(message = "Business contact number is required")
+
     // contact info of the business
+    @NotBlank(message = "Business contact number is required")
     private String phoneNumber;
 
     // constructor for production uses
     protected Business() {
+        worker = new ArrayList<Worker>();
 //        businessBState = new BusinessBState();
     }
 
     // constructor for testing
     public Business(long id,String name,String blurb,String description,String address,String phoneNumber){
         this.id = id;
-//        businessBState = new BusinessBState();
         this.name = name;
         this.blurb = blurb;
         this.description = description;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        worker = new ArrayList<Worker>();
+//        businessBState = new BusinessBState();
     }
 
     // getters and setters
@@ -81,13 +91,13 @@ public class Business {
 //        this.businessBState = businessBState;
 //    }
 //
-//    public List<String> getWorkerList() {
-//        return workerList;
-//    }
-//
-//    public void setWorkerList(List<String> workerList) {
-//        this.workerList = workerList;
-//    }
+    public List<Worker> getWorkerList() {
+        return worker;
+    }
+
+    public void setWorkerList(List<Worker> workerList) {
+        this.worker = workerList;
+    }
 
     public String getDescription() {
         return description;

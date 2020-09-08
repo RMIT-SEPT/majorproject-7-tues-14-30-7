@@ -11,6 +11,7 @@ export default class BusinessPage extends React.Component<{},any>{
         }
     }
 
+    //API call for getting the business info
     componentDidMount(){
         var apicall = "http://localhost:8080/api/Business/findById=" + this.state.businessId
         fetch(apicall)
@@ -23,6 +24,7 @@ export default class BusinessPage extends React.Component<{},any>{
         this.populatetable();
     }
 
+    // API call for filling in the workertabl
     populatetable(){
         fetch("http://localhost:8080/user/1")
             .then(res =>{
@@ -48,6 +50,7 @@ export default class BusinessPage extends React.Component<{},any>{
             })
     }
     
+    // html render on page
     render(){
         return( 
             <section className="hero is-fullheight is-default is-bold">
@@ -95,8 +98,6 @@ export default class BusinessPage extends React.Component<{},any>{
                         </div>
                     </div>
                 </div>
-
-
             <div className="hero-foot">
                 <div className="container">
                     <div className="columns">
