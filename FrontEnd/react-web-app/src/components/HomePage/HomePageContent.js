@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import "../../App.scss"
-import { BrowserRouter as Link } from "react-router-dom";
-import HomePageBusinessBox from './HomePageBusinessBox';
 import axios from 'axios';
 import HomePageHeader from './HomePageHeader';
 
