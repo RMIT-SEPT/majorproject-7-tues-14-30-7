@@ -14,11 +14,8 @@ public class Business {
 
     // state of the business
 //    private BusinessBState businessBState;
-
-//    // List of workers
-//    private List<Worker> workerList;
-
-    // name of business
+    @ManyToMany
+    private List<Worker> worker;
     @NotBlank(message = "Business name is required")
     private String name;
 
@@ -44,7 +41,6 @@ public class Business {
 
     // blank constructor for production uses
     protected Business() {
-//        workerList = new ArrayList<>();
 //        businessBState = new BusinessBState();
     }
 
@@ -52,7 +48,6 @@ public class Business {
     public Business(long id,String name,String blurb,String description,String address,String phoneNumber){
         this.id = id;
 //        businessBState = new BusinessBState();
-//        workerList = new ArrayList<>();
         this.name = name;
         this.blurb = blurb;
         this.description = description;
