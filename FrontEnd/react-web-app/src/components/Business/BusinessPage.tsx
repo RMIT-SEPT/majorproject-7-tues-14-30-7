@@ -24,28 +24,30 @@ export default class BusinessPage extends React.Component<{},any>{
         this.populatetable();
     }
 
-    // API call for filling in the workertabl
+    // API call for filling in the workertable
     populatetable(){
-        fetch("http://localhost:8080/user/1")
+        fetch("http://localhost:8080/api/Business/getWorker")
             .then(res =>{
                 res.json()
                 .then(data => {
                     var dataArray = [];
                     dataArray.push(data);
-                    if(dataArray.length > 0){
-                        var temp :any = "";
-
-                        dataArray.forEach((row) =>{
-                            temp += "<tr>"
-                            temp += "<td>" + row.firstName + "</td>"
-                            temp += "<td>" + row.lastName + "</td>"
-                            temp += "<td>" + row.homeAddress + "</td>"
-                            temp += "<td>" + row.phoneNumber + "</td>"
-                            temp += "<td>" + "TO BE ADDED" + "</td>"
-                            temp += "<tr>"
-                        })
+                        if(dataArray.length > 0){
+                            var temp :any = "";
+                            var i;
+                            for(i = 0; i <= dataArray.length;i++){
+                                dataArray.forEach((row) =>{
+                                    temp += "<tr>"
+                                    temp += "<td>" + row[i].firstName + "</td>"
+                                    temp += "<td>" + row[i].lastName + "</td>"
+                                    temp += "<td>" + row[i].homeAddress + "</td>"
+                                    temp += "<td>" + row[i].phoneNumber + "</td>"
+                                    temp += "<td>" + "TO BE ADDED" + "</td>"
+                                    temp += "<tr>"
+                                })
+                            }
                         document.getElementById("workertable").innerHTML = temp;
-                    }
+                        }
                 })
             })
     }

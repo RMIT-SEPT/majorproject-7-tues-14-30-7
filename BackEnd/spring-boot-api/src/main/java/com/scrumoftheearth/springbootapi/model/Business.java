@@ -5,8 +5,12 @@ import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 // POJO for business
+@Entity
+@NamedQueries({
+        @NamedQuery(name = "Business.findAllWorkers",
+                query = "SELECT w FROM User w WHERE w.id = 1 OR  w.id = 2")
+})
 public class Business {
     // business ID
     @Id

@@ -1,6 +1,7 @@
 package com.scrumoftheearth.springbootapi.service;
 
 import com.scrumoftheearth.springbootapi.model.Business;
+import com.scrumoftheearth.springbootapi.model.User;
 import com.scrumoftheearth.springbootapi.repository.BusinessRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,9 @@ public class BusinessService {
     // for deleteBusiness()
     public void deleteById(long id){
         businessRepository.deleteById(id);
+    }
+
+    public List<User> getWorker(){
+        return businessRepository.findAllWorkers();
     }
 }

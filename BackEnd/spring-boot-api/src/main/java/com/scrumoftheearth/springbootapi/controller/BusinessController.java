@@ -1,6 +1,7 @@
 package com.scrumoftheearth.springbootapi.controller;
 
 import com.scrumoftheearth.springbootapi.model.Business;
+import com.scrumoftheearth.springbootapi.model.User;
 import com.scrumoftheearth.springbootapi.service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -67,5 +68,11 @@ public class BusinessController {
         business.setId(id);
         businessService.saveOrUpdate(business);
         return ResponseEntity.noContent().build();
+    }
+    
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/getWorker")
+    public List<User> getWorker(){
+        return businessService.getWorker();
     }
 }
