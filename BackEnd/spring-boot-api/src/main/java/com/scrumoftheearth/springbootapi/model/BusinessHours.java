@@ -3,7 +3,13 @@ package com.scrumoftheearth.springbootapi.model;
 import javax.persistence.*;
 import java.sql.Time;
 
+// POJO for businessHour
 @Entity
+@NamedQueries({
+        // custom query for getting all business time
+        @NamedQuery(name = "BusinessHours.findAllBusTime",
+        query = "SELECT h FROM BusinessHours h WHERE h.business_id = ?1 ORDER BY h.day")
+})
 public class BusinessHours {
     // business id
     @Id

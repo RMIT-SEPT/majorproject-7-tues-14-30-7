@@ -30,8 +30,8 @@ public class BusinessHourController {
 
     // for getting the business time for a particular business
     @GetMapping("/findByBusId={busId}")
-    public List<BusinessHours> getByBusinessId(Long busId){
-        return businessTimeService.getByBusinessId(busId);
+    public List<BusinessHours> getByBusinessId(@PathVariable long busId){
+        return businessTimeService.getTimeByBusId(busId);
     }
 
     // for searching for a business by ID

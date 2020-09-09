@@ -13,14 +13,9 @@ public class BusinessHourService {
     @Autowired
     private BusinessHourRepository businessHourRepository;
 
-    // for newBusinessHour and updateBusinessHour
+    // for newBusinessHour() and updateBusinessHour()
     public BusinessHours saveOrUpdate(BusinessHours hours){
         return businessHourRepository.save(hours);
-    }
-
-    //for getByBusinessId
-    public List<BusinessHours> getByBusinessId(Long busId){
-        return businessHourRepository.findbyBusinessId(busId);
     }
 
     // for getById()
@@ -31,5 +26,10 @@ public class BusinessHourService {
     // for deleteHour()
     public void deleteById(long id){
         businessHourRepository.deleteById(id);
+    }
+
+    // for getByBusinessId()
+    public List<BusinessHours> getTimeByBusId(long busid){
+        return businessHourRepository.findAllBusTime(busid);
     }
 }
