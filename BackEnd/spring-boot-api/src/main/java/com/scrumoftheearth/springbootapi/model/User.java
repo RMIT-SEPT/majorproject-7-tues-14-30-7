@@ -1,9 +1,13 @@
 package com.scrumoftheearth.springbootapi.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class User {
@@ -27,18 +31,42 @@ public class User {
     @NotBlank(message = "Home Address cannot be blank!")
     private String homeAddress;
 
-    private Date createdAt;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                userName.equals(user.userName) &&
+                firstName.equals(user.firstName) &&
+                lastName.equals(user.lastName) &&
+                phoneNumber.equals(user.phoneNumber) &&
+                homeAddress.equals(user.homeAddress) &&
+                Objects.equals(createdAt, user.createdAt) &&
+                Objects.equals(updatedAt, user.updatedAt);
+    }
 
-    private Date updatedAt;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userName, firstName, lastName, phoneNumber, homeAddress, createdAt, updatedAt);
+    }
+
+    /* https://www.baeldung.com/spring-boot-formatting-json-dates */
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdAt;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updatedAt;
 
     @PrePersist
     protected void onCreate() {
-        this.createdAt = new Date();
+        this.createdAt = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updatedAt = new Date();
+            this.updatedAt = LocalDateTime.now();
     }
 
     public User() { }
@@ -96,11 +124,13 @@ public class User {
         this.homeAddress = homeAddress;
     }
 
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
+
+
 }
