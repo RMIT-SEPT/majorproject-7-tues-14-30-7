@@ -7,7 +7,6 @@ import com.scrumoftheearth.springbootapi.controller.UserController;
 import com.scrumoftheearth.springbootapi.error.NotUniqueException;
 import com.scrumoftheearth.springbootapi.model.User;
 import com.scrumoftheearth.springbootapi.service.UserService;
-import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -23,12 +22,12 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.util.SerializationUtils;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -54,9 +53,13 @@ public class UserAPITests {
 
     private List<User> testUsers;
 
+    private DateTimeFormatter dateTimeFormatter;
+
     @BeforeEach
     void init() {
+        dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); /* https://mkyong.com/java8/java-8-how-to-format-localdatetime/ */
         objectMapper = new ObjectMapper();
+
         testUsers = new ArrayList<>();
 
         // 0: Valid user
@@ -67,11 +70,21 @@ public class UserAPITests {
 
         // 2: Valid Saved User with ID = 3 and CreatedAt Date
         User testUser3 = new User("TestUser3", "FirstName3", "LastName3", "HomeAddress3", "0499999999");
-        ReflectionTestUtils.setField(testUser3, "createdAt", LocalDateTime.now());
+        LocalDateTime customTime = LocalDateTime.now();
+        // Custom time to match json format (due to LocalDateTime having additional information not expressed in json
+        customTime = LocalDateTime.of(customTime.getYear(), customTime.getMonth(), customTime.getDayOfMonth(), customTime.getHour(), customTime.getMinute(), customTime.getSecond());
+        ReflectionTestUtils.setField(testUser3, "createdAt", customTime);
         ReflectionTestUtils.setField(testUser3, "id", 3L);
         testUsers.add(testUser3);
 
         /* Mock UserService class */
+
+        // Invalid Get
+        try {
+            when(mockUserService.getById(-1L)).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource " + -1L + " Not Found!"));
+        } catch (Throwable throwable) {
+            // DO NOTHING
+        }
 
         // User 0: Unique Username and Valid Save
         when(mockUserService.saveUser(eq(testUsers.get(0)))).thenReturn(testUsers.get(0));
@@ -86,7 +99,7 @@ public class UserAPITests {
         when(mockUserService.saveUser(eq(testUsers.get(1)))).thenThrow(new NotUniqueException("UserName must be Unique!", HttpStatus.BAD_REQUEST, "userName"));
         when(mockUserService.checkUserNameNotUnique(testUsers.get(1).getUserName())).thenReturn(true);
         try {
-            when(mockUserService.getById(2L)).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource " + Long.toString(2L) + " Not Found!"));
+            when(mockUserService.getById(2L)).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource " + 2L + " Not Found!"));
         } catch (Throwable throwable) {
             // DO NOTHING
         }
@@ -107,7 +120,6 @@ public class UserAPITests {
 
         @Test
         void NotLoggedIn_PostValidUser_HTTP201AndUser() throws Exception {
-
             String testUserAsJson = objectMapper.writeValueAsString(testUsers.get(0));
 
             MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user")
@@ -157,26 +169,193 @@ public class UserAPITests {
     /* Tests for URI GET '/user/{id}/' */
     @Nested
     public class ReadTests {
+
         @Test
         void NotLoggedIn_UserExistsWithID3_ThenHTTP302AndUser() throws Exception {
 
             MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/user/3")
             ).andExpect(status().isFound()).andReturn();
             String resultJson = result.getResponse().getContentAsString();
-
+            /* https://stackoverflow.com/questions/30997362/how-to-modify-jsonnode-in-java */
             String userString = objectMapper.writeValueAsString(testUsers.get(2));
             JsonNode jsonUser = objectMapper.readTree(userString);
             ObjectNode jsonNode = jsonUser.deepCopy();
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); /* https://mkyong.com/java8/java-8-how-to-format-localdatetime/ */
             jsonNode.put("createdAt", testUsers.get(2).getCreatedAt().format(dateTimeFormatter));
             JSONAssert.assertEquals(jsonNode.toString(), resultJson, JSONCompareMode.LENIENT);
         }
+
+        @Test
+        void NotLoggedIn_DoesNotExist_ThenHTTP404() throws Exception {
+            mockMvc.perform(MockMvcRequestBuilders.get("/user/-1")
+            ).andExpect(status().isNotFound()).andExpect(status().reason("Resource -1 Not Found!"));
+        }
+
     }
 
     /* Tests for URI PUT '/user/{id}/' */
     @Nested
     public class UpdateTests {
 
+        // TODO: Clean up Update Tests
+
+        @Test
+        void NotLoggedIn_EditedUserName_ThenHTTP200AndUser() throws Exception {
+            User editedUser = (User) SerializationUtils.deserialize(SerializationUtils.serialize(testUsers.get(2)));
+
+            assert editedUser != null;
+            editedUser.setUserName("NewUniqueName");
+
+            /* NOTE need to set the date format to be of the Jackson @JsonFormat style set in the model.
+            /* Otherwise writeValueToString will produce a json tree of all date fields eg. month, year, nano, etc.
+            /* when we want a single string. */
+            String editedUserAsJson = objectMapper.writeValueAsString(editedUser);
+            ObjectNode editedJsonNode = objectMapper.readTree(editedUserAsJson).deepCopy();
+            editedJsonNode.put("createdAt", testUsers.get(2).getCreatedAt().format(dateTimeFormatter));
+            editedUserAsJson = editedJsonNode.toString();
+
+            /* https://stackoverflow.com/questions/64036/how-do-you-make-a-deep-copy-of-an-object*/
+            User resultUser = (User) SerializationUtils.deserialize(SerializationUtils.serialize(editedUser));
+
+            assert resultUser != null;
+            ReflectionTestUtils.setField(resultUser, "updatedAt", LocalDateTime.now());
+
+            when(mockUserService.checkUserNameNotUnique(editedUser.getUserName())).thenReturn(false);
+            when(mockUserService.updateUser(eq(testUsers.get(2)), eq(editedUser))).thenReturn(resultUser);
+
+            MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/user/3")
+                    .contentType("application/json")
+                    .content(editedUserAsJson)).andExpect(status().isOk()).andReturn();
+            String resultJson = result.getResponse().getContentAsString();
+
+            String expectedUserAsString = objectMapper.writeValueAsString(resultUser);
+            ObjectNode expectedUserNode = objectMapper.readTree(expectedUserAsString).deepCopy();
+            expectedUserNode.put("updatedAt", resultUser.getUpdatedAt().format(dateTimeFormatter));
+            expectedUserNode.put("createdAt", resultUser.getCreatedAt().format(dateTimeFormatter));
+            expectedUserAsString = expectedUserNode.toString();
+
+            JSONAssert.assertEquals(expectedUserAsString, resultJson, JSONCompareMode.LENIENT);
+        }
+
+        @Test
+        void NotLoggedIn_SameUNameEditedFields_ThenHTTP200AndUser() throws Exception {
+            User editedUser = (User) SerializationUtils.deserialize(SerializationUtils.serialize(testUsers.get(2)));
+
+            assert editedUser != null;
+            editedUser.setFirstName("NewFirstName");
+            editedUser.setLastName("NewLastName");
+
+            /* NOTE need to set the date format to be of the Jackson @JsonFormat style set in the model.
+            /* Otherwise writeValueToString will produce a json tree of all date fields eg. month, year, nano, etc.
+            /* when we want a single string. */
+            String editedUserAsJson = objectMapper.writeValueAsString(editedUser);
+            ObjectNode editedJsonNode = objectMapper.readTree(editedUserAsJson).deepCopy();
+            editedJsonNode.put("createdAt", testUsers.get(2).getCreatedAt().format(dateTimeFormatter));
+            editedUserAsJson = editedJsonNode.toString();
+
+            /* https://stackoverflow.com/questions/64036/how-do-you-make-a-deep-copy-of-an-object*/
+            User resultUser = (User) SerializationUtils.deserialize(SerializationUtils.serialize(editedUser));
+
+            assert resultUser != null;
+            ReflectionTestUtils.setField(resultUser, "updatedAt", LocalDateTime.now());
+
+            when(mockUserService.checkUserNameNotUnique(editedUser.getUserName())).thenReturn(false);
+            when(mockUserService.updateUser(eq(testUsers.get(2)), eq(editedUser))).thenReturn(resultUser);
+
+            MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/user/3")
+                    .contentType("application/json")
+                    .content(editedUserAsJson)).andExpect(status().isOk()).andReturn();
+            String resultJson = result.getResponse().getContentAsString();
+
+            String expectedUserAsString = objectMapper.writeValueAsString(resultUser);
+            ObjectNode expectedUserNode = objectMapper.readTree(expectedUserAsString).deepCopy();
+            expectedUserNode.put("updatedAt", resultUser.getUpdatedAt().format(dateTimeFormatter));
+            expectedUserNode.put("createdAt", resultUser.getCreatedAt().format(dateTimeFormatter));
+            expectedUserAsString = expectedUserNode.toString();
+
+            JSONAssert.assertEquals(expectedUserAsString, resultJson, JSONCompareMode.LENIENT);
+        }
+
+        @Test
+        void NotLoggedIn_NewNonUniqueUserName_ThenHTTP400() throws Exception {
+            User editedUser = (User) SerializationUtils.deserialize(SerializationUtils.serialize(testUsers.get(2)));
+
+            assert editedUser != null;
+            editedUser.setUserName("NonUniqueUserName");
+
+            /* NOTE need to set the date format to be of the Jackson @JsonFormat style set in the model.
+            /* Otherwise writeValueToString will produce a json tree of all date fields eg. month, year, nano, etc.
+            /* when we want a single string. */
+            String editedUserAsJson = objectMapper.writeValueAsString(editedUser);
+            ObjectNode editedJsonNode = objectMapper.readTree(editedUserAsJson).deepCopy();
+            editedJsonNode.put("createdAt", testUsers.get(2).getCreatedAt().format(dateTimeFormatter));
+            editedUserAsJson = editedJsonNode.toString();
+
+            when(mockUserService.checkUserNameNotUnique(editedUser.getUserName())).thenReturn(true);
+            when(mockUserService.updateUser(eq(testUsers.get(2)), eq(editedUser))).thenThrow(new NotUniqueException("SQL Error", HttpStatus.INTERNAL_SERVER_ERROR, "userName"));
+
+            MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/user/3")
+                    .contentType("application/json")
+                    .content(editedUserAsJson)).andExpect(status().isBadRequest()).andReturn();
+
+            String expectedJson = "{\"errors\":{\"userName\":\"User Name must be unique!\"}}";
+            String resultJson = result.getResponse().getContentAsString();
+
+            JSONAssert.assertEquals(expectedJson, resultJson, JSONCompareMode.LENIENT);
+        }
+
+        @ParameterizedTest
+        @NullAndEmptySource
+        void NotLoggedIn_InvalidFields_ThenHTTP400(String nullOrBlank) throws Exception {
+            User editedUser = (User) SerializationUtils.deserialize(SerializationUtils.serialize(testUsers.get(2)));
+
+            assert editedUser != null;
+            editedUser.setFirstName(nullOrBlank);
+            editedUser.setLastName(nullOrBlank);
+            editedUser.setHomeAddress(nullOrBlank);
+            editedUser.setPhoneNumber(nullOrBlank);
+            editedUser.setUserName(nullOrBlank);
+
+            /* NOTE need to set the date format to be of the Jackson @JsonFormat style set in the model.
+            /* Otherwise writeValueToString will produce a json tree of all date fields eg. month, year, nano, etc.
+            /* when we want a single string. */
+            String editedUserAsJson = objectMapper.writeValueAsString(editedUser);
+            ObjectNode editedJsonNode = objectMapper.readTree(editedUserAsJson).deepCopy();
+            editedJsonNode.put("createdAt", testUsers.get(2).getCreatedAt().format(dateTimeFormatter));
+            editedUserAsJson = editedJsonNode.toString();
+
+            when(mockUserService.checkUserNameNotUnique(editedUser.getUserName())).thenReturn(false);
+            when(mockUserService.updateUser(eq(testUsers.get(2)), eq(editedUser))).thenThrow(new NotUniqueException("SQL Error", HttpStatus.INTERNAL_SERVER_ERROR, "userName"));
+
+            MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/user/3")
+                    .contentType("application/json")
+                    .content(editedUserAsJson)).andExpect(status().isBadRequest()).andReturn();
+
+            String expectedJson = "{\"errors\":{\"firstName\":\"First Name cannot be blank!\",\"lastName\":\"Last Name cannot be blank!\",\"phoneNumber\":\"Phone Number cannot be blank!\",\"userName\":\"User Name cannot be blank!\",\"homeAddress\":\"Home Address cannot be blank!\"}}";
+            String resultJson = result.getResponse().getContentAsString();
+
+            JSONAssert.assertEquals(expectedJson, resultJson, JSONCompareMode.LENIENT);
+        }
+
+        @Test
+        void NotLoggedIn_NoneExistentUser_ThenHTTP404() throws Exception {
+            User editedUser = (User) SerializationUtils.deserialize(SerializationUtils.serialize(testUsers.get(2)));
+
+            assert editedUser != null;
+            editedUser.setUserName("Username");
+
+            //
+            String editedUserAsJson = objectMapper.writeValueAsString(editedUser);
+            ObjectNode editedJsonNode = objectMapper.readTree(editedUserAsJson).deepCopy();
+            editedJsonNode.put("createdAt", testUsers.get(2).getCreatedAt().format(dateTimeFormatter));
+            editedUserAsJson = editedJsonNode.toString();
+
+            when(mockUserService.checkUserNameNotUnique(editedUser.getUserName())).thenReturn(false);
+            when(mockUserService.updateUser(eq(testUsers.get(2)), eq(editedUser))).thenReturn(editedUser);
+
+            mockMvc.perform(MockMvcRequestBuilders.put("/user/-1")
+                    .contentType("application/json")
+                    .content(editedUserAsJson)).andExpect(status().isNotFound()).andExpect(status().reason("Resource -1 Not Found!"));
+        }
     }
 
     // TODO: Implement delete tests once api functionality is complete.
