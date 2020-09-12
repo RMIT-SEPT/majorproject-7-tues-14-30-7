@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 @RequestMapping("user")
 public class UserController {
 
@@ -26,6 +27,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/{id}")
     public ResponseEntity<?> READUser(@PathVariable("id") Long id) throws Throwable {
         User user = userService.getById(id);

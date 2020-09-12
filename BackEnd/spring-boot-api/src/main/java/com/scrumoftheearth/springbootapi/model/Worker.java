@@ -1,24 +1,30 @@
 package com.scrumoftheearth.springbootapi.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Worker {
+@Table(name = "worker")
+public class Worker implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
+    @MapsId
+    private User user;
+    @ManyToMany
+    private List<Business> businesses;
+    @OneToOne
+    @JoinColumn(name = "workerWState_id")
     private WorkerWState workerWState;
     @OneToMany
     private List<Service> services;
     @NotBlank
     private String description;
-
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date created_At;
     @JsonFormat(pattern = "yyyy-mm-dd")
@@ -27,9 +33,11 @@ public class Worker {
     public Worker(){
     }
 
-    public Worker(WorkerWState workerWState,
-                  List<Service> services, @NotBlank String description) {
+    public Worker(WorkerWState workerWState, User user,
+                  List<Service> services, @NotBlank String description, List<Business> businesses) {
         this.workerWState = workerWState;
+        this.user = user;
+        this.businesses = businesses;
         this.services = services;
         this.description = description;
     }
@@ -49,6 +57,7 @@ public class Worker {
     public void setDescription(String description){
         this.description = description;
     }
+
     public Date getCreated_At(){
         return created_At;
     }
@@ -93,5 +102,21 @@ public class Worker {
 
     public void addService(Service service){
         this.services.add(service);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Business> getBusinesses() {
+        return businesses;
+    }
+
+    public void setBusinesses(List<Business> business) {
+        this.businesses = business;
     }
 }

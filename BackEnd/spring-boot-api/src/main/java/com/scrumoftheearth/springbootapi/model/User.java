@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
+@Table(name = "USER")
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +45,11 @@ public class User implements Serializable {
 
     @Transient
     private String passwordConfirmation;
+
+    //CascadeType.ALL - This means if the user is deleted so is the worker
+    //We will never actually "delete" the user however this is just good measure
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Worker worker;
 
     /* https://www.baeldung.com/spring-boot-formatting-json-dates */
 

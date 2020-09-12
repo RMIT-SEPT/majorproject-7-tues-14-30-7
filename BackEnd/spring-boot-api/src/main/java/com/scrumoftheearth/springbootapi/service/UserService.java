@@ -3,9 +3,11 @@ package com.scrumoftheearth.springbootapi.service;
 import com.scrumoftheearth.springbootapi.error.NotUniqueException;
 import com.scrumoftheearth.springbootapi.model.User;
 import com.scrumoftheearth.springbootapi.repository.UserRepository;
+import com.scrumoftheearth.springbootapi.repository.WorkerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -14,9 +16,11 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private WorkerRepository workerRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, WorkerRepository workerRepository) {
+        this.workerRepository = workerRepository;
         this.userRepository = userRepository;
     }
 
@@ -26,6 +30,7 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource " + Id.toString() + " Not Found!");
         });
     }
+
 
     public User saveUser(User user) throws NotUniqueException {
         if (checkUserNameNotUnique(user.getUserName())) {
