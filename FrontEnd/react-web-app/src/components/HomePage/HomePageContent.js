@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import "../../App.scss"
-import { BrowserRouter as Link } from "react-router-dom";
+//import { BrowserRouter as Link } from "react-router-dom";
 import HomePageBusinessBox from './HomePageBusinessBox';
 import axios from 'axios';
 import HomePageHeader from './HomePageHeader';
@@ -15,7 +15,8 @@ export default class HomePageContent extends Component {
         };
       }
     
-      async componentDidMount(){
+    async componentDidMount(){
+        // Gets all businesses and stores them in this.state.businesses, the loading state is set to false.
         fetch("http://localhost:8080/api/Business/")
             .then(response => response.json())
             .then(data => {
@@ -25,18 +26,23 @@ export default class HomePageContent extends Component {
                 })
             })
     }
-     
-    //   async componentDidMount() {
-    //     const businessResponse = await axios.get('http://localhost:8080/api/Business/all') //.then(res => res.json())
-    //     const businesses = await businessResponse.results
-    //     console.log(businesses)
-    //     this.setState({ businesses: businesses, loading: false })
-    //   }
 
     render() {
+        /*
+         * Slices the businesses from the getAllBusinesses API so that only the first 5 are displayed.
+         * As a unique key is required, the business name and phone number are added together.
+         * The HomePageBusinessBox is created for each of the 5 businesses.
+        */ 
+        const slice = this.state.businesses.slice(0, 5).map(business =>
+            <div key={business.name + business.phoneNumber}>
+                <HomePageBusinessBox name={business.name} id={business.id} desc={business.description} phoneNumber={business.phoneNumber}/>
+            </div>   
+        )
+
+        // State is loading if the component is accessing, or unable to access, the API
         if(this.state.loading) {
             return(
-                <div>
+            <div>
             <HomePageHeader/>
             <div className="content" id="hpcontent">
                 <div className="columns is-desktop is-gapless">
@@ -67,9 +73,10 @@ export default class HomePageContent extends Component {
             </div>
             );
         }
+        // business.length is ! when the component can access the API but no businesses are present
         if(!this.state.businesses.length) {
             return(
-                <div>
+            <div>
             <HomePageHeader/>
             <div className="content" id="hpcontent">
                 <div className="columns is-desktop is-gapless">
@@ -91,7 +98,7 @@ export default class HomePageContent extends Component {
                     <div className="column is-four-fifths" id="businesscolumn">
                         <div className="container is-fluid" id="businesslistcontainer">
                             <div className="box" id="businesslist">
-                                <h1> No Businesses Found </h1>
+                                <p> No Businesses Found </p>
                             </div>
                         </div>
                     </div>
@@ -100,7 +107,7 @@ export default class HomePageContent extends Component {
             </div>
             );
         }
-
+        // If the component's loading state is false and there are businesses present, the slice constant is rendered
         return (
             <div>
             <HomePageHeader/>
@@ -124,11 +131,16 @@ export default class HomePageContent extends Component {
                     <div className="column is-four-fifths" id="businesscolumn">
                         <div className="container is-fluid" id="businesslistcontainer">
                             <div className="box" id="businesslist">
-                                {this.state.businesses.map(business => (
+                                <span className="title" style={{fontWeight: "bold"}}>Popular Today</span>
+                                <p></p>
+                                <span className="heading" id="bushide">Book an appointment with one of these trending service providers</span>
+                                <p></p>
+                                {slice}
+                                {/* {this.state.businesses.map(business => (
                                     <div key={business.name + business.phoneNumber}>
                                         <HomePageBusinessBox name={business.name} id={business.id} desc={business.description} />
                                     </div>
-                                ))}
+                                ))} */}
                             </div>
                         </div>
                     </div>
