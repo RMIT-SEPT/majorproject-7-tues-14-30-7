@@ -63,13 +63,13 @@ public class UserAPITests {
         testUsers = new ArrayList<>();
 
         // 0: Valid user
-        testUsers.add(new User("OriginalUserNameTest", "FirstName1", "LastName1", "HomeAddress1", "0499999999"));
+        testUsers.add(new User("OriginalUserNameTest", "FirstName1", "LastName1", "HomeAddress1", "0499999999", "password", "password"));
 
         // 1: Valid User, but UserName is not unique
-        testUsers.add(new User("DuplicateUserNameTest", "FirstName2", "LastName2", "HomeAddress2", "0499999999"));
+        testUsers.add(new User("DuplicateUserNameTest", "FirstName2", "LastName2", "HomeAddress2", "0499999999", "password", "password"));
 
         // 2: Valid Saved User with ID = 3 and CreatedAt Date
-        User testUser3 = new User("TestUser3", "FirstName3", "LastName3", "HomeAddress3", "0499999999");
+        User testUser3 = new User("TestUser3", "FirstName3", "LastName3", "HomeAddress3", "0499999999", "password", "password");
         LocalDateTime customTime = LocalDateTime.now();
         // Custom time to match json format (due to LocalDateTime having additional information not expressed in json
         customTime = LocalDateTime.of(customTime.getYear(), customTime.getMonth(), customTime.getDayOfMonth(), customTime.getHour(), customTime.getMinute(), customTime.getSecond());
@@ -151,7 +151,7 @@ public class UserAPITests {
         @ParameterizedTest
         @NullAndEmptySource
         void NotLoggedIn_PostInvalidFields_ThenHTTP400AndJsonErrors(String nullOrBlank) throws Exception {
-            User testUser = new User(nullOrBlank, nullOrBlank, nullOrBlank, nullOrBlank, nullOrBlank);
+            User testUser = new User(nullOrBlank, nullOrBlank, nullOrBlank, nullOrBlank, nullOrBlank, nullOrBlank, nullOrBlank);
             String testUserAsJson = objectMapper.writeValueAsString(testUser);
 
             MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user")
@@ -159,7 +159,7 @@ public class UserAPITests {
                     .content(testUserAsJson))
                     .andExpect(status().isBadRequest()).andReturn();
 
-            String expectedJson = "{\"errors\":{\"firstName\":\"First Name cannot be blank!\",\"lastName\":\"Last Name cannot be blank!\",\"phoneNumber\":\"Phone Number cannot be blank!\",\"userName\":\"User Name cannot be blank!\",\"homeAddress\":\"Home Address cannot be blank!\"}}";
+            String expectedJson = "{\"errors\":{\"firstName\":\"First Name cannot be blank!\",\"lastName\":\"Last Name cannot be blank!\",\"phoneNumber\":\"Phone Number cannot be blank!\",\"userName\":\"User Name cannot be blank!\",\"homeAddress\":\"Home Address cannot be blank!\", \"password\":\"Password must be valid!\", \"passwordConfirmation\":\"Password Confirmation must be valid!\"}}";
             String resultJson = result.getResponse().getContentAsString();
             /* https://www.baeldung.com/jsonassert */
             JSONAssert.assertEquals(expectedJson, resultJson, JSONCompareMode.LENIENT);
@@ -314,6 +314,8 @@ public class UserAPITests {
             editedUser.setHomeAddress(nullOrBlank);
             editedUser.setPhoneNumber(nullOrBlank);
             editedUser.setUserName(nullOrBlank);
+            editedUser.setPassword(nullOrBlank);
+            editedUser.setPasswordConfirmation(nullOrBlank);
 
             /* NOTE need to set the date format to be of the Jackson @JsonFormat style set in the model.
             /* Otherwise writeValueToString will produce a json tree of all date fields eg. month, year, nano, etc.
@@ -330,7 +332,7 @@ public class UserAPITests {
                     .contentType("application/json")
                     .content(editedUserAsJson)).andExpect(status().isBadRequest()).andReturn();
 
-            String expectedJson = "{\"errors\":{\"firstName\":\"First Name cannot be blank!\",\"lastName\":\"Last Name cannot be blank!\",\"phoneNumber\":\"Phone Number cannot be blank!\",\"userName\":\"User Name cannot be blank!\",\"homeAddress\":\"Home Address cannot be blank!\"}}";
+            String expectedJson = "{\"errors\":{\"firstName\":\"First Name cannot be blank!\",\"lastName\":\"Last Name cannot be blank!\",\"phoneNumber\":\"Phone Number cannot be blank!\",\"userName\":\"User Name cannot be blank!\",\"homeAddress\":\"Home Address cannot be blank!\", \"password\":\"Password must be valid!\", \"passwordConfirmation\":\"Password Confirmation must be valid!\"}}";
             String resultJson = result.getResponse().getContentAsString();
 
             JSONAssert.assertEquals(expectedJson, resultJson, JSONCompareMode.LENIENT);
