@@ -66,12 +66,14 @@ public class User implements Serializable {
     public User() { }
 
     public User(String userName, String firstName, String lastName,
-                String homeAddress, String phoneNumber) {
+                String homeAddress, String phoneNumber, String password, String passwordConfirmation) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.homeAddress = homeAddress;
         this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.passwordConfirmation = passwordConfirmation;
     }
 
     public Long getId() {
