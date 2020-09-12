@@ -1,13 +1,12 @@
 package com.scrumoftheearth.springbootapi.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -32,25 +31,19 @@ public class User implements Serializable {
     @NotBlank(message = "Home Address cannot be blank!")
     private String homeAddress;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                userName.equals(user.userName) &&
-                firstName.equals(user.firstName) &&
-                lastName.equals(user.lastName) &&
-                phoneNumber.equals(user.phoneNumber) &&
-                homeAddress.equals(user.homeAddress) &&
-                Objects.equals(createdAt, user.createdAt) &&
-                Objects.equals(updatedAt, user.updatedAt);
-    }
+    @JsonIgnore
+    private String saltedHashedPassword;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, userName, firstName, lastName, phoneNumber, homeAddress, createdAt, updatedAt);
-    }
+    /* Transient indicates that the fields do not get saved to the database.
+    *  As such they are just for mapping the JSON to the User object with validation
+    *  The password fields are to be hashed before saving
+    *  Note: Validation of Password and Password Confirmation must be handled by the controller.
+    * */
+    @Transient
+    private String password;
+
+    @Transient
+    private String passwordConfirmation;
 
     /* https://www.baeldung.com/spring-boot-formatting-json-dates */
 
@@ -133,5 +126,50 @@ public class User implements Serializable {
         return updatedAt;
     }
 
+    public String getSaltedHashedPassword() {
+        return saltedHashedPassword;
+    }
 
+    public void setSaltedHashedPassword(String saltedHashedPassword) {
+        this.saltedHashedPassword = saltedHashedPassword;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
+    }
+
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                userName.equals(user.userName) &&
+                firstName.equals(user.firstName) &&
+                lastName.equals(user.lastName) &&
+                phoneNumber.equals(user.phoneNumber) &&
+                homeAddress.equals(user.homeAddress) &&
+                Objects.equals(saltedHashedPassword, user.saltedHashedPassword) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(passwordConfirmation, user.passwordConfirmation) &&
+                Objects.equals(createdAt, user.createdAt) &&
+                Objects.equals(updatedAt, user.updatedAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userName, firstName, lastName, phoneNumber, homeAddress, saltedHashedPassword, password, passwordConfirmation, createdAt, updatedAt);
+    }
 }
