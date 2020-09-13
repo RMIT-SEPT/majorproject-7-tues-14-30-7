@@ -18,7 +18,8 @@ export default class SearchPage extends Component {
         const sub = pathname.indexOf("Search/");
         const tofind = pathname.substring(pathname.length, sub+7);
         this.setState({
-            searchterm: tofind
+            searchterm: tofind,
+            searchprop: this.props.searchterm
         })
     
     }

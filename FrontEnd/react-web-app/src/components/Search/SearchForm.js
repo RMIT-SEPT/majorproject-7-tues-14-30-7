@@ -26,7 +26,8 @@ export default class SearchForm extends Component {
     componentDidMount() {
         const pathname = window.location.pathname;
         const sub = pathname.indexOf("Search/");
-        const tofind = pathname.substring(pathname.length, sub+7);
+        const tofindtemp = pathname.substring(pathname.length, sub+7);
+        const tofind = unescape(tofindtemp);
         if(this.props.navset === true && this.state.set === false) {
             this.setState({
                 value: tofind, 
@@ -54,13 +55,14 @@ export default class SearchForm extends Component {
             }, () => window.history.replaceState(null, null, "/Search/"))
         }
     }
+    // Handles changes to the checkbox "Search By Description"
     handleCheck(event) {
         this.setState({
             set: false,
             checked: event.target.checked
         })
     }
-    
+    // Updates state based on form information when submit button is pressed
     handleSubmit(event) {
         let filter = 0
         if(this.state.checked === false) {
@@ -83,6 +85,7 @@ export default class SearchForm extends Component {
     }
     
     render() {
+        // Determines the length of the filtered results for conditional rendering
         let filterlen = 0
         if(this.state.checked === false) {
             filterlen = this.state.businesses.filter(business => {
@@ -93,10 +96,9 @@ export default class SearchForm extends Component {
                 return (business.description.toLowerCase().includes(this.state.value.toLowerCase()))
             }).length;
         }
-        this.setState({
-            len: filterlen
-        })
-
+        this.state.len = filterlen
+        
+        // Sets the components to be displayed based on the API results
         let sr = null
         if(this.state.checked === false) {
             sr = this.state.businesses.filter(business => business.name.toLowerCase().includes(this.state.value.toLowerCase())).map(business => (
@@ -111,7 +113,7 @@ export default class SearchForm extends Component {
                 </div>
             ))
         }
-
+        // Base page layout, showing the form only. Displayed when 'value' state is == ''
         if(this.props.navset===true && this.state.value === '') {
             return (
                 <div id="searchtest">
@@ -138,6 +140,7 @@ export default class SearchForm extends Component {
                     <div style={{width: "100%", border: "solid rgb(179, 179, 179) 0.5px", paddingLeft: "0px"}}/>
                 </div>
             );
+        // Shows results in the form of business box components when the results are greater than 0 and the 'value' state isn't == ''
         }else if(this.props.navset===true && filterlen > 0 && this.state.value !== '') {
             return(
                 <div id="businesslistcontainer">
@@ -164,7 +167,7 @@ export default class SearchForm extends Component {
                     <div style={{width: "100%", border: "solid rgb(179, 179, 179) 0.5px", paddingLeft: "0px"}}/>
                     <p></p>
                     <div id="searchresults">
-                        <span className="heading" style={{textAlign: "center"}}>Found {filterlen} Results For "{this.state.value}" {this.state.checked ? 'In Description' : ''}</span>
+                        <span className="heading" style={{textAlign: "center"}}>Found {<span style={{fontWeight: "bold"}}>{filterlen}</span>} Results For "{this.state.value}" {this.state.checked ? 'In Description' : ''}</span>
                         {/* {this.state.businesses.filter(business => business.name.toLowerCase().includes(this.state.value.toLowerCase())).map(business => (
                             <div key={business.name + business.phoneNumber}>
                                 <HomePageBusinessBox name={business.name} id={business.id} desc={business.description} />
@@ -174,6 +177,7 @@ export default class SearchForm extends Component {
                     </div>
                 </div>
             );
+        // Page layout for no results. Displays a message to the user to let them no nothing was found
         }else {
             return(
                 <div id="businesslistcontainer">

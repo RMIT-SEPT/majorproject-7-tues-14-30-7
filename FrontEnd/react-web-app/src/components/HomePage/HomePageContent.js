@@ -64,7 +64,7 @@ export default class HomePageContent extends Component {
                     <div className="column is-four-fifths" id="businesscolumn">
                         <div className="container is-fluid" id="businesslistcontainer">
                             <div className="box" id="businesslist">
-                                <p> Loading Businesses . . . </p>
+                                <p id="loading"> Loading Businesses . . . </p>
                             </div>
                         </div>
                     </div>
@@ -98,7 +98,7 @@ export default class HomePageContent extends Component {
                     <div className="column is-four-fifths" id="businesscolumn">
                         <div className="container is-fluid" id="businesslistcontainer">
                             <div className="box" id="businesslist">
-                                <p> No Businesses Found </p>
+                                <p id="none"> No Businesses Found </p>
                             </div>
                         </div>
                     </div>
