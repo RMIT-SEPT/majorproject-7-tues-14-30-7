@@ -17,10 +17,12 @@ export default class EditBusinessPage extends React.Component<{},any>{
         this.updateBusiness = this.updateBusiness.bind(this)
     }
 
+    // set the state of the input fields to what the user is typing
     onChange(e){
         this.setState({[e.target.name]: e.target.value})
     }
 
+    //API call for getting the business info 
     componentDidMount(){
         var apicall = "http://localhost:8080/api/Business/findById=" + this.state.businessId;
         fetch(apicall)
@@ -32,6 +34,7 @@ export default class EditBusinessPage extends React.Component<{},any>{
             })
     }
 
+    // API call of put to update the business info of the this.state.businessId
     updateBusiness(e){
         e.preventDefault()
         var updateBusiness = {
@@ -54,6 +57,7 @@ export default class EditBusinessPage extends React.Component<{},any>{
         })
     }
 
+    // html render on page
     render(){
         return(
             <section className="hero is-fullheight is-default is-bold">

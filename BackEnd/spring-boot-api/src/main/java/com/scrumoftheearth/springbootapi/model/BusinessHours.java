@@ -41,6 +41,7 @@ public class BusinessHours {
         this.closingTime = closingTime;
     }
 
+    // getter and setter
     public long getId() {
         return id;
     }
