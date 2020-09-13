@@ -51,6 +51,7 @@ public class BusinessController {
     }
 
     // for updating a business by ID
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping("/update={id}")
     public ResponseEntity<?> updateBusiness(@Valid @RequestBody Business business, BindingResult result, @PathVariable long id){
         Optional<Business> toupdate = businessService.getById(id);
