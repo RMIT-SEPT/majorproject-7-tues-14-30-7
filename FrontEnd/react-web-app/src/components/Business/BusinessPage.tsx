@@ -1,5 +1,6 @@
 import React from "react"
 import "../../App.scss"
+import { Link } from 'react-router-dom'
 
 export default class BusinessPage extends React.Component<{},any>{
     constructor(props: number) {
@@ -20,6 +21,7 @@ export default class BusinessPage extends React.Component<{},any>{
                 })
             })
         this.populatetable();
+        this.populatebusinesshours()
     }
 
     populatetable(){
@@ -30,23 +32,50 @@ export default class BusinessPage extends React.Component<{},any>{
                     var dataArray = [];
                     dataArray.push(data);
                     if(dataArray.length > 0){
-                        var temp :any = "";
+                        var input :any = "";
 
                         dataArray.forEach((row) =>{
-                            temp += "<tr>"
-                            temp += "<td>" + row.firstName + "</td>"
-                            temp += "<td>" + row.lastName + "</td>"
-                            temp += "<td>" + row.homeAddress + "</td>"
-                            temp += "<td>" + row.phoneNumber + "</td>"
-                            temp += "<td>" + "TO BE ADDED" + "</td>"
-                            temp += "<tr>"
+                            input += "<tr>"
+                            input += "<td>" + row.firstName + "</td>"
+                            input += "<td>" + row.lastName + "</td>"
+                            input += "<td>" + row.homeAddress + "</td>"
+                            input += "<td>" + row.phoneNumber + "</td>"
+                            input += "<td>" + "TO BE ADDED" + "</td>"
+                            input += "<tr>"
                         })
-                        document.getElementById("workertable").innerHTML = temp;
+                        document.getElementById("workertable").innerHTML = input;
                     }
                 })
             })
     }
     
+    populatebusinesshours(){
+        fetch("http://localhost:8080/api/BusinessHours/findByBusId=1")
+            .then(res => {
+                res.json()
+                .then(data => {
+                    var dataArray = []
+                    dataArray.push(data)
+                    var daysarray = ["ERROR/TIME NOT SET","Monday","Tuesday","Wednesday","Thurday","Firday","Saturday","Sunday"]
+                    if(dataArray.length > 0){
+                        var input :any = "<p className='has-text-weight-bold'>Business Hours</p>"
+                        var i: number;
+                        
+                        for(i = 0; i < 7;i++){
+                            dataArray.forEach((row) =>{
+                                if(row[i].openingTime == null || row[i].closingTime == null){
+                                    input += "<p>" + daysarray[i + 1] + ": CLOSED </p>"
+                                }else{
+                                    input += "<p>" + daysarray[i + 1] + ": " + row[i].openingTime + " To " + row[i].closingTime + "</p>"
+                                }
+                            })
+                            document.getElementById("businesshours").innerHTML = input;
+                        }
+                    }
+                })
+            })
+    }
+
     render(){
         return( 
             <section className="hero is-fullheight is-default is-bold">
@@ -75,6 +104,22 @@ export default class BusinessPage extends React.Component<{},any>{
                                 <p>{this.state.business.blurb}</p>
                                 <br></br>
                                 <p>{this.state.business.description}</p>
+                                <div className="py-6">
+                                    <div className="notification is-primary">
+                                        <div id="businesshours"></div>
+                                        {/* <p className="has-text-weight-bold">Business Hours</p>
+                                        <p>Monday: 9:00 to 17:00</p>
+                                        <p>Tuesday: 9:00 to 17:00</p>
+                                        <p>Wednesday: 9:00 to 17:00</p>
+                                        <p>Thursday: 9:00 to 17:00</p>
+                                        <p>Firday: 9:00 to 17:00</p>
+                                        <p>Saturday: CLOSED</p>
+                                        <p>Sunday: CLOSED</p> */}
+                                    </div>
+                                </div>
+                                <Link to="/worker">
+                                    <div className="button is-primary">Edit Business</div>
+                                </Link>
                             </div>
                         </div>
                     </div>

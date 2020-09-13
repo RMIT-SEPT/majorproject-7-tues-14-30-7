@@ -30,7 +30,6 @@ public class BusinessHours {
 
     // blank constructor for production uses
     protected BusinessHours(){
-
     }
 
     // constructor for junit testing

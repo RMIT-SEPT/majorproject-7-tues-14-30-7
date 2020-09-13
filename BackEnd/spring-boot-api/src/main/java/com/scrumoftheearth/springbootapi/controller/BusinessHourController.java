@@ -29,7 +29,9 @@ public class BusinessHourController {
     }
 
     // for getting the business time for a particular business
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/findByBusId={busId}")
+
     public List<BusinessHours> getByBusinessId(@PathVariable long busId){
         return businessTimeService.getTimeByBusId(busId);
     }
