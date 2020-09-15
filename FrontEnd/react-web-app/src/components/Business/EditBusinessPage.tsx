@@ -5,23 +5,12 @@ export default class EditBusinessPage extends React.Component<{},any>{
     constructor(props: number){
         super(props)
         this.state = {
-            business: {},
             businessTime: [],
             businessId: 1,
-            name: "",
-            blurb: "",
-            description: "",
-            address: "",
-            phoneNumber: ""
         }
-        // this.onChange = this.onChange.bind(this)
         this.updateBusiness = this.updateBusiness.bind(this)
+        this.updateBusinessTime = this.updateBusinessTime.bind(this)
     }
-
-    // set the state of the input fields to what the user is typing
-    // onChange(e){
-    //     this.setState({[e.target.name]: e.target.value})
-    // }
 
     //API call for getting the business info 
     componentDidMount(){
@@ -31,8 +20,7 @@ export default class EditBusinessPage extends React.Component<{},any>{
             .then(data => {
                 this.setState({
                     business: data
-                })
-                console.log(data.name);
+                });
                 (document.getElementById("name") as HTMLInputElement).value = data.name;
                 (document.getElementById("blurb") as HTMLInputElement).value = data.blurb;
                 (document.getElementById("description") as HTMLInputElement).value = data.description;
@@ -44,14 +32,13 @@ export default class EditBusinessPage extends React.Component<{},any>{
             .then(response => response.json())
             .then(data =>{
                 var dataArray = []
+
                 for(var i = 0; i < 7;i++){
                     dataArray.push(data[i])
                 }
                 this.setState({
                     businessTime: dataArray
                 })
-                console.log(data[0].openingTime);
-                (document.getElementById("1Opening") as HTMLInputElement).value = data[0].openingTime;
 
                 for(var i = 1; i <= 7;i++){
                     var opening = i + "Opening"
@@ -62,16 +49,9 @@ export default class EditBusinessPage extends React.Component<{},any>{
             }) 
     }
 
-    // API call of put to update the business info of the this.state.businessId
-    updateBusiness(e){
-        e.preventDefault()
+    // API call of put to update the business info
+    updateBusiness(){
         var updateBusiness = {
-            // id: this.state.businessId,
-            // name: this.state.name,
-            // blurb: this.state.blurb,
-            // description: this.state.description,
-            // address: this.state.address,
-            // phoneNumber: this.state.phoneNumber
             id: this.state.businessId,
             name: (document.getElementById("name") as HTMLInputElement).value,
             blurb: (document.getElementById("blurb") as HTMLInputElement).value,
@@ -79,7 +59,6 @@ export default class EditBusinessPage extends React.Component<{},any>{
             address: (document.getElementById("address") as HTMLInputElement).value,
             phoneNumber: (document.getElementById("phoneNumber") as HTMLInputElement).value
         }
-        console.log(updateBusiness)
         var apiupdate = 'http://localhost:8080/api/Business/update=' + this.state.businessId
         fetch(apiupdate,{
             method: 'PUT',
@@ -113,8 +92,6 @@ export default class EditBusinessPage extends React.Component<{},any>{
                 },
                 body: JSON.stringify(updatebusinessTime)
             })
-            console.log((document.getElementById(opening) as HTMLInputElement).value + ":00")
-            console.log((document.getElementById(closing) as HTMLInputElement).value + ":00")
         }
     }
 
@@ -138,8 +115,6 @@ export default class EditBusinessPage extends React.Component<{},any>{
                                     type="text" 
                                     id="name" 
                                     placeholder="Business Name" 
-                                    // value={this.state.name}
-                                    // onChange={this.onChange}
                                     required>
                             </input>
                             </div>
@@ -151,8 +126,6 @@ export default class EditBusinessPage extends React.Component<{},any>{
                                     className="textarea"
                                     id="blurb" 
                                     placeholder="Business Blurb" 
-                                    // value="{this.state.blurb}"
-                                    // onChange={this.onChange}
                                     required>
                                 </textarea>
                             </div>
@@ -164,8 +137,6 @@ export default class EditBusinessPage extends React.Component<{},any>{
                                     className="textarea" 
                                     id="description" 
                                     placeholder="Business Blurb" 
-                                    // value={this.state.description}
-                                    // onChange={this.onChange}
                                     required>
                                 </textarea>
                             </div>
@@ -178,8 +149,6 @@ export default class EditBusinessPage extends React.Component<{},any>{
                                     type="text" 
                                     id="address" 
                                     placeholder="Business Address" 
-                                    // value={this.state.address}
-                                    // onChange={this.onChange}
                                     required>
                                 </input>
                             </div>
@@ -192,7 +161,6 @@ export default class EditBusinessPage extends React.Component<{},any>{
                                     type="tel" 
                                     id="phoneNumber" 
                                     placeholder="Business Phone Number" 
-                                    // value={this.state.phoneNumber}
                                     required>   
                                 </input>
                             </div>

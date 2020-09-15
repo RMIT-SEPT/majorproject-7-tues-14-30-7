@@ -42,8 +42,8 @@ export default class BusinessPage extends React.Component<{},any>{
                             input += "<td>" + row.phoneNumber + "</td>"
                             input += "<td>" + "TO BE ADDED" + "</td>"
                             input += "<tr>"
-                        })
-                        document.getElementById("workertable").innerHTML = input;
+                        });
+                        (document.getElementById("workertable") as HTMLTableRowElement).innerHTML = input;
                     }
                 })
             })
@@ -68,8 +68,8 @@ export default class BusinessPage extends React.Component<{},any>{
                                 }else{
                                     input += "<p>" + daysarray[i + 1] + ": " + row[i].openingTime + " To " + row[i].closingTime + "</p>"
                                 }
-                            })
-                            document.getElementById("businesshours").innerHTML = input;
+                            });
+                            (document.getElementById("businesshours") as HTMLDivElement).innerHTML = input;
                         }
                     }
                 })
@@ -107,17 +107,9 @@ export default class BusinessPage extends React.Component<{},any>{
                                 <div className="py-6">
                                     <div className="notification is-primary">
                                         <div id="businesshours"></div>
-                                        {/* <p className="has-text-weight-bold">Business Hours</p>
-                                        <p>Monday: 9:00 to 17:00</p>
-                                        <p>Tuesday: 9:00 to 17:00</p>
-                                        <p>Wednesday: 9:00 to 17:00</p>
-                                        <p>Thursday: 9:00 to 17:00</p>
-                                        <p>Firday: 9:00 to 17:00</p>
-                                        <p>Saturday: CLOSED</p>
-                                        <p>Sunday: CLOSED</p> */}
                                     </div>
                                 </div>
-                                <Link to="/worker">
+                                <Link to="/BusinessPage/edit/:id">
                                     <div className="button is-primary">Edit Business</div>
                                 </Link>
                             </div>
