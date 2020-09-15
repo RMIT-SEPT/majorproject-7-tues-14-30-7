@@ -21,6 +21,7 @@ export default class SearchPage extends Component {
         const tofind = this.props.match.params.searchid
         this.setState({
             searchterm: tofind,
+            searchprop: this.props.searchterm
         })
     
     }

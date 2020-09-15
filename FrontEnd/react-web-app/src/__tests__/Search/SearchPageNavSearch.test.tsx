@@ -10,13 +10,13 @@ configure({ adapter: new Adapter()});
 describe('<SearchPage> component test', () => {
     let wrapper: ShallowWrapper<any, Readonly<{}>, React.Component<{}, {}, any>>
     beforeEach(() => {
-        wrapper = shallow(<SearchPage/>);
+        wrapper = shallow(<SearchPage match={{params: {searchid: "test"}}}/>);
     })
     it("Renders <SearchPage> correctly", () => {
-        shallow(<SearchPage/>);
+        shallow(<SearchPage match={{params: {searchid: "test"}}}/>);
     })
     it("Recieves properties correctly", () => {
-        wrapper = shallow(<SearchPage searchterm={"test"}/>);
+        wrapper = shallow(<SearchPage searchterm={"test"} match={{params: {searchid: "test"}}}/>);
         expect(wrapper.state('searchprop')).toEqual("test");
     })
     it("Renders <SearchForm> component in <SearchPage> correctly", () => {
@@ -25,8 +25,6 @@ describe('<SearchPage> component test', () => {
     it("Renders title of <SearchPage>", () => {
         expect(wrapper.find('#searchtitle')).toHaveLength(1);
     })
-
-
 })
 
 describe('<NavSearch> component test', () => {
