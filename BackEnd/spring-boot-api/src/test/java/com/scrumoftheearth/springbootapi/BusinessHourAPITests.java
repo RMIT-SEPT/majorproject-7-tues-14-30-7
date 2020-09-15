@@ -81,7 +81,7 @@ public class BusinessHourAPITests {
         assertEquals(3,businessHourService.getTimeByBusId(busIdtofind).size());
     }
 
-    // Testingto get a Business Time based on their id
+    // Testing to get a Business Time based on their id
     @Test
     public void Test_GetById(){
         long iftofind = 3;

@@ -50,6 +50,7 @@ public class BusinessHourController {
     }
 
     // for updating a business Time by ID
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping("/update={id}")
     public ResponseEntity<?> updateBusinessHour(@Valid @RequestBody BusinessHours businessHours,BindingResult result, @PathVariable long id){
         Optional<BusinessHours> toupdate = businessTimeService.getById(id);
