@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import '../../App.scss';
 import { BrowserRouter as Router,Link } from "react-router-dom";
 import NavSearch from './NavSearch';
+import HomePageTitle from './HomePageTitle';
 
 export default class HomePageHeader extends Component {
     render() {
@@ -15,7 +16,7 @@ export default class HomePageHeader extends Component {
                         <Link to="/"><img src={require("./Images/brand.png")} width="112" height="28" alt="nav-img"/></Link>
                     </div> */}
                     <div className="navbar-item">
-                        <Link to="/"><span className="title" id="brand">AGME</span></Link>
+                        <HomePageTitle/>
                     </div>
                     
                     <label
