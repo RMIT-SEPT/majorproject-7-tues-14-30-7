@@ -10,7 +10,9 @@ class RegisterPageJS extends Component {
             firstName:"",
             lastName:"",
             phoneNumber:"",
-            homeAddress:""
+            homeAddress:"",
+            password: "",
+            passwordConfirmation: ""
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -26,7 +28,9 @@ class RegisterPageJS extends Component {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             phoneNumber: this.state.phoneNumber,
-            homeAddress: this.state.homeAddress
+            homeAddress: this.state.homeAddress,
+            password: this.state.password,
+            passwordConfirmation: this.state.passwordConfirmation
         }
         const res = axios.post("http://localhost:8080/user", newUser);
         console.log(newUser);
@@ -90,7 +94,16 @@ class RegisterPageJS extends Component {
                                     <div className = "field">
                                         <div className = "control has-text-left">
                                             Password:
-                                            <input className = "input is-small" type="password" placeholder="Password">
+                                            <input className = "input is-small" type="password" placeholder="Password"
+                                            name="password" value={this.state.password} onChange = {this.onChange}>
+                                            </input>
+                                        </div>
+                                    </div>
+                                    <div className = "field">
+                                        <div className = "control has-text-left">
+                                            Confirm Password:
+                                            <input className = "input is-small" type="password" placeholder="Password"
+                                            name="passwordConfirmation" value={this.state.passwordConfirmation} onChange = {this.onChange}>
                                             </input>
                                         </div>
                                     </div>
