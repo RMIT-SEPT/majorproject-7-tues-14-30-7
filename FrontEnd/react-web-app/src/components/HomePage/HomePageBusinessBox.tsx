@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import "../../App.scss"
 import { BrowserRouter as Router,Link } from "react-router-dom";
-import { throws } from 'assert';
 
 interface BBProps {
     name: string;
@@ -29,11 +28,11 @@ export default class HomePageBusinessBox extends Component<BBProps, BBState> {
     }
 
     render() {
-        if(this.props.desc.length > 50) {
-            const temp = this.props.desc.substring(0, 50) + "...";
-        }else{
-            const desc = this.props.desc
-        }
+        // if(this.props.desc.length > 50) {
+        //     const temp = this.props.desc.substring(0, 50) + "...";
+        // }else{
+        //     const desc = this.props.desc
+        // }
 
         return (
             <div>

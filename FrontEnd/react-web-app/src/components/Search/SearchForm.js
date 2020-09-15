@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import "../../App.scss"
-//import { BrowserRouter as Link } from "react-router-dom";
 import HomePageBusinessBox from '../HomePage/HomePageBusinessBox';
 
 export default class SearchForm extends Component {
@@ -24,10 +23,14 @@ export default class SearchForm extends Component {
      * All businesses are fetched and stored so that they can be filtered as necessary based on the search term
     */ 
     componentDidMount() {
-        const pathname = window.location.pathname;
-        const sub = pathname.indexOf("Search/");
-        const tofindtemp = pathname.substring(pathname.length, sub+7);
-        const tofind = unescape(tofindtemp);
+        // const pathname = window.location.pathname;
+        // const sub = pathname.indexOf("Search/");
+        // const tofindtemp = pathname.substring(pathname.length, sub+7);
+        // const tofind = unescape(tofindtemp);
+        let tofind = this.props.searchid
+        if(tofind === undefined) {
+            tofind = ''
+        }
         if(this.props.navset === true && this.state.set === false) {
             this.setState({
                 value: tofind, 
@@ -168,11 +171,6 @@ export default class SearchForm extends Component {
                     <p></p>
                     <div id="searchresults">
                         <span className="heading" style={{textAlign: "center"}}>Found {<span style={{fontWeight: "bold"}}>{filterlen}</span>} Results For "{this.state.value}" {this.state.checked ? 'In Description' : ''}</span>
-                        {/* {this.state.businesses.filter(business => business.name.toLowerCase().includes(this.state.value.toLowerCase())).map(business => (
-                            <div key={business.name + business.phoneNumber}>
-                                <HomePageBusinessBox name={business.name} id={business.id} desc={business.description} />
-                            </div>
-                        ))} */}
                         {sr}
                     </div>
                 </div>

@@ -6,7 +6,6 @@ import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter()}); 
 
 describe('<SearchForm> component test', () => {
-
     let wrapper: ShallowWrapper<any, Readonly<{}>, React.Component<{}, {}, any>>
     beforeEach(() => {
         wrapper = shallow(<SearchForm navset={true}/>);

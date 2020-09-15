@@ -14,13 +14,14 @@ export default class SearchPage extends Component {
 
     // The pathname is dependent on the NavSearch component, and used to determine the searchterm
     async componentDidMount() {
-        const pathname = window.location.pathname;
-        const sub = pathname.indexOf("Search/");
-        const tofind = pathname.substring(pathname.length, sub+7);
+        // const pathname = window.location.pathname;
+        // const sub = pathname.indexOf("Search/");
+        // const tofind = pathname.substring(pathname.length, sub+7);
+        // const tofind  = this.props.searchterm
+        const tofind = this.props.match.params.searchid
         this.setState({
             searchterm: tofind,
-            searchprop: this.props.searchterm
-        })
+        }, console.log("SearchPage:" + this.state.searchterm))
     
     }
 
@@ -36,7 +37,7 @@ export default class SearchPage extends Component {
                     </div>
                     <div className="container is-fluid" id="searchcontainer">
                         <div className="box" id="searchlist">
-                            <SearchForm navset={true}/>
+                            <SearchForm navset={true} searchid={this.props.match.params.searchid}/>
                         </div>
                         <div className="space"></div>
                     </div>
