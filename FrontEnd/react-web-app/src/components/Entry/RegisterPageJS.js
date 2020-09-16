@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router,Switch,Route,Link } from "react-router-dom";
-import axios from "axios";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {createUser} from "../../actions/userActions";
@@ -36,7 +35,7 @@ class RegisterPageJS extends Component {
             passwordConfirmation: this.state.passwordConfirmation
         }
         console.log(newUser);
-        this.props.createPerson(newUser, this.props.history);
+        this.props.createUser(newUser, this.props.history);
     }
     render() {
         return (
@@ -126,4 +125,10 @@ class RegisterPageJS extends Component {
         )
     }
 }
-export default RegisterPageJS;
+RegisterPageJS.propTypes = {
+    createProject: PropTypes.func.isRequired
+  };
+export default connect(
+    null,
+    { createUser }
+  )(RegisterPageJS);
