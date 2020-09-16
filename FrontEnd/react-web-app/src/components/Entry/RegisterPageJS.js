@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router,Switch,Route,Link } from "react-router-dom";
 import axios from "axios";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import {createUser} from "../../actions/userActions";
 
 class RegisterPageJS extends Component {
     constructor(){
@@ -32,8 +35,8 @@ class RegisterPageJS extends Component {
             password: this.state.password,
             passwordConfirmation: this.state.passwordConfirmation
         }
-        const res = axios.post("http://localhost:8080/user", newUser);
         console.log(newUser);
+        this.props.createPerson(newUser, this.props.history);
     }
     render() {
         return (
