@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,12 @@ public class Worker implements Serializable {
     private List<Service> services;
     @NotBlank
     private String description;
+    @ElementCollection
+    @JsonFormat(pattern = ("HH:mm:ss"))
+    private List<java.sql.Time> startTimes;
+    @ElementCollection
+    @JsonFormat(pattern = ("HH:mm:ss"))
+    private List<java.sql.Time> endTimes;
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date created_At;
     @JsonFormat(pattern = "yyyy-mm-dd")
@@ -33,13 +40,16 @@ public class Worker implements Serializable {
     public Worker(){
     }
 
-    public Worker(WorkerWState workerWState, User user,
-                  List<Service> services, @NotBlank String description, List<Business> businesses) {
-        this.workerWState = workerWState;
+    //Add workerWState later
+    public Worker(User user, List<Service> services, @NotBlank String description, List<Business> businesses,
+                  List<java.sql.Time> startTimes, List<java.sql.Time> endTimes) {
+        //this.workerWState = workerWState;
         this.user = user;
         this.businesses = businesses;
         this.services = services;
         this.description = description;
+        this.startTimes = startTimes;
+        this.endTimes = endTimes;
     }
 
     public Long getId(){
@@ -116,7 +126,26 @@ public class Worker implements Serializable {
         return businesses;
     }
 
-    public void setBusinesses(List<Business> business) {
+    public void setBusinesses   (List<Business> business) {
         this.businesses = business;
     }
+
+    public List<java.sql.Time> getEndTimes() {
+        return endTimes;
+    }
+
+    public void setEndTimes(List<java.sql.Time> endTimes) {
+        this.endTimes = endTimes;
+    }
+
+    public List<java.sql.Time> getStartTimes() {
+        return startTimes;
+    }
+
+    public void setStartTimes(List<java.sql.Time> startTimes) {
+        this.startTimes = startTimes;
+    }
+
+        
+
 }
