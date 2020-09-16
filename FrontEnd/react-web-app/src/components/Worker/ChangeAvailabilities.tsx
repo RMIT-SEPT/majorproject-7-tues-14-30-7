@@ -3,6 +3,7 @@ import './Worker.scss'
 import 'bulma/css/bulma.css'
 import TimePicker from 'react-time-picker'
 import axios from "axios"
+import { start } from 'repl'
 
 
 class ChangeAvailabilties extends Component<any, any> {
@@ -12,9 +13,20 @@ class ChangeAvailabilties extends Component<any, any> {
         this.state = {
             items: [],
             isLoaded: false,
-            showShifts: true,
-            startTimes: ["00:00", "00:00", "00:00", "00:00", "00:00", "00:00", "00:00"],
-            endTimes: ["00:00", "00:00", "00:00", "00:00", "00:00", "00:00", "00:00"]
+            startTimeMonday: "00:00",
+            startTimeTueday: "00:00",
+            startTimeWednesday: "00:00",
+            startTimeThursday: "00:00",
+            startTimeFriday: "00:00",
+            startTimeSaturday: "00:00",
+            startTimeSunday: "00:00",
+            endTimeMonday: "00:00",
+            endTimeTueday: "00:00",
+            endTimeWednesday: "00:00",
+            endTimeThursday: "00:00",
+            endTimeFriday: "00:00",
+            endTimeSaturday: "00:00",
+            endTimeSunday: "00:00",
         };
     }
 
@@ -25,72 +37,232 @@ class ChangeAvailabilties extends Component<any, any> {
                 isLoaded: true,
                 items: json,
                 links: ["profile-link", "service-link", "shifts-link is-active","availability-link"],
-                link: null
+                link: null,
+                startTimeMonday: json.startTimes[0],
+                startTimeTuesday: json.startTimes[1],
+                startTimeWednesday: json.startTimes[2],
+                startTimeThursday: json.startTimes[3],
+                startTimeFriday: json.startTimes[4],
+                startTimeSaturday: json.startTimes[5],
+                startTimeSunday: json.startTimes[6],
+                endTimeMonday: json.endTimes[0],
+                endTimeTuesday: json.endTimes[1],
+                endTimeWednesday: json.endTimes[2],
+                endTimeThursday: json.endTimes[3],
+                endTimeFriday: json.endTimes[4],
+                endTimeSaturday: json.endTimes[5],
+                endTimeSunday: json.endTimes[6]
             })
         });
     }
 
     async updateAvailability(){
-        try {
+        
+        //Turn all stored start times into their string format
+        var startTimes = [this.state.startTimeMonday.toString(), this.state.startTimeTuesday.toString(), 
+                          this.state.startTimeWednesday.toString(), this.state.startTimeThursday.toString(), this.state.startTimeFriday.toString(),
+                          this.state.startTimeSaturday.toString(), this.state.startTimeSunday.toString()];
+        
+        //Turn all stored end times into their string format
+        var endTimes = [this.state.endTimeMonday.toString(), this.state.endTimeTuesday.toString(), 
+                        this.state.endTimeWednesday.toString(), this.state.endTimeThursday.toString(), this.state.endTimeFriday.toString(),
+                        this.state.endTimeSaturday.toString(), this.state.endTimeSunday.toString()];
 
-            const response = await axios.patch('http://localhost:8080/api/worker/1',
-            [
-                {
-                'op':'replace',
-                'path':'/startTimes/1',
-                'value':this.state.startTime.toString() + ':00'
-                },
-                {
-                    'op':'replace',
-                    'path':'/endTimes/1',
-                    'value':this.state.endTime.toString() + ':00'
-                }
-            ],
-            {
-                headers: {'content-type': 'application/json-patch+json'}
-            });
+        //Check for start time strings not in the proper format
+        for(var i=0;i<startTimes.length;i++){
+            if(startTimes[i].length==5){
+                startTimes[i] = startTimes[i]+":00"
+            }
+        }
+        //Check for end time strings not in the proper format
+        for(var i=0;i<endTimes.length;i++){
+            if(endTimes[i].length==5){
+                endTimes[i] = endTimes[i]+":00"
+            }
+        }
+        
 
-        } catch(e) {
-            console.log(e)
+        console.log(startTimes[0].toString());
+
+        //Update start time and end time for each day of the week
+        for(var i=0;i<7;i++){
+            try {
+                const response = await axios.patch('http://localhost:8080/api/worker/1',
+                [
+                    {
+                        'op':'replace',
+                        'path':('/startTimes/' + i),
+                        'value':startTimes[i]
+                    },
+                    {
+                        'op':'replace',
+                        'path': ('/endTimes/' + i),
+                        'value':endTimes[i]
+                    }
+                ],
+                {
+                    headers: {'content-type': 'application/json-patch+json'}
+                });
+
+            } catch(e) {
+                console.log(e)
+            }
         }
     }
 
-    render() {
+    onChangeStartTimeMonday = startTimeMonday => this.setState({startTimeMonday})
+    onChangeStartTimeTuesday = startTimeTuesday => this.setState({startTimeTuesday})
+    onChangeStartTimeWednesday = startTimeWednesday => this.setState({startTimeWednesday})
+    onChangeStartTimeThursday = startTimeThursday => this.setState({startTimeThursday})
+    onChangeStartTimeFriday = startTimeFriday => this.setState({startTimeFriday})
+    onChangeStartTimeSaturday = startTimeSaturday=> this.setState({startTimeSaturday})
+    onChangeStartTimeSunday = startTimeSunday => this.setState({startTimeSunday})
 
+    onChangeEndTimeMonday = endTimeMonday => this.setState({endTimeMonday})
+    onChangeEndTimeTuesday = endTimeTuesday => this.setState({endTimeTuesday})
+    onChangeEndTimeWednesday = endTimeWednesday => this.setState({endTimeWednesday})
+    onChangeEndTimeThursday = endTimeThursday => this.setState({endTimeThursday})
+    onChangeEndTimeFriday = endTimeFriday => this.setState({endTimeFriday})
+    onChangeEndTimeSaturday = endTimeSaturday => this.setState({endTimeSaturday})
+    onChangeEndTimeSunday = endTimeSunday => this.setState({endTimeSunday})
+
+    render() {
         //State items of this component
         var {isLoaded, items} = this.state;
-        //console.log(items.user.firstName);
 
-        var startTimes = ["00:00", "00:00", "00:00", "00:00", "00:00", "00:00", "00:00"];
-        var endTimes = ["00:00", "00:00", "00:00", "00:00", "00:00", "00:00", "00:00"];
-
-
-
-        return(
-            <div className="shift-change-div">
-                <div className="columns">
-                    <div className="column">
-                        Monday:
+        if(!isLoaded) {
+            return <div>Loading...</div>
+        }
+        else {
+            return(
+                
+                <div className="shift-change-div">
+                    <div className="columns">
+                        <div className="column day-tag">
+                            Monday:
+                        </div>
+                        <div className="column">
+                            Start Time:{" "}
+                            <TimePicker 
+                            onChange={this.onChangeStartTimeMonday}
+                            value={this.state.startTimeMonday}/>
+                        </div>
+                        <div className="column">
+                            End Time: {" "}
+                            <TimePicker 
+                            onChange={this.onChangeEndTimeMonday}
+                            value={this.state.endTimeMonday}/>
+                        </div>
                     </div>
-                    <div className="column">
-                        Start Time:{" "}
-                        <TimePicker 
-                        onChange={startTimes[0]}
-                        value={startTimes[0]}/>
+                    <div className="columns">
+                        <div className="column day-tag">
+                            Tueday:
+                        </div>
+                        <div className="column">
+                            Start Time:{" "}
+                            <TimePicker 
+                            onChange={this.onChangeStartTimeTuesday}
+                            value={this.state.startTimeTuesday}/>
+                        </div>
+                        <div className="column">
+                            End Time: {" "}
+                            <TimePicker 
+                            onChange={this.onChangeEndTimeTuesday}
+                            value={this.state.endTimeTuesday}/>
+                        </div>
                     </div>
-                    <div className="column">
-                        End Time: {" "}
-                        <TimePicker 
-                        onChange={endTimes[0]}
-                        value={endTimes[0]}/>
+                    <div className="columns">
+                        <div className="column day-tag">
+                            Wednesday:
+                        </div>
+                        <div className="column">
+                            Start Time:{" "}
+                            <TimePicker 
+                            onChange={this.onChangeStartTimeWednesday}
+                            value={this.state.startTimeWednesday}/>
+                        </div>
+                        <div className="column">
+                            End Time: {" "}
+                            <TimePicker 
+                            onChange={this.onChangeEndTimeWednesday}
+                            value={this.state.endTimeWednesday}/>
+                        </div>
                     </div>
+                    <div className="columns">
+                        <div className="column day-tag">
+                            Thursday:
+                        </div>
+                        <div className="column">
+                            Start Time:{" "}
+                            <TimePicker 
+                            onChange={this.onChangeStartTimeThursday}
+                            value={this.state.startTimeThursday}/>
+                        </div>
+                        <div className="column">
+                            End Time: {" "}
+                            <TimePicker 
+                            onChange={this.onChangeEndTimeThursday}
+                            value={this.state.endTimeThursday}/>
+                        </div>
+                    </div>
+                    <div className="columns">
+                        <div className="column day-tag">
+                            Friday:
+                        </div>
+                        <div className="column">
+                            Start Time:{" "}
+                            <TimePicker 
+                            onChange={this.onChangeStartTimeFriday}
+                            value={this.state.startTimeFriday}/>
+                        </div>
+                        <div className="column">
+                            End Time: {" "}
+                            <TimePicker 
+                            onChange={this.onChangeEndTimeFriday}
+                            value={this.state.endTimeFriday}/>
+                        </div>
+                    </div>
+                    <div className="columns">
+                        <div className="column day-tag">
+                            Saturday:
+                        </div>
+                        <div className="column">
+                            Start Time:{" "}
+                            <TimePicker 
+                            onChange={this.onChangeStartTimeSaturday}
+                            value={this.state.startTimeSaturday}/>
+                        </div>
+                        <div className="column">
+                            End Time: {" "}
+                            <TimePicker 
+                            onChange={this.onChangeEndTimeSaturday}
+                            value={this.state.endTimeSaturday}/>
+                        </div>
+                    </div>
+                    <div className="columns">
+                        <div className="column day-tag">
+                            Sunday:
+                        </div>
+                        <div className="column">
+                            Start Time:{" "}
+                            <TimePicker 
+                            onChange={this.onChangeStartTimeSunday}
+                            value={this.state.startTimeSunday}/>
+                        </div>
+                        <div className="column">
+                            End Time: {" "}
+                            <TimePicker 
+                            onChange={this.onChangeEndTimeSunday}
+                            value={this.state.endTimeSunday}/>
+                        </div>
+                    </div>
+                    <button className="button is-primary is-outlined submit-shift" id="edit-preferences" 
+                    onClick={()=>{this.updateAvailability() }}>
+                        Submit
+                    </button>
                 </div>
-                <button className="button is-primary is-outlined submit-shift" id="edit-preferences" 
-                onClick={()=>{this.updateAvailability(); console.log(this.state.startTime.toString() + ':00')}}>
-                    Submit
-                </button>
-            </div>
-        );
+            );
+        }
     }
 }
 
