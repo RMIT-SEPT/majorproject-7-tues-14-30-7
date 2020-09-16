@@ -3,9 +3,12 @@ import {BrowserRouter, Router} from "react-router-dom"
 import 'bulma/css/bulma.css'
 import './Worker.scss'
 import Shifts from './Shifts'
+import ChangeAvailabilities from './ChangeAvailabilities'
 import DropDown from './DropDown'
 import HomePageHeader from '../HomePage/HomePageHeader'
 import TimePicker from 'react-time-picker'
+import { time } from 'console'
+import axios from "axios";
 
 class Worker extends Component<any, any> {
 
@@ -14,7 +17,7 @@ class Worker extends Component<any, any> {
         this.state = {
             items: [],
             isLoaded: false,
-            showShifts: true
+            showShifts: true,
         };
     }
 
@@ -31,6 +34,7 @@ class Worker extends Component<any, any> {
         });
     }
 
+
     
     showOrHideShifts(){
         if(this.state.showShifts == true){
@@ -45,29 +49,27 @@ class Worker extends Component<any, any> {
         }
     }
 
-    deactivateAllLinks(){
+
+    activateLink = (index) =>{
+        this.state.links[0] = "profile-link"
+        this.state.links[1] = "service-link"
+        this.state.links[2] = "shifts-link"
+        this.state.links[3] = "availability-link"
+        this.state.links[index] = this.state.links[index] + " is-active";
+        var updatedLinks = this.state.links;
         this.setState({
-            links:  ["profile-link", "service-link", "shifts-link", "availability-link"]
+            links: updatedLinks
         })
+
     }
 
-    activateShiftsLink(){
-        this.setState({
-            links:  ["profile-link", "service-link", "shifts-link is-active", "availability-link"]
-        })
-    }
-
-    activateAvailabilityLink(){
-        this.setState({
-            links:  ["profile-link", "service-link", "shifts-link", "availability-link is-active"]
-        })
-    }
-
-    
+    onChangeStartTime = startTime => this.setState({startTime})
+    onChangeEndTime = endTime => this.setState({endTime})
 
     render() {
         //State items of this component
         var {isLoaded, items} = this.state;
+        var timeValue;
 
         //Will be assigned based on whether the fetch was successful or not
         var firstName = null;
@@ -136,7 +138,11 @@ class Worker extends Component<any, any> {
                     <div className="profile-options is-fullwidth">
                         <div className="tabs is-fullwidth is-medium">
                             <ul>
-                                <li className={this.state.links[0]}>
+                                <li className={this.state.links[0]}
+                                onClick={()=>{
+                                    this.showOrHideShifts();
+                                    this.activateLink(0);
+                                }}>
                                     <a>
                                         <span className="icon">
                                             <i className="fa fa-list"></i>
@@ -144,7 +150,10 @@ class Worker extends Component<any, any> {
                                         <span>Profile Info</span>
                                     </a>
                                 </li>
-                                <li className={this.state.links[1]}>
+                                <li className={this.state.links[1]} onClick={()=>{
+                                    this.showOrHideShifts();
+                                    this.activateLink(1);
+                                }}>
                                     <a>
                                         <span className="icon">
                                             <i className="fa fa-list"></i>
@@ -154,8 +163,7 @@ class Worker extends Component<any, any> {
                                 </li>
                                 <li className={this.state.links[2]} onClick={()=>{
                                     this.showOrHideShifts();
-                                    this.deactivateAllLinks();
-                                    this.activateShiftsLink();
+                                    this.activateLink(2);
                                 }}>
                                     <a>
                                         <span className="icon">
@@ -166,8 +174,7 @@ class Worker extends Component<any, any> {
                                 </li>
                                 <li className={this.state.links[3]} onClick={()=>{
                                     this.showOrHideShifts();
-                                    this.deactivateAllLinks();
-                                    this.activateAvailabilityLink();
+                                    this.activateLink(3);
                                 }}>
                                     <a>
                                         <span className="icon">
@@ -179,29 +186,14 @@ class Worker extends Component<any, any> {
                             </ul>
                         </div>
                         {
-                            this.state.showShifts?
+                            //this.state.showShifts?
+                            this.state.links[2] === "shifts-link is-active"?
                             <Shifts/>
                             :null
                         }
-                        {
-                            !this.state.showShifts?
-                            <div className="shift-change-div">
-                                <div className="columns">
-                                    <div className="column">
-                                        <DropDown/>
-                                    </div>
-                                    <div className="column">
-                                        Start Time:
-                                        <TimePicker />
-                                    </div>
-                                    <div className="column">
-                                        End Time: 
-                                        <TimePicker />
-                                    </div>
-                                </div>
-                                <br/>
-                                
-                            </div>
+                        { 
+                            this.state.links[3] === "availability-link is-active"?
+                            <ChangeAvailabilities/>
                             :null
                         }
                         

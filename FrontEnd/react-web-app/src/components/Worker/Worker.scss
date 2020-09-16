@@ -34,8 +34,8 @@
     margin: auto;
 }
 
-.day-box{
-    margin-left: 20px;
+.day-tag{
+    margin-left: 200px;
     float: left;
 }
 
@@ -46,4 +46,10 @@
 
 .shift-change-div {
     margin-bottom: 200px;
+}
+
+.submit-shift {
+    width: 100px; // whatever your button's width
+    margin: 0 auto; // auto left/right margins
+    display: block;
 }
