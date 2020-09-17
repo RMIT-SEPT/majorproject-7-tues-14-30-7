@@ -1,11 +1,15 @@
 package com.scrumoftheearth.springbootapi.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
 // POJO for business
+<<<<<<< HEAD
 @Entity
 @NamedQueries({
 //        @NamedQuery(name = "Business.findAllWorkers",
@@ -13,10 +17,18 @@ import java.util.List;
         @NamedQuery(name = "Business.findAllWorkers",
                 query = "SELECT b.worker FROM Business b WHERE b.id = :id")
 })
+=======
+@ApiModel(description = "Business Model")
+>>>>>>> develop
 public class Business {
     // business ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+<<<<<<< HEAD
+=======
+    @ApiModelProperty(name="id",required = true,value = "1")
+    // business ID
+>>>>>>> develop
     private Long id;
 
     // state of the business
@@ -25,6 +37,10 @@ public class Business {
     // list of worker for the business
     @ManyToMany
     private List<Worker> worker;
+<<<<<<< HEAD
+=======
+    @NotBlank(message = "Business name is required")
+>>>>>>> develop
 
     // name of business
     @NotBlank(message = "Business name is required")

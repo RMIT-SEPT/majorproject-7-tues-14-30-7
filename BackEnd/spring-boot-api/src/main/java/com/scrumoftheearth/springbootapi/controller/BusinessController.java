@@ -4,6 +4,7 @@ import com.scrumoftheearth.springbootapi.model.Business;
 import com.scrumoftheearth.springbootapi.model.User;
 import com.scrumoftheearth.springbootapi.model.Worker;
 import com.scrumoftheearth.springbootapi.service.BusinessService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-
+@ApiOperation(value = "/api/Business",tags = "Business Object Controller")
 @RestController
 @RequestMapping("/api/Business")
 public class BusinessController {
@@ -22,6 +23,7 @@ public class BusinessController {
     private BusinessService businessService;
 
     // for adding a new business to the database
+    @ApiOperation(value = "Add a new Business",response = Iterable.class, notes = "API used to create and add a new Business to the database")
     @PostMapping("")
     public ResponseEntity<?> newBusiness(@Valid @RequestBody Business business, BindingResult result){
         // if there is a json error
