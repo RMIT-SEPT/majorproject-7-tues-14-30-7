@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 // POJO for business
-<<<<<<< HEAD
 @Entity
 @NamedQueries({
 //        @NamedQuery(name = "Business.findAllWorkers",
@@ -17,55 +16,54 @@ import java.util.List;
         @NamedQuery(name = "Business.findAllWorkers",
                 query = "SELECT b.worker FROM Business b WHERE b.id = :id")
 })
-=======
 @ApiModel(description = "Business Model")
->>>>>>> develop
 public class Business {
-    // business ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-<<<<<<< HEAD
-=======
     @ApiModelProperty(name="id",required = true,value = "1")
     // business ID
->>>>>>> develop
     private Long id;
 
+    @OneToOne
+    @JoinColumn(name = "BusinessBState_id")
+    @ApiModelProperty(name="businessBState")
     // state of the business
-//    private BusinessBState businessBState;
+    private BusinessBState businessBState;
 
+    @OneToMany
+    @ApiModelProperty(name="worker")
     // list of worker for the business
-    @ManyToMany
     private List<Worker> worker;
-<<<<<<< HEAD
-=======
-    @NotBlank(message = "Business name is required")
->>>>>>> develop
 
-    // name of business
     @NotBlank(message = "Business name is required")
+    @ApiModelProperty(name="name",required = true,value = "Jim's Computer Service")
+    // name of business
     private String name;
 
-    // blurb the business provides
     @NotBlank(message = "Business blurb is required")
+    @ApiModelProperty(name="blurb",required = true,value = "We deliver quality IT services to your home or business")
+    // blurb the business provides
     private String blurb;
 
-    // description of the business
     @NotBlank(message = "Business description is required")
+    @ApiModelProperty(name="description",required = true,value = "We do new Networking configuration,computer repair and more")
+    // description of the business
     private String description;
 
-    // address of the business
     @NotBlank(message = "Business address is required")
+    // address of the business
+    @ApiModelProperty(name="address",required = true,value = "56/115 Queensberry St, Carlton VIC 3053")
     private String address;
 
-    // contact info of the business
     @NotBlank(message = "Business contact number is required")
+    @ApiModelProperty(name="phoneNumber",required = true,value = "9925 4468")
+    // contact info of the business
     private String phoneNumber;
 
     // constructor for production uses
     protected Business() {
         worker = new ArrayList<Worker>();
-//        businessBState = new BusinessBState();
+        businessBState = new BusinessBState();
     }
 
     // constructor for testing
@@ -105,14 +103,14 @@ public class Business {
         this.blurb = busservice;
     }
 
-//    public BusinessBState getBusinessBState() {
-//        return businessBState;
-//    }
-//
-//    public void setBusinessBState(BusinessBState businessBState) {
-//        this.businessBState = businessBState;
-//    }
-//
+    public BusinessBState getBusinessBState() {
+        return businessBState;
+    }
+
+    public void setBusinessBState(BusinessBState businessBState) {
+        this.businessBState = businessBState;
+    }
+
     public List<Worker> getWorkerList() {
         return worker;
     }
