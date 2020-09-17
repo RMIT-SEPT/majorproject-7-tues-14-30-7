@@ -10,12 +10,15 @@ export default class SearchForm extends Component {
             tempval: '',
             value: '',
             businesses: [],
-            checked: false
+            checked: false,
+            visible: 0
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.splitArrayIntoChunks = this.splitArrayIntoChunks.bind(this);
+        this.changePage = this.changePage.bind(this);
     }
     
     /*
@@ -86,6 +89,26 @@ export default class SearchForm extends Component {
 
         event.preventDefault();
     }
+
+    splitArrayIntoChunks(arr, len) {
+        if(this.state.checked === false) {
+            arr = arr.filter(business => business.name.toLowerCase().includes(this.state.value.toLowerCase()));
+        }else {
+            arr = arr.filter(business => business.desc.toLowerCase().includes(this.state.value.toLowerCase()));
+        }
+        var grps = [], i = 0, n = arr.length;
+        while(i < n) {
+            grps.push(arr.slice(i, i += len));
+        }
+        return grps;
+    }
+    changePage(event) {
+        var v = event.currentTarget.textContent;
+        this.setState({
+            visible: parseInt(v) - 1
+        }, console.log(this.state.visible))
+        event.preventDefault()
+    }
     
     render() {
         // Determines the length of the filtered results for conditional rendering
@@ -116,6 +139,33 @@ export default class SearchForm extends Component {
                 </div>
             ))
         }
+
+        let ret = null;
+        let pagination = null;
+        if(filterlen > 5) {
+            var retarr = this.splitArrayIntoChunks(this.state.businesses, 5);
+            if(this.state.checked === false) {
+                ret = retarr.map(group => {
+                    return <div>
+                        {group.filter(business => business.name.toLowerCase().includes(this.state.value.toLowerCase())).map(business => {
+                            return <div key={business.name + business.phoneNumber}><HomePageBusinessBox name={business.name} id={business.id} desc={business.description} phoneNumber={business.phoneNumber} /></div>
+                        })}
+                    </div>
+                })
+            }else {
+                ret = retarr.map(group => {
+                    return <div>
+                        {group.filter(business => business.description.toLowerCase().includes(this.state.value.toLowerCase())).map(business => {
+                            return <div key={business.name + business.phoneNumber}><HomePageBusinessBox name={business.name} id={business.id} desc={business.description} phoneNumber={business.phoneNumber} /></div>
+                        })}
+                    </div>
+                })
+            }
+            pagination = ret.map((o, index) => {
+                return <div key={index} className="button is-small" onClick={this.changePage} id="pagbut">{index + 1}</div>
+            })
+        }
+
         // Base page layout, showing the form only. Displayed when 'value' state is == ''
         if(this.props.navset===true && this.state.value === '') {
             return (
@@ -170,8 +220,9 @@ export default class SearchForm extends Component {
                     <div style={{width: "100%", border: "solid rgb(179, 179, 179) 0.5px", paddingLeft: "0px"}}/>
                     <p></p>
                     <div id="searchresults">
+                        {ret !== null ? ret[this.state.visible] : sr}
                         <span className="heading" style={{textAlign: "center"}}>Found {<span style={{fontWeight: "bold"}}>{filterlen}</span>} Results For "{this.state.value}" {this.state.checked ? 'In Description' : ''}</span>
-                        {sr}
+                        {pagination !== null ? pagination : null}
                     </div>
                 </div>
             );
