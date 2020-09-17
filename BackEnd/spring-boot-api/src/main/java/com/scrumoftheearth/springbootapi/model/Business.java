@@ -1,15 +1,24 @@
 package com.scrumoftheearth.springbootapi.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
 // POJO for business
+@ApiModel(description = "Business Model")
 public class Business {
     // business ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+<<<<<<< HEAD
+=======
+    @ApiModelProperty(name="id",required = true,value = "1")
+    // business ID
+>>>>>>> develop
     private Long id;
 
     // state of the business
@@ -17,6 +26,11 @@ public class Business {
     @ManyToMany
     private List<Worker> worker;
     @NotBlank(message = "Business name is required")
+<<<<<<< HEAD
+=======
+
+    // name of business
+>>>>>>> develop
     private String name;
 
     // blurb the business provides
