@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {createUser} from "../../actions/userActions";
 
-class RegisterPageJS extends Component {
+class RegisterPage extends Component {
     constructor(){
         super();
         this.state ={
@@ -125,10 +125,10 @@ class RegisterPageJS extends Component {
         )
     }
 }
-RegisterPageJS.propTypes = {
+RegisterPage.propTypes = {
     createProject: PropTypes.func.isRequired
   };
 export default connect(
     null,
     { createUser }
-  )(RegisterPageJS);
+  )(RegisterPage);
