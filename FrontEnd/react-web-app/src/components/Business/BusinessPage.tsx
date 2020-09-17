@@ -59,15 +59,44 @@ export default class BusinessPage extends React.Component<{},any>{
                     var daysarray = ["ERROR/TIME NOT SET","Monday","Tuesday","Wednesday","Thurday","Firday","Saturday","Sunday"]
                     if(dataArray.length > 0){
                         var input :any = "<p className='has-text-weight-bold'>Business Hours</p>"
-                        var i: number;
-                        
-                        for(i = 0; i < 7;i++){
+
+                        for(var i = 0; i < 1;i++){
                             dataArray.forEach((row) =>{
-                                if(row[i].openingTime == null || row[i].closingTime == null){
+                                var opening = new Date("2015-03-25T" + row[i].openingTime.toString());
+                                var closing = new Date("2015-03-25T" + row[i].closingTime.toString())
+                                var openinghour = opening.getHours() % 12
+                                var closinghour = closing.getHours() % 12
+                                var openingmin;
+                                var closingmin;
+                                var openingmeridiem
+                                var closingmeridiem
+                                if(openinghour == 0)
+                                    openinghour = 12    
+                                if(closinghour == 0)
+                                    closinghour = 12
+                                if(openinghour >= 12)
+                                    openingmeridiem = " pm"
+                                else
+                                    openingmeridiem = " am"
+                                if(closinghour >= 12)
+                                    closingmeridiem = " pm"
+                                else
+                                    closingmeridiem = " am"
+                                if(opening.getMinutes() < 10)
+                                    openingmin = "0" + opening.getMinutes() 
+                                else
+                                    openingmin = opening.getMinutes() 
+                                if(closing.getMinutes() < 10)
+                                    closingmin = "0" + closing.getMinutes()
+                                else
+                                    closingmin = closing.getMinutes()
+                                var openingformatted = openinghour + ":" + openingmin + openingmeridiem
+                                var closingformatted = closinghour + ":" + closingmin + closingmeridiem
+
+                                if(row[i].openingTime == null || row[i].closingTime == null)
                                     input += "<p>" + daysarray[i + 1] + ": CLOSED </p>"
-                                }else{
-                                    input += "<p>" + daysarray[i + 1] + ": " + row[i].openingTime + " To " + row[i].closingTime + "</p>"
-                                }
+                                else
+                                    input += "<p>" + daysarray[i + 1] + ": " + openingformatted +" To " + closingformatted + "</p>"
                             });
                             (document.getElementById("businesshours") as HTMLDivElement).innerHTML = input;
                         }

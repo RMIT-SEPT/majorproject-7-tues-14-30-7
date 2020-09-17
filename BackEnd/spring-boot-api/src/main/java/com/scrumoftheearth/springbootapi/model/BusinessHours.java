@@ -1,11 +1,12 @@
 package com.scrumoftheearth.springbootapi.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.sql.Time;
+import java.sql.Timestamp;
 
 // POJO for businessHour
 @Entity
@@ -22,30 +23,32 @@ public class BusinessHours {
     // business id
     private long id;
 
-    @NotBlank(message = "BusinessHours must be associated with valid business_id")
+//    @NotBlank(message = "BusinessHours must be associated with valid business_id")
     @ApiModelProperty(name = "business_id",required = true,value = "1")
     // foreign key to business table,
-    private Long business_id;
+    private long business_id;
 
-    @NotBlank(message = "Day integer is required")
+//    @NotBlank(message = "Day integer is required")
     @ApiModelProperty(name = "day",required = true,value = "5")
     // long to save day (monday = 1, tuesday = 2 etc)
     private int day;
 
+    @JsonFormat(pattern = ("HH:mm:ss"))
     @ApiModelProperty(name="openingTime",value = "09:00:00")
     // opening time
-    private Time openingTime;
+    private Timestamp openingTime;
 
+    @JsonFormat(pattern = ("HH:mm:ss"))
     @ApiModelProperty(name = "closingTime",value = "17:00:00")
     // closing time
-    private Time closingTime;
+    private Timestamp closingTime;
 
     // blank constructor for production uses
     protected BusinessHours(){
     }
 
     // constructor for junit testing
-    public BusinessHours(long id,long business_id,int day,Time openingTime,Time closingTime){
+    public BusinessHours(long id,long business_id,int day,Timestamp openingTime,Timestamp closingTime){
         this.id = id;
         this.business_id = business_id;
         this.day = day;
@@ -78,19 +81,19 @@ public class BusinessHours {
         this.day = day;
     }
 
-    public Time getOpeningTime() {
-        return openingTime;
-    }
-
-    public void setOpeningTime(Time openingTime) {
-        this.openingTime = openingTime;
-    }
-
-    public Time getClosingTime() {
-        return closingTime;
-    }
-
-    public void setClosingTime(Time closingTime) {
-        this.closingTime = closingTime;
-    }
+//    public Time getOpeningTime() {
+//        return openingTime;
+//    }
+//
+//    public void setOpeningTime(Time openingTime) {
+//        this.openingTime = openingTime;
+//    }
+//
+//    public Time getClosingTime() {
+//        return closingTime;
+//    }
+//
+//    public void setClosingTime(Time closingTime) {
+//        this.closingTime = closingTime;
+//    }
 }
