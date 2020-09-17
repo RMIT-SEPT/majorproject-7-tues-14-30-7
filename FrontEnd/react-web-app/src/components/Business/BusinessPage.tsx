@@ -30,23 +30,29 @@ export default class BusinessPage extends React.Component<{},any>{
             .then(res =>{
                 res.json()
                 .then(data => {
-                    var dataArray = [];
-                    dataArray.push(data);
-                        if(dataArray.length > 0){
+                    // var dataArray = data;
+                    // dataArray.push(data);
+                        if(data.length > 0){
                             var temp :any = "";
-                            var i;
-                            for(i = 0; i <= dataArray.length;i++){
-                                dataArray.forEach((row) =>{
-                                    temp += "<tr>"
-                                    temp += "<td>" + row[i].firstName + "</td>"
-                                    temp += "<td>" + row[i].lastName + "</td>"
-                                    temp += "<td>" + row[i].homeAddress + "</td>"
-                                    temp += "<td>" + row[i].phoneNumber + "</td>"
-                                    temp += "<td>" + "TO BE ADDED" + "</td>"
-                                    temp += "<tr>"
-                                })
+                            for(var i = 0; i <= data.length;i++){
+                                // dataArray.forEach((row) =>{
+                                //     temp += "<tr>"
+                                //     temp += "<td>" + row[i].firstName + "</td>"
+                                //     temp += "<td>" + row[i].lastName + "</td>"
+                                //     temp += "<td>" + row[i].homeAddress + "</td>"
+                                //     temp += "<td>" + row[i].phoneNumber + "</td>"
+                                //     temp += "<td>" + "TO BE ADDED" + "</td>"
+                                //     temp += "<tr>"
+                                // })
+                                temp += "<tr>"
+                                temp += "<td>" + data[i].user.firstName + "</td>"
+                                temp += "<td>" + data[i].user.lastName + "</td>"
+                                temp += "<td>" + data[i].homeAddress + "</td>"
+                                temp += "<td>" + data[i].phoneNumber + "</td>"
+                                temp += "<td>" + "TO BE ADDED" + "</td>"
+                                temp += "<tr>"
                             }
-                        document.getElementById("workertable").innerHTML = temp;
+                        (document.getElementById("workertable") as HTMLTableRowElement).innerHTML = temp;
                         }
                 })
             })
