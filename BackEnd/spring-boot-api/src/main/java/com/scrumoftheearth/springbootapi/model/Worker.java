@@ -5,6 +5,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -22,16 +24,22 @@ public class Worker implements Serializable {
     @OneToOne
     @JoinColumn(name = "workerWState_id")
     private WorkerWState workerWState;
-    @OneToMany
-    private List<Service> services;
+    @ElementCollection
+    private List<String> services;
     @NotBlank
     private String description;
     @ElementCollection
     @JsonFormat(pattern = ("HH:mm:ss"))
-    private List<java.sql.Time> startTimes;
+    private List<java.sql.Time> availableStartTimes;
     @ElementCollection
     @JsonFormat(pattern = ("HH:mm:ss"))
-    private List<java.sql.Time> endTimes;
+    private List<java.sql.Time> availableEndTimes;
+    @ElementCollection
+    @JsonFormat(pattern = ("yyyy-MM-dd'T'HH:mm:ss"))
+    private List<java.sql.Timestamp> shiftStartTimes;
+    @ElementCollection
+    @JsonFormat(pattern = ("yyyy-MM-dd'T'HH:mm:ss"))
+    private List<java.sql.Timestamp> shiftEndTimes;
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date created_At;
     @JsonFormat(pattern = "yyyy-mm-dd")
@@ -41,15 +49,18 @@ public class Worker implements Serializable {
     }
 
     //Add workerWState later
-    public Worker(User user, List<Service> services, @NotBlank String description, List<Business> businesses,
-                  List<java.sql.Time> startTimes, List<java.sql.Time> endTimes) {
+    public Worker(User user, List<String> services, @NotBlank String description, List<Business> businesses,
+                  List<java.sql.Time> availableStartTimes, List<java.sql.Time> availableEndTimes,
+                  List<java.sql.Timestamp> shiftStartTimes, List<java.sql.Timestamp> shiftEndTimes) {
         //this.workerWState = workerWState;
         this.user = user;
         this.businesses = businesses;
         this.services = services;
         this.description = description;
-        this.startTimes = startTimes;
-        this.endTimes = endTimes;
+        this.availableStartTimes = availableStartTimes;
+        this.availableEndTimes = availableEndTimes;
+        this.shiftStartTimes = shiftStartTimes;
+        this.shiftEndTimes = shiftEndTimes;
     }
 
     public Long getId(){
@@ -102,15 +113,15 @@ public class Worker implements Serializable {
         this.workerWState = workerWState;
     }
 
-    public List<Service> getServices() {
+    public List<String> getServices() {
         return services;
     }
 
-    public void setServices(List<Service> services) {
+    public void setServices(List<String> services) {
         this.services = services;
     }
 
-    public void addService(Service service){
+    public void addService(String service){
         this.services.add(service);
     }
 
@@ -126,24 +137,40 @@ public class Worker implements Serializable {
         return businesses;
     }
 
-    public void setBusinesses   (List<Business> business) {
+    public void setBusinesses (List<Business> business) {
         this.businesses = business;
     }
 
-    public List<java.sql.Time> getEndTimes() {
-        return endTimes;
+    public List<java.sql.Time> getAvailableEndTimes() {
+        return availableEndTimes;
     }
 
-    public void setEndTimes(List<java.sql.Time> endTimes) {
-        this.endTimes = endTimes;
+    public void setAvailableEndTimes(List<java.sql.Time> availableEndTimes) {
+        this.availableEndTimes = availableEndTimes;
     }
 
-    public List<java.sql.Time> getStartTimes() {
-        return startTimes;
+    public List<java.sql.Time> getAvailableStartTimes() {
+        return availableStartTimes;
     }
 
-    public void setStartTimes(List<java.sql.Time> startTimes) {
-        this.startTimes = startTimes;
+    public void setAvailableStartTimes(List<java.sql.Time> availableStartTimes) {
+        this.availableStartTimes = availableStartTimes;
+    }
+
+    public List<java.sql.Timestamp> getShiftStartTimes() {
+        return shiftStartTimes;
+    }
+
+    public void setShiftStartTimes(List<java.sql.Timestamp> shiftStartTimes) {
+        this.shiftStartTimes = shiftStartTimes;
+    }
+
+    public List<java.sql.Timestamp> getShiftEndTimes() {
+        return shiftEndTimes;
+    }
+
+    public void setShiftEndTimes(List<java.sql.Timestamp> shiftEndTimes) {
+        this.shiftEndTimes = shiftEndTimes;
     }
 
         

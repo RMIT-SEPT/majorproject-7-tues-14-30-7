@@ -3,7 +3,7 @@ import './Worker.scss'
 import 'bulma/css/bulma.css'
 import TimePicker from 'react-time-picker'
 import axios from "axios"
-import { start } from 'repl'
+import queryString from 'query-string'
 
 
 class ChangeAvailabilties extends Component<any, any> {
@@ -31,27 +31,27 @@ class ChangeAvailabilties extends Component<any, any> {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8080/api/worker/1').then(res => res.json())
+        fetch('http://localhost:8080/api/worker/' + this.props.workerId).then(res => res.json())
         .then(json => {
             this.setState({
                 isLoaded: true,
                 items: json,
                 links: ["profile-link", "service-link", "shifts-link is-active","availability-link"],
                 link: null,
-                startTimeMonday: json.startTimes[0],
-                startTimeTuesday: json.startTimes[1],
-                startTimeWednesday: json.startTimes[2],
-                startTimeThursday: json.startTimes[3],
-                startTimeFriday: json.startTimes[4],
-                startTimeSaturday: json.startTimes[5],
-                startTimeSunday: json.startTimes[6],
-                endTimeMonday: json.endTimes[0],
-                endTimeTuesday: json.endTimes[1],
-                endTimeWednesday: json.endTimes[2],
-                endTimeThursday: json.endTimes[3],
-                endTimeFriday: json.endTimes[4],
-                endTimeSaturday: json.endTimes[5],
-                endTimeSunday: json.endTimes[6]
+                startTimeMonday: json.availableStartTimes[0],
+                startTimeTuesday: json.availableStartTimes[1],
+                startTimeWednesday: json.availableStartTimes[2],
+                startTimeThursday: json.availableStartTimes[3],
+                startTimeFriday: json.availableStartTimes[4],
+                startTimeSaturday: json.availableStartTimes[5],
+                startTimeSunday: json.availableStartTimes[6],
+                endTimeMonday: json.availableEndTimes[0],
+                endTimeTuesday: json.availableEndTimes[1],
+                endTimeWednesday: json.availableEndTimes[2],
+                endTimeThursday: json.availableEndTimes[3],
+                endTimeFriday: json.availableEndTimes[4],
+                endTimeSaturday: json.availableEndTimes[5],
+                endTimeSunday: json.availableEndTimes[6]
             })
         });
     }
@@ -80,23 +80,20 @@ class ChangeAvailabilties extends Component<any, any> {
                 endTimes[i] = endTimes[i]+":00"
             }
         }
-        
-
-        console.log(startTimes[0].toString());
-
         //Update start time and end time for each day of the week
         for(var i=0;i<7;i++){
+            console.log(startTimes[i] + " " + endTimes[i])
             try {
                 const response = await axios.patch('http://localhost:8080/api/worker/1',
                 [
                     {
                         'op':'replace',
-                        'path':('/startTimes/' + i),
+                        'path':('/availableStartTimes/' + i),
                         'value':startTimes[i]
                     },
                     {
                         'op':'replace',
-                        'path': ('/endTimes/' + i),
+                        'path': ('/availableEndTimes/' + i),
                         'value':endTimes[i]
                     }
                 ],
@@ -257,7 +254,7 @@ class ChangeAvailabilties extends Component<any, any> {
                         </div>
                     </div>
                     <button className="button is-primary is-outlined submit-shift" id="edit-preferences" 
-                    onClick={()=>{this.updateAvailability() }}>
+                    onClick={()=>{this.updateAvailability(); alert("Your availabilities have been updated!")}}>
                         Submit
                     </button>
                 </div>

@@ -56,8 +56,11 @@ public class WorkerController {
             return fieldErrors.get();
         }
 
+        System.out.println(worker.getShiftEndTimes());
         worker = workerService.saveWorker(worker.getWorkerWState(), worker.getUser().getId(), worker.getDescription(),
-                worker.getServices(), worker.getBusinesses(), worker.getStartTimes(), worker.getEndTimes());
+                                          worker.getServices(), worker.getBusinesses(), worker.getAvailableStartTimes(),
+                                          worker.getAvailableEndTimes(), worker.getShiftStartTimes(),
+                                          worker.getShiftEndTimes());
 
         return new ResponseEntity<Worker>(worker, HttpStatus.CREATED);
     }

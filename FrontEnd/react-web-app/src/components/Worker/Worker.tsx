@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import {BrowserRouter, Router} from "react-router-dom"
 import 'bulma/css/bulma.css'
 import './Worker.scss'
 import Shifts from './Shifts'
 import ChangeAvailabilities from './ChangeAvailabilities'
+import ProfileInfo from './ProfileInfo'
+import ServiceInfo from './ServiceInfo'
 import HomePageHeader from '../HomePage/HomePageHeader'
-import TimePicker from 'react-time-picker'
-import { time } from 'console'
-import axios from "axios";
+import queryString from 'query-string'
 
 class Worker extends Component<any, any> {
 
@@ -17,12 +16,13 @@ class Worker extends Component<any, any> {
             items: [],
             isLoaded: false,
             showShifts: true,
+            values: queryString.parse(this.props.location.search)
         };
     }
 
 
     componentDidMount() {
-        fetch('http://localhost:8080/api/worker/1').then(res => res.json())
+        fetch('http://localhost:8080/api/worker/' + this.state.values.id).then(res => res.json())
         .then(json => {
             this.setState({
                 isLoaded: true,
@@ -48,7 +48,6 @@ class Worker extends Component<any, any> {
         }
     }
 
-
     activateLink = (index) =>{
         this.state.links[0] = "profile-link"
         this.state.links[1] = "service-link"
@@ -59,16 +58,11 @@ class Worker extends Component<any, any> {
         this.setState({
             links: updatedLinks
         })
-
     }
-
-    onChangeStartTime = startTime => this.setState({startTime})
-    onChangeEndTime = endTime => this.setState({endTime})
 
     render() {
         //State items of this component
         var {isLoaded, items} = this.state;
-        var timeValue;
 
         //Will be assigned based on whether the fetch was successful or not
         var firstName = null;
@@ -90,6 +84,10 @@ class Worker extends Component<any, any> {
             return <div>Loading...</div>
         }
 
+        else if(items.user == undefined){
+            return <div className="worker-not-found">Worker not found!</div>
+        }
+
         //Display content if loading is complete
         else {
             return (
@@ -106,19 +104,11 @@ class Worker extends Component<any, any> {
                                 <p>
                                     <span className="title is-bold">{firstName + " " + lastName}</span>
                                     <br/>
-                                    <a className="button is-primary is-outlined edit-button" href="#" id="edit-preferences">
-                                                                                                        Edit Profile
+                                    <a className="button is-danger is-outlined edit-button" href="#" id="edit-preferences" onClick={()=>{alert("Your account as been deactivated")}}>
+                                                                                                        Deactivate Profile
                                     </a>
                                     <br/>
                                 </p>
-                                <p className="tagline">
-                                    {
-                                        this.state.items != null ?
-                                        items.description
-                                        : <div>Description did not load</div>
-                                    }
-                                    {items.description}
-                                 </p>
                             </div>
                             <div className="column is-2-tablet is-4-mobile has-text-centered">
                                 <p className="stat-val">3</p>
@@ -139,7 +129,6 @@ class Worker extends Component<any, any> {
                             <ul>
                                 <li className={this.state.links[0]}
                                 onClick={()=>{
-                                    this.showOrHideShifts();
                                     this.activateLink(0);
                                 }}>
                                     <a>
@@ -150,7 +139,6 @@ class Worker extends Component<any, any> {
                                     </a>
                                 </li>
                                 <li className={this.state.links[1]} onClick={()=>{
-                                    this.showOrHideShifts();
                                     this.activateLink(1);
                                 }}>
                                     <a>
@@ -161,7 +149,6 @@ class Worker extends Component<any, any> {
                                     </a>
                                 </li>
                                 <li className={this.state.links[2]} onClick={()=>{
-                                    this.showOrHideShifts();
                                     this.activateLink(2);
                                 }}>
                                     <a>
@@ -172,7 +159,6 @@ class Worker extends Component<any, any> {
                                     </a>
                                 </li>
                                 <li className={this.state.links[3]} onClick={()=>{
-                                    this.showOrHideShifts();
                                     this.activateLink(3);
                                 }}>
                                     <a>
@@ -185,14 +171,22 @@ class Worker extends Component<any, any> {
                             </ul>
                         </div>
                         {
-                            //this.state.showShifts?
+                            this.state.links[0] === "profile-link is-active"?
+                            <ProfileInfo workerId={this.state.values.id}/>
+                            :null}
+                        {
+                            this.state.links[1] === "service-link is-active"?
+                            <ServiceInfo workerId={this.state.values.id}/>
+                            :null
+                        }
+                        {
                             this.state.links[2] === "shifts-link is-active"?
-                            <Shifts/>
+                            <Shifts workerId={this.state.values.id}/>
                             :null
                         }
                         { 
                             this.state.links[3] === "availability-link is-active"?
-                            <ChangeAvailabilities/>
+                            <ChangeAvailabilities workerId={this.state.values.id}/>
                             :null
                         }
                         

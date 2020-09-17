@@ -42,6 +42,8 @@
 .shifts{
     margin: auto;
     text-align: center;
+    overflow-y: hidden;
+    overflow-x: scroll;
 }
 
 .shift-change-div {
@@ -52,4 +54,10 @@
     width: 100px; // whatever your button's width
     margin: 0 auto; // auto left/right margins
     display: block;
+}
+
+.worker-not-found {
+    margin: auto;
+    text-align: center;
+    font-size: 30px;
 }
