@@ -14,11 +14,8 @@ public class Business {
     // business ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-<<<<<<< HEAD
-=======
     @ApiModelProperty(name="id",required = true,value = "1")
     // business ID
->>>>>>> develop
     private Long id;
 
     // state of the business
@@ -26,11 +23,8 @@ public class Business {
     @ManyToMany
     private List<Worker> worker;
     @NotBlank(message = "Business name is required")
-<<<<<<< HEAD
-=======
 
     // name of business
->>>>>>> develop
     private String name;
 
     // blurb the business provides

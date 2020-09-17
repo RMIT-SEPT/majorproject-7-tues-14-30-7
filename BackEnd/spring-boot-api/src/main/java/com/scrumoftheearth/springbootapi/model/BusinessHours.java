@@ -1,6 +1,10 @@
 package com.scrumoftheearth.springbootapi.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.sql.Time;
 
 // POJO for businessHour
@@ -10,21 +14,29 @@ import java.sql.Time;
         @NamedQuery(name = "BusinessHours.findAllBusTime",
         query = "SELECT h FROM BusinessHours h WHERE h.business_id = ?1 ORDER BY h.day")
 })
+@ApiModel(description = "BusinessTime Model")
 public class BusinessHours {
-    // business id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(name = "id",required = true,value = "2")
+    // business id
     private long id;
 
-    // foreign key to business table
+    @NotBlank(message = "BusinessHours must be associated with valid business_id")
+    @ApiModelProperty(name = "business_id",required = true,value = "1")
+    // foreign key to business table,
     private Long business_id;
 
+    @NotBlank(message = "Day integer is required")
+    @ApiModelProperty(name = "day",required = true,value = "5")
     // long to save day (monday = 1, tuesday = 2 etc)
     private int day;
 
+    @ApiModelProperty(name="openingTime",value = "09:00:00")
     // opening time
     private Time openingTime;
 
+    @ApiModelProperty(name = "closingTime",value = "17:00:00")
     // closing time
     private Time closingTime;
 
