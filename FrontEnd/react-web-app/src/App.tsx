@@ -14,9 +14,9 @@ function App() {
         <Switch>
           <Route path="/" exact component={HomePageContent} />
           <Route path="/Worker" component={Worker} />
-          <Route exact path="/BusinessPage/:id" component={BusinessPage} />
+          <Route path="/BusinessPage/:id" render={(props) => <BusinessPage {...props}/>}/>
+          <Route path="/edit/:id" render={(props) => <EditBusinessPage {...props}/>}/>
           <Route exact path='/UserHomepage/:id' component={UserHomepage}/>
-          <Route exact path="/BusinessPage/edit/:id" component={EditBusinessPage}/>
         </Switch>
       </Router>
     </div>

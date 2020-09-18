@@ -1,18 +1,18 @@
 import React from "react"
 import "../../App.scss"
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
-export default class BusinessPage extends React.Component<{},any>{
-    constructor(props: number) {
+export default class BusinessPage extends React.Component{
+    constructor(props) {
         super(props)
         this.state = {
-            business: {},
-            businessId: 1
+            business: {}
         }
     }
 
     componentDidMount(){
-        var apicall = "http://localhost:8080/api/Business/findById=" + this.state.businessId
+        var businessid = this.props.match.params.id
+        var apicall = "http://localhost:8080/api/Business/findById=" + businessid
         fetch(apicall)
             .then(response => response.json())
             .then(data => {
@@ -32,7 +32,7 @@ export default class BusinessPage extends React.Component<{},any>{
                     var dataArray = [];
                     dataArray.push(data);
                     if(dataArray.length > 0){
-                        var input :any = "";
+                        var input = "";
 
                         dataArray.forEach((row) =>{
                             input += "<tr>"
@@ -43,14 +43,15 @@ export default class BusinessPage extends React.Component<{},any>{
                             input += "<td>" + "TO BE ADDED" + "</td>"
                             input += "<tr>"
                         });
-                        (document.getElementById("workertable") as HTMLTableRowElement).innerHTML = input;
+                        document.getElementById("workertable").innerHTML = input;
                     }
                 })
             })
     }
     
     populatebusinesshours(){
-        fetch("http://localhost:8080/api/BusinessHours/findByBusId=1")
+        var businessid = this.props.match.params.id
+        fetch("http://localhost:8080/api/BusinessHours/findByBusId=" + businessid)
             .then(res => {
                 res.json()
                 .then(data => {
@@ -58,7 +59,7 @@ export default class BusinessPage extends React.Component<{},any>{
                     dataArray.push(data)
                     var daysarray = ["ERROR/TIME NOT SET","Monday","Tuesday","Wednesday","Thurday","Firday","Saturday","Sunday"]
                     if(dataArray.length > 0){
-                        var input :any = "<p className='has-text-weight-bold'>Business Hours</p>"
+                        var input = "<p className='has-text-weight-bold'>Business Hours</p>"
 
                         for(var i = 0; i < 1;i++){
                             dataArray.forEach((row) =>{
@@ -98,7 +99,7 @@ export default class BusinessPage extends React.Component<{},any>{
                                 else
                                     input += "<p>" + daysarray[i + 1] + ": " + openingformatted +" To " + closingformatted + "</p>"
                             });
-                            (document.getElementById("businesshours") as HTMLDivElement).innerHTML = input;
+                            document.getElementById("businesshours").innerHTML = input;
                         }
                     }
                 })
@@ -106,6 +107,7 @@ export default class BusinessPage extends React.Component<{},any>{
     }
 
     render(){
+        {var businessid = this.props.match.params.id}
         return( 
             <section className="hero is-fullheight is-default is-bold">
                 <div className="hero is-primary is-bold">
@@ -138,15 +140,13 @@ export default class BusinessPage extends React.Component<{},any>{
                                         <div id="businesshours"></div>
                                     </div>
                                 </div>
-                                <Link to="/BusinessPage/edit/:id">
+                                <Link to={"edit/" + businessid}>
                                     <div className="button is-primary">Edit Business</div>
                                 </Link>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             <div className="hero-foot">
                 <div className="container">
                     <div className="columns">

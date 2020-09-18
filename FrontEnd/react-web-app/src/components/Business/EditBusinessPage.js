@@ -1,12 +1,11 @@
 import React from 'react'
 import "../../App.scss"
 
-export default class EditBusinessPage extends React.Component<{},any>{
-    constructor(props: number){
+export default class EditBusinessPage extends React.Component{
+    constructor(props){
         super(props)
         this.state = {
-            businessTime: [],
-            businessId: 1,
+            businessTime: []
         }
         this.updateBusiness = this.updateBusiness.bind(this)
         this.updateBusinessTime = this.updateBusinessTime.bind(this)
@@ -14,20 +13,21 @@ export default class EditBusinessPage extends React.Component<{},any>{
 
     //API call for getting the business info 
     componentDidMount(){
-        var businessApi = "http://localhost:8080/api/Business/findById=" + this.state.businessId;
+        var busid = this.props.match.params.id
+        var businessApi = "http://localhost:8080/api/Business/findById=" + busid;
         fetch(businessApi)
             .then(response => response.json())
             .then(data => {
                 this.setState({
                     business: data
                 });
-                (document.getElementById("name") as HTMLInputElement).value = data.name;
-                (document.getElementById("blurb") as HTMLInputElement).value = data.blurb;
-                (document.getElementById("description") as HTMLInputElement).value = data.description;
-                (document.getElementById("address") as HTMLInputElement).value = data.address;
-                (document.getElementById("phoneNumber") as HTMLInputElement).value = data.phoneNumber;
+                document.getElementById("name").value = data.name;
+                document.getElementById("blurb").value = data.blurb;
+                document.getElementById("description").value = data.description;
+                document.getElementById("address").value = data.address;
+                document.getElementById("phoneNumber").value = data.phoneNumber;
             })
-        var businessTimeApi ="http://localhost:8080/api/BusinessHours/findByBusId=" + this.state.businessId;
+        var businessTimeApi ="http://localhost:8080/api/BusinessHours/findByBusId=" + busid;
         fetch(businessTimeApi)
             .then(response => response.json())
             .then(data =>{
@@ -43,23 +43,24 @@ export default class EditBusinessPage extends React.Component<{},any>{
                 for(var i = 1; i <= 7;i++){
                     var opening = i + "Opening"
                     var closing = i + "Closing";
-                    (document.getElementById(opening) as HTMLInputElement).value = data[i - 1].openingTime;
-                    (document.getElementById(closing) as HTMLInputElement).value = data[i - 1].closingTime;
+                    document.getElementById(opening).value = data[i - 1].openingTime;
+                    document.getElementById(closing).value = data[i - 1].closingTime;
                 }
             }) 
     }
 
     // API call of put to update the business info
     updateBusiness(){
+        var busid = this.props.match.params.id
         var updateBusiness = {
-            id: this.state.businessId,
-            name: (document.getElementById("name") as HTMLInputElement).value,
-            blurb: (document.getElementById("blurb") as HTMLInputElement).value,
-            description: (document.getElementById("description") as HTMLInputElement).value,
-            address: (document.getElementById("address") as HTMLInputElement).value,
-            phoneNumber: (document.getElementById("phoneNumber") as HTMLInputElement).value
+            id: busid,
+            name: document.getElementById("name").value,
+            blurb: document.getElementById("blurb").value,
+            description: document.getElementById("description").value,
+            address: document.getElementById("address").value,
+            phoneNumber: document.getElementById("phoneNumber").value
         }
-        var apiupdate = 'http://localhost:8080/api/Business/update=' + this.state.businessId
+        var apiupdate = 'http://localhost:8080/api/Business/update=' + busid
         fetch(apiupdate,{
             method: 'PUT',
             headers: {
@@ -81,8 +82,8 @@ export default class EditBusinessPage extends React.Component<{},any>{
                 id: this.state.businessTime[i - 1].id,
                 day: i,
                 business_id: this.state.businessTime[i - 1].business_id,
-                openingTime: (document.getElementById(opening) as HTMLInputElement).value + ":00",
-                closingTime: (document.getElementById(closing) as HTMLInputElement).value + ":00"
+                openingTime: document.getElementById(opening).value + ":00",
+                closingTime: document.getElementById(closing).value + ":00"
             }
             fetch(apicall,{
                 method: 'PUT',
