@@ -1,6 +1,0 @@
-#FileLock
-#Sat Sep 19 19:57:49 AEST 2020
-hostName=192.168.0.102
-id=174a5cc289536026e691da26261979c69c25ed1f150
-method=file
-server=192.168.0.102\:56432
