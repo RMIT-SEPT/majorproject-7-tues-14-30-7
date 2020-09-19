@@ -56,25 +56,28 @@ public class WorkerService {
         //Get user based on ID passed through the json request
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User does not exist: " + userId));
 
+        if(availableStartTimes.isEmpty() || availableEndTimes.isEmpty()) {
 
-        //Create 7 new start Times and 7 new end times for workers availability one for each day of the week
-        for (int i = 0; i < 7; i++) {
-            availableStartTimes.add(java.sql.Time.valueOf("00:00:00"));
-        }
-        for (int i = 0; i < 7; i++) {
-            availableEndTimes.add(java.sql.Time.valueOf("00:00:00"));
-        }
-
-        for (int i = 0; i < 7; i++) {
-            shiftStartTimes.add(java.sql.Timestamp.valueOf("2020-09-" + day + " 00:00:00"));
-            day++;
-        }
-        day = 14;
-        for (int i = 0; i < 7; i++) {
-            shiftEndTimes.add(java.sql.Timestamp.valueOf("2020-09-" + day + " 00:00:00"));
-            day++;
+            //Create 7 new start Times and 7 new end times for workers availability one for each day of the week
+            for (int i = 0; i < 7; i++) {
+                availableStartTimes.add(java.sql.Time.valueOf("00:00:00"));
+            }
+            for (int i = 0; i < 7; i++) {
+                availableEndTimes.add(java.sql.Time.valueOf("00:00:00"));
+            }
         }
 
+        if(shiftStartTimes.isEmpty() || shiftEndTimes.isEmpty()) {
+            for (int i = 0; i < 7; i++) {
+                shiftStartTimes.add(java.sql.Timestamp.valueOf("2020-09-" + day + " 00:00:00"));
+                day++;
+            }
+            day = 14;
+            for (int i = 0; i < 7; i++) {
+                shiftEndTimes.add(java.sql.Timestamp.valueOf("2020-09-" + day + " 00:00:00"));
+                day++;
+            }
+        }
         //For each business ID in the json request get the business from the repo then add it to the collection
         for(Business b : businesses){
             //Keep track of this businesses Id
