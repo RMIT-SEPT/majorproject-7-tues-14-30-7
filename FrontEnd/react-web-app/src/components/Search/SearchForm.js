@@ -19,13 +19,15 @@ export default class SearchForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.splitArrayIntoChunks = this.splitArrayIntoChunks.bind(this);
         this.changePage = this.changePage.bind(this);
+        this.nextPage = this.nextPage.bind(this);
+        this.prevPage = this.prevPage.bind(this);
     }
     
     /*
      * The current URL is used to set the value in the search box
      * All businesses are fetched and stored so that they can be filtered as necessary based on the search term
     */ 
-    componentDidMount() {
+    async componentDidMount() {
         // const pathname = window.location.pathname;
         // const sub = pathname.indexOf("Search/");
         // const tofindtemp = pathname.substring(pathname.length, sub+7);
@@ -42,7 +44,7 @@ export default class SearchForm extends Component {
             })
         }
 
-        fetch("http://localhost:8080/api/Business/")
+        await fetch("http://localhost:8080/api/Business/")
             .then(response => response.json())
             .then(data => {
             this.setState({
@@ -90,6 +92,7 @@ export default class SearchForm extends Component {
         event.preventDefault();
     }
 
+    // Takes the businesses from the API request and filters it based on the description checkbox, then puts businesses in groups of 5
     splitArrayIntoChunks(arr, len) {
         if(this.state.checked === false) {
             arr = arr.filter(business => business.name.toLowerCase().includes(this.state.value.toLowerCase()));
@@ -102,11 +105,27 @@ export default class SearchForm extends Component {
         }
         return grps;
     }
+    // Handles page button clicks
     changePage(event) {
         var v = event.currentTarget.textContent;
         this.setState({
-            visible: parseInt(v) - 1
-        }, console.log(this.state.visible))
+            visible: parseInt(v) - 1,
+            prev: v
+        })
+        event.preventDefault()
+    }
+    // Handles previous page button clicks
+    prevPage(event) {
+        this.setState({
+            visible: this.state.visible - 1
+        })
+        event.preventDefault()
+    }
+    // Handles next page button clicks
+    nextPage(event) {
+        this.setState({
+            visible: this.state.visible + 1
+        })
         event.preventDefault()
     }
     
@@ -140,6 +159,7 @@ export default class SearchForm extends Component {
             ))
         }
 
+        // Generates pagination if results length is > 5
         let ret = null;
         let pagination = null;
         if(filterlen > 5) {
@@ -161,9 +181,20 @@ export default class SearchForm extends Component {
                     </div>
                 })
             }
-            pagination = ret.map((o, index) => {
-                return <div key={index} className="button is-small" onClick={this.changePage} id="pagbut">{index + 1}</div>
+            var paginationcenter = ret.map((o, index) => {
+                return <div key={index} className="button is-small" onClick={this.changePage} style={{marginLeft: "5px"}} id={index}>{index + 1}</div>
             })
+            pagination = <div className="columns is-mobile" id="pagination">
+                <div className="column">
+                    <div className="button is-small" onClick={this.prevPage} id="bushide">Previous</div>
+                </div>
+                <div className="column" id="pagcolumn">
+                    {paginationcenter}
+                </div>
+                <div className="column">
+                    <div className="button is-small" onClick={this.nextPage} id="bushide">Next</div>
+                </div>
+            </div>
         }
 
         // Base page layout, showing the form only. Displayed when 'value' state is == ''
@@ -220,8 +251,11 @@ export default class SearchForm extends Component {
                     <div style={{width: "100%", border: "solid rgb(179, 179, 179) 0.5px", paddingLeft: "0px"}}/>
                     <p></p>
                     <div id="searchresults">
+                        {/* Search Results */}
                         {ret !== null ? ret[this.state.visible] : sr}
+                        {/* Results Counter */}
                         <span className="heading" style={{textAlign: "center"}}>Found {<span style={{fontWeight: "bold"}}>{filterlen}</span>} Results For "{this.state.value}" {this.state.checked ? 'In Description' : ''}</span>
+                        {/* Pagination Buttons */}
                         {pagination !== null ? pagination : null}
                     </div>
                 </div>
