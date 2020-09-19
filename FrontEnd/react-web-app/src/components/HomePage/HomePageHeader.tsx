@@ -73,7 +73,7 @@ export default class HomePageHeader extends React.Component {
                             <div className="navbar-item">
                                 <div className="buttons">
                                     <div className="button is-primary" id="signup">
-                                    <Link to="/Signup">Sign Up</Link>
+                                        <Link to="/Signup"><strong>Sign Up</strong></Link>
                                     </div>
                                     <div className="button is-light">
                                         <Link to="/Login">Login</Link>
