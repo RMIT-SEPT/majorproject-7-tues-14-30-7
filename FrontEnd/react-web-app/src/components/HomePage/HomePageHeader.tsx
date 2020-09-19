@@ -4,12 +4,12 @@ import { BrowserRouter as Router,Link } from "react-router-dom";
 import NavSearch from './NavSearch';
 import HomePageTitle from './HomePageTitle';
 
+
 export default class HomePageHeader extends Component {
     render() {
         return (
             <div>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-
                 <nav className="navbar" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
                     {/* <div className="navbar-item">
@@ -31,7 +31,20 @@ export default class HomePageHeader extends Component {
                         <span aria-hidden="true" />
                     </label>
                     </div>
+                    <Link to="/Worker" className="navbar-item">
+                        <a>Worker</a>
+                    </Link>
+
+                    <Link to="/UserHomepage/1" className="navbar-item">
+                        <a>User</a>
+                    </Link>
+
+                    <Link to="/BusinessPage" className="navbar-item">
+                        <a>BusinessPage</a>
+                    </Link>
+
                     <input type="checkbox" id="nav-toggle-state" />
+
 
                     <div className="navbar-menu">
                         <div className="navbar-start">
@@ -70,7 +83,11 @@ export default class HomePageHeader extends Component {
                             </div>
                         </div>
                     </div>
-                </nav>
+                </div>
+            </nav>
+
+            <HomePageContent/>
+
             </div>
         )
     }
