@@ -15,25 +15,30 @@ jobs:
       - checkout: 
 
       - run:
-          name: Change directory to Spring boot
-          command: cd BackEnd/spring-boot-api/
-
+          name: Check directory to Spring boot
+          command: pwd 
+    
       - run:
-          name: Change directory to Spring boot
-          command: ls 
+          name: Check and change directory to Spring boot
+          command: pwd 
+          working_directory: ~/project/BackEnd/spring-boot-api/
 
       - restore_cache:
           key: circleci-springboot-api-{{ checksum "pom.xml"}}
 
       - run: mvn dependency:go-offline
+          working_directory: ~/project/BackEnd/spring-boot-api/
+
       - save_cache:
-          paths: /.m2
+          paths: ~/project/BackEnd/spring-boot-api/.m2
           key: circleci-springboot-api-{{ checksum "pom.xml"}}
+
       - run: mvn package
+          working_directory: ~/project/BackEnd/spring-boot-api/
 
       - store_test_results:
-          path: /target/surefire-reports
+          path: ~/project/BackEnd/spring-boot-api/target/surefire-reports
 
       - store_artifacts :
-          path: /target/spring-boot-api-0.0.1-SNAPSHOT.jar
+          path: ~/project/BackEnd/spring-boot-api/target/spring-boot-api-0.0.1-SNAPSHOT.jar
 
