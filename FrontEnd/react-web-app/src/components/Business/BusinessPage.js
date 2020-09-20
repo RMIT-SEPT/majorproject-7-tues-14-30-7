@@ -131,7 +131,7 @@ export default class BusinessPage extends React.Component{
                                     <tbody id="workertable"></tbody>
                                 </table>
                             </div>
-                            <div className="colum is-6 is-offset-1">
+                            <div className="column is-6 is-offset-1">
                                 <p>{this.state.business.blurb}</p>
                                 <br></br>
                                 <p>{this.state.business.description}</p>

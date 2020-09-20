@@ -101,164 +101,180 @@ export default class EditBusinessPage extends React.Component{
         return(
             <section className="hero is-fullheight is-default is-bold">
                 <div className="hero is-primary is-bold">
-                    <h1 className="title is-1 has-text-centered py-6">Edit Business Info</h1>
-                </div>
-                <div className="pt-5">
-                    <h3 className="subtitle is-2">General info:</h3>
+                    <h1 className="title is-1 has-text-centered py-5">Edit Business Info</h1>
                 </div>
                 <div className="hero-body">
                     <form onSubmit={this.updateBusiness}>
-                        <div className="field">
-                            <label className="label">Name:</label>
-                            <div className="control">
-                                <input 
-                                    className="input" 
-                                    type="text" 
-                                    id="name" 
-                                    placeholder="Business Name" 
-                                    required>
-                            </input>
-                            </div>
-                        </div>
-                        <div className="field">
-                            <label className="label">Blurb:</label>
-                            <div className="control">
-                                <textarea 
-                                    className="textarea"
-                                    id="blurb" 
-                                    placeholder="Business Blurb" 
-                                    required>
-                                </textarea>
-                            </div>
-                        </div>
-                        <div className="field">
-                            <label className="label">Description:</label>
-                            <div className="control">
-                                <textarea 
-                                    className="textarea" 
-                                    id="description" 
-                                    placeholder="Business Blurb" 
-                                    required>
-                                </textarea>
-                            </div>
-                        </div>
-                        <div className="field">
-                            <label className="label">Address:</label>
-                            <div className="control">
-                                <input 
-                                    className="input" 
-                                    type="text" 
-                                    id="address" 
-                                    placeholder="Business Address" 
-                                    required>
-                                </input>
-                            </div>
-                        </div>
-                        <div className="field">
-                            <label className="label">Phone Number:</label>
-                            <div className="control">
-                                <input 
-                                    className="input" 
-                                    type="tel" 
-                                    id="phoneNumber" 
-                                    placeholder="Business Phone Number" 
-                                    required>   
-                                </input>
-                            </div>
-                        </div>
-                        <div className="pt-5">
-                            <h3 className="subtitle is-2">Business Hours:</h3>
-                        </div>
-                        <div className="field is-horizontal">
-                            <div className="field-label">
-                                <label className="label">Monday:</label>
-                            </div>
-                            <div className="field-body">
-                                <input type="time" id="1Opening"></input>
-                            </div>
-                            <label className="label mx-3">TO</label>
-                            <div className="field-body">
-                                <input type="time" id="1Closing"></input>
-                            </div>
-                        </div>
-                        <div className="field is-horizontal">
-                            <div className="field-label">
-                                <label className="label">Tuesday:</label>
-                            </div>
-                            <div className="field-body">
-                                <input type="time" id="2Opening"></input>
-                            </div>
-                            <label className="label mx-3">TO</label>
-                            <div className="field-body">
-                                <input type="time" id="2Closing"></input>
-                            </div>
-                        </div>
-                        <div className="field is-horizontal">
-                            <div className="field-label">
-                                <label className="label">Wednesday:</label>
-                            </div>
-                            <div className="field-body">
-                                <input type="time" id="3Opening"></input>
-                            </div>
-                            <label className="label mx-3">TO</label>
-                            <div className="field-body">
-                                <input type="time" id="3Closing"></input>
-                            </div>
-                        </div>
-                        <div className="field is-horizontal">
-                            <div className="field-label">
-                                <label className="label">Thursday:</label>
-                            </div>
-                            <div className="field-body">
-                                <input type="time" id="4Opening"></input>
-                            </div>
-                            <label className="label mx-3">TO</label>
-                            <div className="field-body">
-                                <input type="time" id="4Closing"></input>
-                            </div>
-                        </div>
-                        <div className="field is-horizontal">
-                            <div className="field-label">
-                                <label className="label">Friday:</label>
-                            </div>
-                            <div className="field-body">
-                                <input type="time" id="5Opening"></input>
-                            </div>
-                            <label className="label mx-3">TO</label>
-                            <div className="field-body">
-                                <input type="time" id="5Closing"></input>
-                            </div>
-                        </div>
-                        <div className="field is-horizontal">
-                            <div className="field-label">
-                                <label className="label">Saturday:</label>
-                            </div>
-                            <div className="field-body">
-                                <input type="time" id="6Opening"></input>
-                            </div>
-                            <label className="label mx-3">TO</label>
-                            <div className="field-body">
-                                <input type="time" id="6Closing"></input>
-                            </div>
-                        </div>
-                        <div className="field is-horizontal">
-                            <div className="field-label">
-                                <label className="label">Sunday:</label>
-                            </div>
-                            <div className="field-body">
-                                <input type="time" id="7Opening"></input>
-                            </div>
-                            <label className="label mx-3">TO</label>
-                            <div className="field-body">
-                                <input type="time" id="7Closing"></input>
-                            </div>
-                        </div>
-                        <div className="field is-grouped">
-                            <div className="control">
-                                <button className="button is-primary" type="submit">Submit</button>
-                            </div>
-                            <div className="control">
-                                <button className="button is-light" type="reset">Clear</button>
+                        <div className = "container">
+                            <div className="columns is-ventered">
+                                <div className="column is-narrow">
+                                    <h3 className="subtitle is-2 has-text-centered">General info:</h3>
+                                    <div className="field is-horizontal">
+                                        <div className="field-label">
+                                            <label className="label">Name:</label>
+                                        </div>
+                                        <div className="control is-expanded">
+                                            <input 
+                                                className="input" 
+                                                type="text" 
+                                                id="name" 
+                                                placeholder="Business Name" 
+                                                required>
+                                            </input>
+                                        </div>
+                                    </div>
+                                    <div className="field is-horizontal">
+                                        <div className="field-label">
+                                            <label className="label">Blurb: </label>
+                                        </div>
+                                        <div className="control is-expanded">
+                                            <textarea 
+                                                className="textarea"
+                                                id="blurb" 
+                                                placeholder="Business Blurb" 
+                                                required>
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div className="field is-horizontal">
+                                        <div className="field-label">
+                                            <label className="label">Description:</label>
+                                        </div>
+                                        <div className="control is-expanded">
+                                            <textarea 
+                                                className="textarea" 
+                                                id="description" 
+                                                placeholder="Business Blurb" 
+                                                required>
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div className="field is-horizontal">
+                                        <div className="field-label">
+                                            <label className="label">Address:</label>
+                                        </div>
+                                        <div className="control is-expanded">
+                                            <input 
+                                                className="input" 
+                                                type="text" 
+                                                id="address" 
+                                                placeholder="Business Address" 
+                                                required>
+                                            </input>
+                                        </div>
+                                    </div>
+                                    <div className="field is-horizontal">
+                                        <div className="field-label">
+                                            <label className="label">Phone Number:</label>
+                                        </div>
+                                        <div className="control">
+                                            <input 
+                                                className="input" 
+                                                type="tel" 
+                                                id="phoneNumber" 
+                                                placeholder="Business Phone Number" 
+                                                required>   
+                                            </input>
+                                        </div>
+                                    </div>
+                                    <div className="field is-grouped">
+                                        <div className="control">
+                                            <button className="button is-primary" type="submit">Submit</button>
+                                        </div>
+                                        <div className="control">
+                                            <button className="button is-light" type="reset">Resets</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="column is-6 is-offset-1">
+                                    <div className="pt-5">
+                                        <h3 className="subtitle is-2 has-text-centered">Business Hours:</h3>
+                                    </div>
+                                    <div className="field is-horizontal">
+                                        <div className="field-label">
+                                            <label className="label">Monday:</label>
+                                        </div>
+                                        <div className="field-body">
+                                            <input type="time" id="1Opening"></input>
+                                        </div>
+                                        <label className="label mx-3">TO</label>
+                                        <div className="field-body">
+                                            <input type="time" id="1Closing"></input>
+                                        </div>
+                                    </div>
+                                    <div className="field is-horizontal">
+                                        <div className="field-label">
+                                            <label className="label">Tuesday:</label>
+                                        </div>
+                                        <div className="field-body">
+                                            <input type="time" id="2Opening"></input>
+                                        </div>
+                                        <label className="label mx-3">TO</label>
+                                        <div className="field-body">
+                                            <input type="time" id="2Closing"></input>
+                                        </div>
+                                    </div>
+                                    <div className="field is-horizontal">
+                                        <div className="field-label">
+                                            <label className="label">Wednesday:</label>
+                                        </div>
+                                        <div className="field-body">
+                                            <input type="time" id="3Opening"></input>
+                                        </div>
+                                        <label className="label mx-3">TO</label>
+                                        <div className="field-body">
+                                            <input type="time" id="3Closing"></input>
+                                        </div>
+                                    </div>
+                                    <div className="field is-horizontal">
+                                        <div className="field-label">
+                                            <label className="label">Thursday:</label>
+                                        </div>
+                                        <div className="field-body">
+                                            <input type="time" id="4Opening"></input>
+                                        </div>
+                                        <label className="label mx-3">TO</label>
+                                        <div className="field-body">
+                                            <input type="time" id="4Closing"></input>
+                                        </div>
+                                    </div>
+                                    <div className="field is-horizontal">
+                                        <div className="field-label">
+                                            <label className="label">Friday:</label>
+                                        </div>
+                                        <div className="field-body">
+                                            <input type="time" id="5Opening"></input>
+                                        </div>
+                                        <label className="label mx-3">TO</label>
+                                        <div className="field-body">
+                                            <input type="time" id="5Closing"></input>
+                                        </div>
+                                    </div>
+                                    <div className="field is-horizontal">
+                                        <div className="field-label">
+                                            <label className="label">Saturday:</label>
+                                        </div>
+                                        <div className="field-body">
+                                            <input type="time" id="6Opening"></input>
+                                        </div>
+                                        <label className="label mx-3">TO</label>
+                                        <div className="field-body">
+                                            <input type="time" id="6Closing"></input>
+                                        </div>
+                                    </div>
+                                    <div className="field is-horizontal">
+                                        <div className="field-label">
+                                            <label className="label">Sunday:</label>
+                                        </div>
+                                        <div className="field-body">
+                                            <input type="time" id="7Opening"></input>
+                                        </div>
+                                        <label className="label mx-3">TO</label>
+                                        <div className="field-body">
+                                            <input type="time" id="7Closing"></input>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
