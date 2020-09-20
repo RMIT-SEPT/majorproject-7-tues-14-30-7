@@ -2,8 +2,6 @@ version: 2
 jobs:
   build:
 
-    working_directory: ~/BackEnd/spring-boot-api/
-
     docker:
       - image: circleci/openjdk:8-jdk-stretch
       - image: circleci/postgres:9.6.3-alpine
@@ -15,7 +13,7 @@ jobs:
     steps:
 
       - checkout: 
-          path: ~/BackEnd/spring-boot-api/
+          path: ./BackEnd/spring-boot-api/
       - restore_cache:
           key: circleci-springboot-api-{{ checksum "pom.xml"}}
 
