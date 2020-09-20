@@ -15,7 +15,7 @@ jobs:
     steps:
 
       - checkout: 
-        - path: ~/BackEnd/spring-boot-api/
+          path: ~/BackEnd/spring-boot-api/
       - restore_cache:
           key: circleci-springboot-api-{{ checksum "pom.xml"}}
 
