@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
 
-    working_directory: /BackEnd/spring-boot-api/
+    working_directory: ~/BackEnd/spring-boot-api/
 
     docker:
       - image: circleci/openjdk:8-jdk-stretch
