@@ -97,7 +97,7 @@ export default class SearchForm extends Component {
         if(this.state.checked === false) {
             arr = arr.filter(business => business.name.toLowerCase().includes(this.state.value.toLowerCase()));
         }else {
-            arr = arr.filter(business => business.desc.toLowerCase().includes(this.state.value.toLowerCase()));
+            arr = arr.filter(business => business.description.toLowerCase().includes(this.state.value.toLowerCase()));
         }
         var grps = [], i = 0, n = arr.length;
         while(i < n) {
