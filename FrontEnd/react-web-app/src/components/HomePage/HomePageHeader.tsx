@@ -82,12 +82,8 @@ export default class HomePageHeader extends React.Component {
                             </div>
                         </div>
                     </div>
+                    </nav>
                 </div>
-            </nav>
-
-            <HomePageContent/>
-
-            </div>
         )
     }
 }

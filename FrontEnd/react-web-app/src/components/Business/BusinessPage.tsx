@@ -41,7 +41,7 @@ export default class BusinessPage extends React.Component<{},any>{
                             temp += "<td>" + "TO BE ADDED" + "</td>"
                             temp += "<tr>"
                         })
-                        document.getElementById("workertable").innerHTML = temp;
+                        //document.getElementById("workertable").innerHTML = temp;
                     }
                 })
             })
