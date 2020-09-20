@@ -33,10 +33,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         req.getHeaderNames();
         String username = obtainUsername(req);
         String password = obtainPassword(req);
-        System.out.println(req.getParameterMap().entrySet()
-                .stream()
-                .map(e -> e.getKey() + "=" + String.join(", ", e.getValue()))
-                .collect(Collectors.joining(" ")));
 
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
