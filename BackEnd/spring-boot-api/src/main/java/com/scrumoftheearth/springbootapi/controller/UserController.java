@@ -17,8 +17,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
-@RequestMapping("user")
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/user")
 public class UserController {
 
     private final UserService userService;
@@ -30,14 +30,13 @@ public class UserController {
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/{id}")
     public ResponseEntity<?> READUser(@PathVariable("id") Long id) throws Throwable {
         User user = userService.getById(id);
         return new ResponseEntity<User>(user, HttpStatus.FOUND);
     }
 
-    @PostMapping("")
+    @PostMapping("/")
     public ResponseEntity<?> CREATEUser(@Valid @RequestBody User user, BindingResult bindingResult) {
         UserErrors userErrors = new UserErrors().nonUniqueUserName(userService.checkUserNameNotUnique(user.getUserName()));
         checkValidPasswords(user, userErrors);

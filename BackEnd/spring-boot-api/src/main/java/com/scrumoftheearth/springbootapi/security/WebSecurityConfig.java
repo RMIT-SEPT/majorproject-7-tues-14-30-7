@@ -22,13 +22,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().disable().csrf().disable()
+        http.cors().and().csrf().disable()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .authorizeRequests()
                 // Put here any routes that don't require role authorization
                 // Allow all GET requests without Authorization.
                 // This is temporary to allow front end to connect.
-                    .antMatchers(HttpMethod.POST, "/user/").permitAll()
+                    .antMatchers(HttpMethod.POST, "/api/user").permitAll()
                     .antMatchers(HttpMethod.GET, "/api/Business/**").permitAll()
                     .antMatchers(HttpMethod.GET, "/api/worker/**").permitAll()
                     .antMatchers(HttpMethod.GET, "/api/service**").permitAll()
