@@ -13,10 +13,14 @@ jobs:
     steps:
 
       - checkout: 
-        
+
       - run:
           name: Change directory to Spring boot
-          command: cd /BackEnd/spring-boot-api/
+          command: cd BackEnd/spring-boot-api/
+
+      - run:
+          name: Change directory to Spring boot
+          command: ls 
 
       - restore_cache:
           key: circleci-springboot-api-{{ checksum "pom.xml"}}
