@@ -6,7 +6,6 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
 import java.util.List;
 
 // POJO for business
@@ -17,16 +16,20 @@ import java.util.List;
 })
 @ApiModel(description = "Business Model")
 public class Business {
+    // business ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(name="id",required = true,value = "1")
     // business ID
     private Long id;
 
+<<<<<<< HEAD
     @OneToOne
     @JoinColumn(name = "BusinessBState_id")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @ApiModelProperty(name="businessBState")
+=======
+>>>>>>> edit-business-page
     // state of the business
     private BusinessBState businessBState;
 
@@ -40,16 +43,25 @@ public class Business {
     // name of business
     private String name;
 
+<<<<<<< HEAD
     @NotBlank(message = "Business blurb is required")
     @ApiModelProperty(name="blurb",required = true,value = "We deliver quality IT services to your home or business")
+=======
+>>>>>>> edit-business-page
     // blurb the business provides
+    @NotBlank(message = "Business blurb is required")
     private String blurb;
 
+<<<<<<< HEAD
     @NotBlank(message = "Business description is required")
     @ApiModelProperty(name="description",required = true,value = "We do new Networking configuration,computer repair and more")
+=======
+>>>>>>> edit-business-page
     // description of the business
+    @NotBlank(message = "Business description is required")
     private String description;
 
+<<<<<<< HEAD
     @NotBlank(message = "Business address is required")
     // address of the business
     @ApiModelProperty(name="address",required = true,value = "56/115 Queensberry St, Carlton VIC 3053")
@@ -57,16 +69,27 @@ public class Business {
 
     @NotBlank(message = "Business contact number is required")
     @ApiModelProperty(name="phoneNumber",required = true,value = "9925 4468")
+=======
+    // address of the business
+    @NotBlank(message = "Business address is required")
+    private String address;
+
+>>>>>>> edit-business-page
     // contact info of the business
+    @NotBlank(message = "Business contact number is required")
     private String phoneNumber;
 
-    // constructor for production uses
+    // List of business hours
+    @OneToMany()
+    private List<BusinessHours> openinghours;
+
+    // blank constructor for production uses
     protected Business() {
         worker = new ArrayList<Worker>();
         businessBState = new BusinessBState();
     }
 
-    // constructor for testing
+    // constructor for junit testing
     public Business(long id,String name,String blurb,String description,String address,String phoneNumber){
         this.id = id;
         this.name = name;

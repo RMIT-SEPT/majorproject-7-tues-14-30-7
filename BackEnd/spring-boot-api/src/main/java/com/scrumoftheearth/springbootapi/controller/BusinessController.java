@@ -29,7 +29,6 @@ public class BusinessController {
         // if there is a json error
         if(result.hasErrors())
                 return new ResponseEntity<String>("Bad Business Object W.I.P", HttpStatus.BAD_REQUEST);
-
        Business toadd = businessService.saveOrUpdate(business);
        return new ResponseEntity<Business>(business, HttpStatus.CREATED);
     }
@@ -58,20 +57,24 @@ public class BusinessController {
         businessService.deleteById(id);
     }
 
+<<<<<<< HEAD
+=======
+    // for updating a business by ID
+    @CrossOrigin(origins = "http://localhost:3000")
+>>>>>>> edit-business-page
     @PutMapping("/update={id}")
     @ApiOperation(value = "Updating a Business with the given id",response = Iterable.class,
             notes = "used to update a business information that has the given id, needs all unchanged variable in request")
     public ResponseEntity<?> updateBusiness(@Valid @RequestBody Business business, BindingResult result, @PathVariable long id){
         Optional<Business> toupdate = businessService.getById(id);
 
-        // if there is no business associated which the given ID
+        // if there is no business associated with the given ID
         if(!toupdate.isPresent())
             return new ResponseEntity<String>("Business doesnt exist W.I.P", HttpStatus.BAD_REQUEST);
 
         // if there is a json error
         if(result.hasErrors())
             return new ResponseEntity<String>("Invaild values for updating W.I.P", HttpStatus.BAD_REQUEST);
-
         business.setId(id);
         businessService.saveOrUpdate(business);
         return ResponseEntity.noContent().build();
