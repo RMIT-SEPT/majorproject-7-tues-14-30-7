@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
 
-
+    working_directory: ~/majorproject-7-tues-14-30-7/
 
     docker:
       - image: circleci/openjdk:8-jdk-stretch
@@ -15,7 +15,7 @@ jobs:
     steps:
 
       - checkout:
-        path: ~/majorproject-7-tues-14-30-7
+        path: ~/majorproject-7-tues-14-30-7/BackEnd
       - restore_cache:
           key: circleci-springboot-api-{{ checksum "pom.xml"}}
 
