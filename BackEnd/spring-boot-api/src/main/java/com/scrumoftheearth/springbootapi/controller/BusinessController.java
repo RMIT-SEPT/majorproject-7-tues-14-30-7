@@ -76,18 +76,12 @@ public class BusinessController {
         businessService.saveOrUpdate(business);
         return ResponseEntity.noContent().build();
     }
-    
-//    @CrossOrigin(origins = "http://localhost:3000")
-//    @GetMapping("/getWorker")
-//    public List<User> getWorker(){
-//        return businessService.getWorker();
-//    }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/getWorker={id}")
     @ApiOperation(value = "Getting the List of worker",response = Iterable.class,
             notes = "used to have a list of all the worker associated with that business")
-    public List<Worker> getWorkers(@PathVariable long id){
+    public Worker[] getWorkers(@PathVariable long id){
         return businessService.getWorker(id);
     }
 }

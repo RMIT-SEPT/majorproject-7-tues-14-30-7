@@ -11,8 +11,6 @@ import java.util.List;
 // POJO for business
 @Entity
 @NamedQueries({
-//        @NamedQuery(name = "Business.findAllWorkers",
-//                query = "SELECT w FROM User w WHERE w.id = 1 OR  w.id = 2")
         @NamedQuery(name = "Business.findAllWorkers",
                 query = "SELECT b.worker FROM Business b WHERE b.id = :id")
 })
@@ -75,7 +73,7 @@ public class Business {
         this.address = address;
         this.phoneNumber = phoneNumber;
         worker = new ArrayList<Worker>();
-//        businessBState = new BusinessBState();
+        businessBState = new BusinessBState();
     }
 
     // getters and setters

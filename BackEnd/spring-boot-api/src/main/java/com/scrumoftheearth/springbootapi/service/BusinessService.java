@@ -35,10 +35,7 @@ public class BusinessService {
         businessRepository.deleteById(id);
     }
 
-//    public List<User> getWorker(){
-//        return businessRepository.findAllWorkers();
-//    }
-    public List<Worker> getWorker(long id){
-        return businessRepository.findAllWorkers(id);
+    public Worker[] getWorker(long id){
+        return (Worker[]) businessRepository.findAllWorkers(id).toArray();
     }
 }
