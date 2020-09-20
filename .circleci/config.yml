@@ -12,8 +12,6 @@ jobs:
 
     steps:
 
-      - checkout: 
-
       - run:
           name: Check directory to Spring boot
           command: pwd 
@@ -26,14 +24,16 @@ jobs:
       - restore_cache:
           key: circleci-springboot-api-{{ checksum "pom.xml"}}
 
-      - run: mvn dependency:go-offline
+      - run: 
+          command: mvn dependency:go-offline
           working_directory: ~/project/BackEnd/spring-boot-api/
 
       - save_cache:
-          paths: ~/project/BackEnd/spring-boot-api/.m2
+          paths: [~/project/BackEnd/spring-boot-api/.m2]
           key: circleci-springboot-api-{{ checksum "pom.xml"}}
 
-      - run: mvn package
+      - run:
+          command: mvn package
           working_directory: ~/project/BackEnd/spring-boot-api/
 
       - store_test_results:
