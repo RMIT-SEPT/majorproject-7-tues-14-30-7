@@ -14,7 +14,7 @@ jobs:
     steps:
 
       - checkout
-      - path: ~/majorproject-7-tues-14-30-7
+      - paths: ~/majorproject-7-tues-14-30-7
       - restore_cache:
           key: circleci-springboot-api-{{ checksum "pom.xml"}}
 
