@@ -64,10 +64,7 @@ jobs:
 
 workflows:
   version: 2
-  build_front_and_back:
+  build:
     jobs:
-      - build_frontend:
-          name: Building Front End Projects
-
-      - build_backend:
-          name: Building Back End Projects
+      - build_frontend
+      - build_backend
