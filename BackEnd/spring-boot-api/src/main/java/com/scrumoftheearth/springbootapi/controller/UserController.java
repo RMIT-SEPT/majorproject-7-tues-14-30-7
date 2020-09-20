@@ -6,6 +6,7 @@ import com.scrumoftheearth.springbootapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +22,12 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
+        this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -43,6 +46,8 @@ public class UserController {
             return fieldErrors.get();
         }
         try {
+            String encryptedPass = bCryptPasswordEncoder.encode(user.getPassword());
+            user.setSaltedHashedPassword(encryptedPass);
             user = userService.saveUser(user);
         } catch (NotUniqueException ex) {
             throw new RuntimeException("Failed at saving User due to uniqueness! This should not occur!", ex);
@@ -64,6 +69,10 @@ public class UserController {
             return fieldErrors.get();
         }
         try {
+            if (user.getPassword() != null) {
+                String encryptedPass = bCryptPasswordEncoder.encode(user.getPassword());
+                user.setSaltedHashedPassword(encryptedPass);
+            }
             user = userService.updateUser(user, updatedUser);
         } catch (NotUniqueException ex) {
             throw new RuntimeException("Failed at saving User due to uniqueness! This should not occur!", ex);

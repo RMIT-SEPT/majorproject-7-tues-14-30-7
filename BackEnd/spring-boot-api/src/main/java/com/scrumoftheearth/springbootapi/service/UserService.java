@@ -6,8 +6,10 @@ import com.scrumoftheearth.springbootapi.repository.UserRepository;
 import com.scrumoftheearth.springbootapi.repository.WorkerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -45,10 +47,13 @@ public class UserService {
         oldUser.setHomeAddress(newUser.getHomeAddress());
         oldUser.setPhoneNumber(newUser.getPhoneNumber());
         oldUser.setUserName(newUser.getUserName());
+        if (newUser.getSaltedHashedPassword() != null) {
+            oldUser.setSaltedHashedPassword(newUser.getSaltedHashedPassword());
+        }
         return userRepository.save(oldUser);
     }
+
     public boolean checkUserNameNotUnique(String userName) {
         return userRepository.existsByUserName(userName);
     }
-
 }

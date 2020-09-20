@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.scrumoftheearth.springbootapi.controller.UserController;
 import com.scrumoftheearth.springbootapi.error.NotUniqueException;
 import com.scrumoftheearth.springbootapi.model.User;
+import com.scrumoftheearth.springbootapi.security.SecurityUserService;
+import com.scrumoftheearth.springbootapi.security.WebSecurityConfig;
 import com.scrumoftheearth.springbootapi.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -15,14 +17,23 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.SerializationUtils;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
@@ -35,19 +46,27 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
 /**
  * This Calss handles the Intergration tests for the HTTP Layer.
  * Tests and setup is partly based on the following resource: https://reflectoring.io/spring-boot-web-controller-test/
  * Author: Matthew Walters
  */
-@WebMvcTest(controllers = UserController.class)
+@WebMvcTest(UserController.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class UserAPITests {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
+    private SecurityUserService mockSecurityUserService;
+
+    @MockBean
     private UserService mockUserService;
+
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     private ObjectMapper objectMapper;
 
@@ -57,6 +76,7 @@ public class UserAPITests {
 
     @BeforeEach
     void init() {
+
         dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); /* https://mkyong.com/java8/java-8-how-to-format-localdatetime/ */
         objectMapper = new ObjectMapper();
 
@@ -114,6 +134,9 @@ public class UserAPITests {
         }
     }
 
+    // TODO: MODIFY TEST METHODS TO USE PRINCIPAL AS SHOWN BELOW
+    //  https://stackoverflow.com/questions/45561471/mock-principal-for-spring-rest-controller
+
     /* Tests for URI POST '/user/' */
     @Nested
     public class CreateTests {
@@ -129,6 +152,7 @@ public class UserAPITests {
             /*  TODO: This should work the other-way in that the object is deserialize into a user object
                     and all the fields are checked.
             * */
+            // TODO: FIX ERROR REGARDING INCORRECT MOCK
             String resultJson = result.getResponse().getContentAsString();
             assertEquals(testUserAsJson, resultJson);
         }
