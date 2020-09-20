@@ -14,15 +14,6 @@ jobs:
 
       - checkout
           
-      - run:
-          name: Check directory to Spring boot
-          command: pwd 
-    
-      - run:
-          name: Check files in directory of Spring boot
-          command: ls 
-          working_directory: ~/project/BackEnd/spring-boot-api/
-
       - restore_cache:
           keys: 
             - circleci-springboot-api-{{ checksum "~/project/BackEnd/spring-boot-api/pom.xml"}}
