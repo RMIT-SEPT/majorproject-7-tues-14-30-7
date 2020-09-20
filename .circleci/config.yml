@@ -12,13 +12,15 @@ jobs:
 
     steps:
 
+      - checkout
+          
       - run:
           name: Check directory to Spring boot
           command: pwd 
     
       - run:
-          name: Check and change directory to Spring boot
-          command: pwd 
+          name: Check files in directory of Spring boot
+          command: ls 
           working_directory: ~/project/BackEnd/spring-boot-api/
 
       - restore_cache:
