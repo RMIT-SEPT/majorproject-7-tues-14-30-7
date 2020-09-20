@@ -1,7 +1,6 @@
 version: 2
 jobs:
-  build:
-
+  build_backend:
     docker:
       - image: circleci/openjdk:8-jdk-stretch
       - image: circleci/postgres:9.6.3-alpine
@@ -9,22 +8,20 @@ jobs:
           POSTGRES_USER: root
           POSTGRES_DB: circle_test
 
-
     steps:
-
       - checkout
-          
+
       - restore_cache:
-          keys: 
+          keys:
             - circleci-springboot-api-{{ checksum "~/project/BackEnd/spring-boot-api/pom.xml"}}
             - circleci-springboot-api-
 
-      - run: 
+      - run:
           command: mvn dependency:go-offline
           working_directory: ~/project/BackEnd/spring-boot-api/
 
       - save_cache:
-          paths: 
+          paths:
             - .m2
           key: circleci-springboot-api-{{ checksum "~/project/BackEnd/spring-boot-api/pom.xml"}}
 
@@ -35,6 +32,42 @@ jobs:
       - store_test_results:
           path: ~/project/BackEnd/spring-boot-api/target/surefire-reports
 
-      - store_artifacts :
+      - store_artifacts:
           path: ~/project/BackEnd/spring-boot-api/target/spring-boot-api-0.0.1-SNAPSHOT.jar
 
+  build_frontend:
+    docker:
+      - image: circleci/node:latest
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - react-frontend-dependencies-{{ checksum "~/project/FrontEnd/react-web-app/package-lock.json" }}
+            - react-frontend-dependencies-
+
+      - run:
+          name: Clean and Install Front-end Dependencies
+          command: npm ci
+          working_directory: ~/project/FrontEnd/react-web-app/
+
+      - save_cache:
+          paths:
+            - .npm
+          key: react-frontend-dependencies-{{ checksum "~/project/FrontEnd/react-web-app/package-lock.json" }}
+
+      - run:
+          name: Run React Tests
+          command: npm test
+          working_directory: ~/project/FrontEnd/react-web-app/
+
+workflows:
+  version: 2
+  build_front_and_back:
+    jobs:
+      - build_frontend:
+          name: Building Front End Projects
+
+      - build_backend:
+          name: Building Back End Projects
