@@ -2,6 +2,7 @@ package com.scrumoftheearth.springbootapi.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -24,6 +25,7 @@ public class Business {
 
     @OneToOne
     @JoinColumn(name = "BusinessBState_id")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @ApiModelProperty(name="businessBState")
     // state of the business
     private BusinessBState businessBState;
