@@ -7,10 +7,10 @@ import UserHomepage from './components/User/UserHomepage';
 import { BrowserRouter as Router,Switch,Route,Link } from "react-router-dom";
 import HomePageContent from './components/HomePage/HomePageContent';
 
+
 function App() {
   return (
     <div>
-
       <Router>
         <Switch>
           <Route path="/" exact component={HomePageContent} />
