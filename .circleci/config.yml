@@ -22,15 +22,18 @@ jobs:
           working_directory: ~/project/BackEnd/spring-boot-api/
 
       - restore_cache:
-          key: circleci-springboot-api-{{ checksum "pom.xml"}}
+          keys: 
+            - circleci-springboot-api-{{ checksum "~/project/BackEnd/spring-boot-api/pom.xml"}}
+            - circleci-springboot-api-
 
       - run: 
           command: mvn dependency:go-offline
           working_directory: ~/project/BackEnd/spring-boot-api/
 
       - save_cache:
-          paths: [~/project/BackEnd/spring-boot-api/.m2]
-          key: circleci-springboot-api-{{ checksum "pom.xml"}}
+          paths: 
+            - .m2
+          key: circleci-springboot-api-{{ checksum "~/project/BackEnd/spring-boot-api/pom.xml"}}
 
       - run:
           command: mvn package
