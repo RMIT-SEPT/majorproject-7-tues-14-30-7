@@ -5,6 +5,7 @@ import BusinessPage from './components/Business/BusinessPage';
 import UserHomepage from './components/User/UserHomepage';
 import { BrowserRouter as Router,Switch,Route,Link } from "react-router-dom";
 import HomePageContent from './components/HomePage/HomePageContent';
+import EditBusinessPage from './components/Business/EditBusinessPage';
 import LoginPage from './components/Entry/LoginPage';
 import RegisterPage from './components/Entry/RegisterPage';
 import {Provider} from "react-redux";
@@ -13,16 +14,17 @@ function App() {
   return (
     <div>
       <Provider store={store}>
-        <Router>
-          <Switch>
-            <Route path="/" exact component={HomePageContent} />
-            <Route path="/Worker" component={Worker} />
-            <Route path="/BusinessPage" component={BusinessPage} />
-            <Route path="/Login" component={LoginPage} />
-            <Route path="/Signup" component={RegisterPage} />
-            <Route exact path='/UserHomepage/:id' component={UserHomepage}/>
-          </Switch>
-        </Router>
+      <Router>
+        <Switch>
+          <Route path="/" exact component={HomePageContent} />
+          <Route path="/Worker" component={Worker} />
+          <Route exact path="/BusinessPage/:id" render={(props) => <BusinessPage {...props}/>}/>
+          <Route path="/BusinessPage/edit/:id" render={(props) => <EditBusinessPage {...props}/>}/>
+          <Route path="/Login" component={LoginPage} />
+          <Route path="/Signup" component={RegisterPage} />
+          <Route exact path='/UserHomepage/:id' component={UserHomepage}/>
+        </Switch>
+      </Router>
       </Provider>
     </div>
   );
