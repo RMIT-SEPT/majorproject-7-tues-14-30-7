@@ -20,9 +20,8 @@ function App() {
             <Route exact path="/" component={HomePageContent} />
             <Route path="/Worker" component={Worker} />
             <Route exact path='/UserHomepage/:id' component={UserHomepage}/>
-            <Route path="/BusinessPage" component={BusinessPage} />
             <Route exact path="/BusinessPage/:id" render={(props) => <BusinessPage {...props}/>}/>
-            <Route path="/BusinessPage/edit/:id" render={(props) => <EditBusinessPage {...props}/>}/>
+          <Route path="/BusinessPage/edit/:id" render={(props) => <EditBusinessPage {...props}/>}/>
             <Route path="/Search/:searchid" render={(props) => <SearchPage {...props}/> } />
             <Route path="/Search" component={SearchPage} /> 
             <Route path="/Login" component={LoginPage} />
