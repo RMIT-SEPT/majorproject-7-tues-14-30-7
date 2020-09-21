@@ -1,17 +1,22 @@
 import React, { Component } from 'react'
 import '../../App.scss';
-import HomePageContent from './HomePageContent';
-import { BrowserRouter as Router,Switch,Route,Link } from "react-router-dom";
+import { BrowserRouter as Router,Link } from "react-router-dom";
+import NavSearch from './NavSearch';
+import HomePageTitle from './HomePageTitle';
 
-export default class HomePageHeader extends React.Component {
+
+export default class HomePageHeader extends Component {
     render() {
         return (
             <div>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
                 <nav className="navbar" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
-                    <div className="navbar-item">
+                    {/* <div className="navbar-item">
                         <Link to="/"><img src={require("./Images/brand.png")} width="112" height="28" alt="nav-img"/></Link>
+                    </div> */}
+                    <div className="navbar-item">
+                        <HomePageTitle/>
                     </div>
                     
                     <label
@@ -44,13 +49,9 @@ export default class HomePageHeader extends React.Component {
                     <div className="navbar-menu">
                         <div className="navbar-start">
                             <div className="navbar-item" id="burgerzoomed">
-                                <div className="field">
-                                    <div className="control">
-                                        <input className="text is-primary" placeholder="Search"></input>
-                                        <label> <a href="localhost:3000" id="searchbutton">
-                                            <i className="fa fa-search"></i></a></label>
-                                    </div>
-                                </div>
+
+                                <NavSearch/>
+
                             </div>
                             <div className="navbar-item">
                                 <Link to="/CustomerHomePage">Dashboard</Link>

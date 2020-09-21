@@ -7,11 +7,10 @@ export default class BusinessPage extends React.Component<{},any>{
         super(props)
         this.state = {
             business: {},
-            businessId: 1
         }
     }
-
-    //API call for getting the business info
+    
+  //API call for getting the business info
     componentDidMount(){
         var apicall = "http://localhost:8080/api/Business/findById=" + this.state.businessId
         fetch(apicall)
