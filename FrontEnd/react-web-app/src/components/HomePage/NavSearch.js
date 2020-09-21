@@ -45,7 +45,7 @@ export default class NavSearch extends Component {
                                 pathname: "/Search/"+this.state.search,
                                 state: {searchterm: this.state.search},
                             }} id="navsearchlink">
-                                <span onClick={this.reset} id="searchspan">  <i className="fa fa-search" /></span>
+                                <span onClick={this.reset} id="searchspan">  <div className="fa fa-search" /></span>
                             </Link>
                         </label>
                     </div>
