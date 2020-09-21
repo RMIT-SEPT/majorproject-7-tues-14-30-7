@@ -25,6 +25,7 @@ public class BusinessAPITest {
     @MockBean
     private BusinessRepository businessRepository;
 
+    // set up test database with 3 Businesses
     @BeforeEach
     public void setup(){
         Business testcase1 = new Business(1,"bus1","blurb1","description1","address1","123");
@@ -35,6 +36,7 @@ public class BusinessAPITest {
         businessRepository.save(testcase3);
     }
 
+    // Testing adding a new business
     @Test
     public void Test_add(){
         Business bus4 = new Business(4,"bus4","blurb4","description4","address4","123");
@@ -43,6 +45,7 @@ public class BusinessAPITest {
         assertEquals(bus4,businessService.saveOrUpdate(bus4));
     }
 
+    // Testing updating an already added business
     @Test
     public void Test_update(){
         Business testcase1 = new Business(1,"bus1","blurb1","description1","address1","123");
@@ -52,6 +55,7 @@ public class BusinessAPITest {
         assertEquals(testcase1,businessService.saveOrUpdate(testcase1));
     }
 
+    // Testing if the GetAll() gets all the setup() businesses
     @Test
     public void Test_GetAll(){
         Business testcase1 = new Business(1,"bus1","blurb1","description1","address1","123");
@@ -65,6 +69,7 @@ public class BusinessAPITest {
         assertEquals(3,businessService.getAll().size());
     }
 
+    // Testing to get the Business information based on their id
     @Test
     public void Test_GetById(){
         long idTofind = 2;
@@ -73,6 +78,7 @@ public class BusinessAPITest {
         assertEquals(Optional.of(testcase2),businessService.getById(idTofind));
     }
 
+    // testing if the deleting of a business works as intended
     @Test
     public void Test_DeleteById(){
         Business testcase3 = new Business(3,"bus3","blurb3","description3","address3","123");
