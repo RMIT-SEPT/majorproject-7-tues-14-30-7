@@ -33,12 +33,12 @@ public class BusinessHours {
     // long to save day (monday = 1, tuesday = 2 etc)
     private int day;
 
-    @JsonFormat(pattern = ("HH:mm:ss"))
+    @JsonFormat(pattern = ("HH:mm"))
     @ApiModelProperty(name="openingTime",value = "09:00:00")
     // opening time
     private Timestamp openingTime;
 
-    @JsonFormat(pattern = ("HH:mm:ss"))
+    @JsonFormat(pattern = ("HH:mm"))
     @ApiModelProperty(name = "closingTime",value = "17:00:00")
     // closing time
     private Timestamp closingTime;
