@@ -3,7 +3,7 @@ import { GET_ERRORS } from "./types";
 
 export const createUser = (newUser, history) => async dispatch => {
   try {
-    const res = await axios.post("http://localhost:8080/api/user/", newUser);
+    const res = await axios.post("http://localhost:8080/user", newUser);
     console.log(res.data.id);
     const userID = res.data.id;
     history.push(`/UserHomepage/${userID}`);

@@ -39,7 +39,9 @@ class LoginPage extends Component {
                             <p className = "subtitle has-text-white">Temporary subtitle</p>
                             <div className = "box">
                                 <div className = "box">
+                                <Link to="/" >
                                     <img src={require("../HomePage/Images/brand.png")}></img>
+                                </Link>
                                 </div>
                                 <div className = "title has-text-grey is-5">
                                     Please enter your username and password.
