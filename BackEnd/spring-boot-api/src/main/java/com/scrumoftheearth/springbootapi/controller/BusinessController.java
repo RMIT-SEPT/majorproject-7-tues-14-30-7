@@ -56,12 +56,9 @@ public class BusinessController {
     public void deleteBusiness(@PathVariable long id){
         businessService.deleteById(id);
     }
-
-<<<<<<< HEAD
-=======
     // for updating a business by ID
     @CrossOrigin(origins = "http://localhost:3000")
->>>>>>> edit-business-page
+
     @PutMapping("/update={id}")
     @ApiOperation(value = "Updating a Business with the given id",response = Iterable.class,
             notes = "used to update a business information that has the given id, needs all unchanged variable in request")
