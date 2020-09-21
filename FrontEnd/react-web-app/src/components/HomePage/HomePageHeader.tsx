@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 import '../../App.scss';
-import HomePageContent from './HomePageContent';
-import { BrowserRouter as Router,Switch,Route,Link } from "react-router-dom";
+import { BrowserRouter as Router,Link } from "react-router-dom";
+import NavSearch from './NavSearch';
+import HomePageTitle from './HomePageTitle';
 
-export default class HomePageHeader extends React.Component {
+
+export default class HomePageHeader extends Component {
     render() {
         return (
             <div>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
                 <nav className="navbar" role="navigation" aria-label="main navigation">
+<<<<<<< HEAD
                     <div className="navbar-brand">
                         <div className="navbar-item">
                             <Link to="/"><img src={require("./Images/brand.png")} width="112" height="28" alt="nav-img"/></Link>
@@ -25,6 +28,27 @@ export default class HomePageHeader extends React.Component {
                             <span aria-hidden="true" />
                             <span aria-hidden="true" />
                         </label>
+=======
+                <div className="navbar-brand">
+                    {/* <div className="navbar-item">
+                        <Link to="/"><img src={require("./Images/brand.png")} width="112" height="28" alt="nav-img"/></Link>
+                    </div> */}
+                    <div className="navbar-item">
+                        <HomePageTitle/>
+                    </div>
+                    
+                    <label
+                        role="button"
+                        className="navbar-burger burger"
+                        aria-label="menu"
+                        aria-expanded="false"
+                        htmlFor="nav-toggle-state"
+                        >
+                        <span aria-hidden="true" />
+                        <span aria-hidden="true" />
+                        <span aria-hidden="true" />
+                    </label>
+>>>>>>> e6b53176a435306d2adf0a1202e581cbf77d77fb
                     </div>
                     <Link to="/Worker" className="navbar-item">
                         <a>Worker</a>
@@ -43,6 +67,7 @@ export default class HomePageHeader extends React.Component {
                     <div className="navbar-menu">
                         <div className="navbar-start">
                             <div className="navbar-item" id="burgerzoomed">
+<<<<<<< HEAD
                                 <div className="field">
                                     <div className="control">
                                         <input className="text is-primary" placeholder="Search"></input>
@@ -53,6 +78,11 @@ export default class HomePageHeader extends React.Component {
                                         </label>
                                     </div>
                                 </div>
+=======
+
+                                <NavSearch/>
+
+>>>>>>> e6b53176a435306d2adf0a1202e581cbf77d77fb
                             </div>
                             <div className="navbar-item">
                                 <Link to="/CustomerHomePage">Dashboard</Link>
@@ -75,15 +105,16 @@ export default class HomePageHeader extends React.Component {
                             <div className="navbar-item">
                                 <div className="buttons">
                                     <div className="button is-primary" id="signup">
-                                        <strong>Sign up</strong>
+                                        <Link to="/Signup"><strong>Sign Up</strong></Link>
                                     </div>
                                     <div className="button is-light">
-                                        Log in
+                                        <Link to="/Login">Login</Link>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+<<<<<<< HEAD
                 </nav>
             </div>
 
@@ -93,3 +124,10 @@ export default class HomePageHeader extends React.Component {
     );
 }
 }
+=======
+            </nav>
+            </div>
+        )
+    }
+}
+>>>>>>> e6b53176a435306d2adf0a1202e581cbf77d77fb

@@ -33,5 +33,10 @@ build/
 ### VS Code ###
 .vscode/
 
+<<<<<<< HEAD
+### DATA ###
+/src/main/resources/datadatabase.lock.db
+=======
 ### Data ###
 /src/main/resources/data/
+>>>>>>> develop
