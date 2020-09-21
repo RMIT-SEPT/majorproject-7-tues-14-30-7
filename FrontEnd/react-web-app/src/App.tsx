@@ -11,6 +11,7 @@ import LoginPage from './components/Entry/LoginPage';
 import RegisterPage from './components/Entry/RegisterPage';
 import {Provider} from "react-redux";
 import store from './store';
+
 function App() {
   return (
     <div>
