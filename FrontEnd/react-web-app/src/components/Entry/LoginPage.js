@@ -1,7 +1,33 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router,Switch,Route,Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import {userLogin} from "../../actions/userLogin";
 
-export default class LoginPage extends Component {
+class LoginPage extends Component {
+    constructor(){
+        super();
+        this.state ={
+            userName:"",
+            password: ""
+        };
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    onChange(e){
+        this.setState({[e.target.name]: e.target.value});
+    }
+
+    onSubmit(e){
+        e.preventDefault();
+        const loginUser = {
+            userName: this.state.userName,
+            password: this.state.password
+        }
+        console.log(loginUser);
+        this.props.userLogin(loginUser, this.props.history);
+    }
     render() {
         return (
             <div className = "hero is-fullheight is-primary">
@@ -18,17 +44,19 @@ export default class LoginPage extends Component {
                                 <div className = "title has-text-grey is-5">
                                     Please enter your username and password.
                                 </div>
-                                <form>
+                                <form id="login" onSubmit={this.onSubmit}>
                                     <div className = "field">
                                         <div className = "control">
-                                            <input className = "input is-medium" type="text" placeholder="Username">
+                                            <input className="input is-medium" type="text" placeholder="Username" 
+                                            name="userName" value={this.state.userName} onChange = {this.onChange}>
                                             </input>
                                         </div>
                                     </div>
                                     <div className = "field">
                                         <div className = "control">
-                                            <input className = "input is-medium" type="password" placeholder="Password">
-                                            </input>
+                                        <input className = "input is-medium" type="password" placeholder="Password"
+                                        name="password" value={this.state.password} onChange = {this.onChange}>
+                                        </input>
                                         </div>
                                     </div>
                                     <button className="button is-block is-danger is-large is-fullwidth">Login</button>
@@ -47,3 +75,10 @@ export default class LoginPage extends Component {
         )
     }
 }
+LoginPage.propTypes = {
+    createProject: PropTypes.func.isRequired
+  };
+export default connect(
+    null,
+    { userLogin }
+  )(LoginPage);
