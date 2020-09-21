@@ -74,20 +74,16 @@ export default class HomePageHeader extends Component {
                             <div className="navbar-item">
                                 <div className="buttons">
                                     <div className="button is-primary" id="signup">
-                                        <strong>Sign up</strong>
+                                        <Link to="/Signup"><strong>Sign Up</strong></Link>
                                     </div>
                                     <div className="button is-light">
-                                        Log in
+                                        <Link to="/Login">Login</Link>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </nav>
-
-            <HomePageContent/>
-
             </div>
         )
     }
