@@ -63,6 +63,11 @@ body {
   //height: 92vh;
 }
 
+.content {
+  height: 100vh;
+  text-align: center
+}
+
 #herobanner {
   padding-bottom: 70vh;
   font-size: 1.5rem;
@@ -202,7 +207,6 @@ body {
   #bushide {
     display: none;
   }
-
   #searchlist {
     overflow-y: auto;
   }
@@ -283,6 +287,9 @@ a, a:visited, a:link, a:active {
   display: none;
 }
 
+.navbar-item {
+  text-align: center;
+}
 #nav-toggle-state:checked ~ .navbar-menu {
   display: block;
 }
@@ -299,4 +306,8 @@ a, a:visited, a:link, a:active {
   font-size: 1rem;
   color: black;
   
+}
+
+#loading {
+  text-align: center;
 }
