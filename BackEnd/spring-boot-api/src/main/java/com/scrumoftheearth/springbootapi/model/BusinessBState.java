@@ -1,22 +1,30 @@
 package com.scrumoftheearth.springbootapi.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 
 // Store the state of one business
 @Entity
+@ApiModel(description = "BusinessBState Model")
 public class BusinessBState {
-    // Business state id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(name="id",required = true,value = "1")
+    // Business state id
     private long id;
+
+    @OneToOne
+    @ApiModelProperty(name="business",required = true)
     // Business this state belongs to
-    @OneToOne
     private Business business;
-    // business state
+
     @OneToOne
-    private BState BState;
-    // State message
-    private String messsage;
+    @JoinColumn(name = "business_state_id")
+    @ApiModelProperty(name="businessState",required = true)
+    // business state
+    private BusinessState BusinessState;
 
     public BusinessBState() {
 
@@ -38,19 +46,12 @@ public class BusinessBState {
         this.business = business;
     }
 
-    public com.scrumoftheearth.springbootapi.model.BState getBState() {
-        return BState;
+    public BusinessState getBState() {
+        return BusinessState;
     }
 
-    public void setBState(com.scrumoftheearth.springbootapi.model.BState BState) {
-        this.BState = BState;
+    public void setBState(BusinessState BusinessState) {
+        this.BusinessState = BusinessState;
     }
 
-    public String getMesssage() {
-        return messsage;
-    }
-
-    public void setMesssage(String messsage) {
-        this.messsage = messsage;
-    }
 }

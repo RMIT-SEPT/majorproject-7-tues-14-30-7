@@ -1,5 +1,5 @@
 import React from "react"
-import BusinessPage from "./BusinessPage";
+import BusinessPage from "../components/Business/BusinessPage";
 
 const { shallow, mount } = require("enzyme")
 const Enzyme = require("enzyme")
@@ -7,7 +7,7 @@ const Adapter = require("enzyme-adapter-react-16");
 
 Enzyme.configure({ adapter: new Adapter()}); 
 
-// test if the BusinessPage component render properly
+// test if the edit businessPage component render properly
 describe('<BusinessPage /> component unit test', () => {
     it('should render correctly', () =>{
         const wrapper = shallow(<BusinessPage />);
