@@ -4,3 +4,6 @@ creds2.sh
 terraform.tfstate
 terraform.tfstate.backup
 tmp/
+/.idea/
+/Users/giacomopirrone/majorproject-7-tues-14-30-7/BackEnd/.idea
+/data/
