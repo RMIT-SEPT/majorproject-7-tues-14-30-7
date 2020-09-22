@@ -15,7 +15,8 @@ import java.util.Arrays;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-@EnableWebSecurity
+// Debug is insecure, only use it if needing to see all requests
+@EnableWebSecurity(debug = false)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final SecurityUserService securityUserService;
@@ -28,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors(withDefaults())
+        http.csrf().disable()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .authorizeRequests()
                     .antMatchers(SecurityConstants.AUTH_WHITELIST_PATHS)
@@ -44,7 +45,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                    .antMatchers(HttpMethod.GET, "/api/service**").permitAll()
                 .and()
                 .addFilter(new JWTAuthorizationFilter(securityUserService, authenticationManager()))
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().cors(withDefaults());
     }
 
     @Override
@@ -54,9 +56,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(SecurityConstants.CROSS_ORIGIN_ALLOWED);
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "PATCH", "DELETE"));
+        CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues(); // Defaults to open CORS
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080", "http://localhost:3000"));
+//        configuration.addAllowedOrigin("*");
+        configuration.setAllowedMethods(Arrays.asList("HEAD", "GET","POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+//        configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
