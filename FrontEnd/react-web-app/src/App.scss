@@ -8,6 +8,7 @@ $red: rgb(247, 71, 71);
 $red-invert: findColorInvert($red);
 $primary: $red;
 $primary-invert: $red-invert;
+$is-primary: $red;
 
 $agmemain: rgb(255, 169, 98);
 $agmemain-invert: findColorInvert($agmemain);
@@ -37,6 +38,7 @@ html {
   padding: 0px;
   height: 100%;
 }
+
 body {
   overflow-y: hidden;
   margin: 0px;
@@ -47,6 +49,10 @@ body {
   border-bottom: 1px solid rgb(179, 179, 179);
 }
 
+#brand {
+  font-weight: bold;
+}
+
 #signup {
   background-color: $primary;
 }
@@ -55,6 +61,11 @@ body {
   background-color: rgb(221, 221, 221);
   //background-color: rgb(241, 241, 241);
   //height: 92vh;
+}
+
+.content {
+  height: 100vh;
+  text-align: center
 }
 
 #herobanner {
@@ -80,6 +91,35 @@ body {
   overflow: hidden;
 }
 
+#buslvl {
+  border: solid rgb(179, 179, 179) 1px;
+  height: 10vh;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  margin-left: 50px;
+  margin-right: 50px;
+  border-radius: 7px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05), 0 2px 20px 0 rgba(0, 0, 0, 0.05);
+  font-size: 1em;
+  padding-bottom: 100px;
+}
+#buslvl:hover {
+  background-color: rgb(250, 250, 250);
+}
+
+#paddingtest {
+  font-size: 3.5vh;
+}
+
+#onlyname {
+  display: none;
+}
+
+#hiddenbox {
+  visibility: hidden;
+}
+
+
 #bustext {
   //color: rgb(179, 179, 179);
   color: $grey_dark;
@@ -87,8 +127,54 @@ body {
 }
 
 #busimg {
+  margin-top: 20px;
   width: 90px;
   height: 90px;
+}
+
+#navsearchbar {
+  border-radius: 4px;
+  border: solid rgb(136, 136, 136) 1px;
+}
+
+#searchcontainer {
+  //padding-bottom: 100px;
+  overflow-y: auto;
+}
+#searchlist {
+  height: 1px;
+  margin-top: 2vh;
+  margin-left: 2%;
+  margin-right: 2%;
+  padding-bottom: calc(76vh - 2px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+#searchresults {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+#searchhero {
+  background-color: $primary;
+  padding-bottom: 20px;
+  padding-top: 25px;
+}
+#searchradio {
+  text-align: left;
+}
+.space {
+  padding-bottom: 50vh;
+}
+
+#submitbutton {
+  background-color: $red;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  //border: solid rgb(136, 136, 136) 0.5px;
+  // padding-top: 5px;
+  // padding-bottom: 5px;
+  border-radius: 4px;
 }
 
 @media only screen and (max-width: 1060px) {
@@ -98,6 +184,33 @@ body {
   #businesscolumn {
     width: 100%;
   }
+  #buslvl {
+    display: none;
+    font-size: 2vh;
+  }
+  #onlyname {
+    display: block;
+    border: solid rgb(179, 179, 179) 1px;
+    height: 10vh;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    margin-left: 50px;
+    margin-right: 50px;
+    border-radius: 7px;
+    font-size: 1.5vh;
+    padding-bottom: 100px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05), 0 2px 20px 0 rgba(0, 0, 0, 0.05);
+  }
+  #onlyname:hover {
+    background-color: rgb(250, 250, 250);
+  }
+  #bushide {
+    display: none;
+  }
+  #searchlist {
+    overflow-y: auto;
+  }
+
   #herobanner2 {
     padding-top: 0px;
     padding-bottom: 50px;
@@ -142,8 +255,14 @@ body {
   #businesslist {
     padding-bottom: 500px;
   }
+  #pagbut {
+    margin-left: 0px;
+  }
 }
 
+#businesslistcontainer {
+  height: 30vh;
+}
 #businesslist {
   margin-top: 15px;
   overflow-y: auto;
@@ -168,6 +287,27 @@ a, a:visited, a:link, a:active {
   display: none;
 }
 
+.navbar-item {
+  text-align: center;
+}
 #nav-toggle-state:checked ~ .navbar-menu {
   display: block;
+}
+
+.pagbutton {
+  background-color:white;
+  display: inline-block;
+  border: solid lightgray 1px;
+  border-radius: 3px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 1rem;
+  color: black;
+  
+}
+
+#loading {
+  text-align: center;
 }
