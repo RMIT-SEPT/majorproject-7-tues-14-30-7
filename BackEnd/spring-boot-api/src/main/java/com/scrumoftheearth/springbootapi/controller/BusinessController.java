@@ -19,8 +19,13 @@ import java.util.Optional;
 @RequestMapping("/api/Business")
 @ApiOperation(value = "/api/Business",tags = "Business Object Controller")
 public class BusinessController {
-    @Autowired
+
     private BusinessService businessService;
+
+    @Autowired
+    BusinessController(BusinessService businessService) {
+        this.businessService = businessService;
+    }
 
     @PostMapping("")
     @ApiOperation(value = "Add a new Business",response = Iterable.class,
@@ -33,7 +38,6 @@ public class BusinessController {
        return new ResponseEntity<Business>(business, HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("")
     @ApiOperation(value = "Getting a List of all Businesses",response = Iterable.class,
             notes = "used get all information about every business in the database")
@@ -41,7 +45,6 @@ public class BusinessController {
         return businessService.getAll();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/findById={id}")
     @ApiOperation(value = "Getting a Business that matches its id",response = Iterable.class,
             notes = "used to get all the business information that has a matching id")
@@ -57,7 +60,6 @@ public class BusinessController {
         businessService.deleteById(id);
     }
     // for updating a business by ID
-    @CrossOrigin(origins = "http://localhost:3000")
 
     @PutMapping("/update={id}")
     @ApiOperation(value = "Updating a Business with the given id",response = Iterable.class,
@@ -77,7 +79,6 @@ public class BusinessController {
         return ResponseEntity.noContent().build();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/getWorker={id}")
     @ApiOperation(value = "Getting the List of worker",response = Iterable.class,
             notes = "used to have a list of all the worker associated with that business")
