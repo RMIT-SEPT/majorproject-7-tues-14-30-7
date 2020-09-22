@@ -1,5 +1,6 @@
 import React from "react"
 import "../../App.scss"
+import HomePageHeader from "../HomePage/HomePageHeader"
 import { Link, withRouter } from 'react-router-dom'
 
 export default class BusinessPage extends React.Component{
@@ -31,7 +32,7 @@ export default class BusinessPage extends React.Component{
                 .then(data => {
                     var dataArray = [];
                     dataArray.push(data);
-                    if(dataArray.length > 0){
+                    if(dataArray.length > 1){
                         var input = "";
 
                         dataArray.forEach((row) =>{
@@ -57,11 +58,12 @@ export default class BusinessPage extends React.Component{
                 .then(data => {
                     var dataArray = []
                     dataArray.push(data)
+                    this.setState({
+                        businessTime: dataArray
+                    })
                     var daysarray = ["ERROR/TIME NOT SET","Monday","Tuesday","Wednesday","Thurday","Firday","Saturday","Sunday"]
-                    if(dataArray.length > 0){
-                        var input = "<p className='has-text-weight-bold'>Business Hours</p>"
-
-                        for(var i = 0; i < 7;i++){
+                    var input = "<p className='has-text-weight-bold'>Business Hours</p>"
+                         for(var i = 0; i < 7;i++){
                             dataArray.forEach((row) =>{
                                 if(row[i].openingTime == null || row[i].closingTime == null)
                                     input += "<p>" + daysarray[i + 1] + ": CLOSED </p>"
@@ -103,14 +105,15 @@ export default class BusinessPage extends React.Component{
                             document.getElementById("businesshours").innerHTML = input;
                         }
                     }
-                })
+                )
             })
     }
 
     render(){
-        {var busid = this.props.match.params.id}
+        var busid = this.props.match.params.id
         return( 
             <section className="hero is-fullheight is-default is-bold">
+                <HomePageHeader/>
                 <div className="hero is-primary is-bold">
                     <h1 className="title is-1 has-text-centered py-6">{this.state.business.name}</h1>
                 </div>
