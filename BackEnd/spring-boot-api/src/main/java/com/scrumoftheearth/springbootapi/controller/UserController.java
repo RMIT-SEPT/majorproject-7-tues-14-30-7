@@ -3,6 +3,7 @@ package com.scrumoftheearth.springbootapi.controller;
 import com.scrumoftheearth.springbootapi.error.NotUniqueException;
 import com.scrumoftheearth.springbootapi.model.User;
 import com.scrumoftheearth.springbootapi.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/user")
+@ApiOperation(value = "/api/user", tags = "User Model Controller")
 public class UserController {
 
     private final UserService userService;
@@ -30,17 +31,15 @@ public class UserController {
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    //@CrossOrigin(origins = "https://master.d2sj26qe4gyi28.amplifyapp.com")
     @GetMapping("/{id}")
+    @ApiOperation(value = "Get a user by ID", response = User.class, httpMethod = "GET")
     public ResponseEntity<?> READUser(@PathVariable("id") Long id) throws Throwable {
         User user = userService.getById(id);
         return new ResponseEntity<User>(user, HttpStatus.FOUND);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    //@CrossOrigin(origins = "https://master.d2sj26qe4gyi28.amplifyapp.com")
     @PostMapping("")
+    @ApiOperation(value = "Create a new User", response = User.class, httpMethod = "POST")
     public ResponseEntity<?> CREATEUser(@Valid @RequestBody User user, BindingResult bindingResult) {
         UserErrors userErrors = new UserErrors().nonUniqueUserName(userService.checkUserNameNotUnique(user.getUserName()));
         checkValidPasswords(user, userErrors);
@@ -59,6 +58,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
+    @ApiOperation(value = "Update a user by ID", response = User.class, httpMethod = "PUT", notes = "Will require authorzation of \"ROLE_USER\"")
     public ResponseEntity<?> UPDATEUser(@PathVariable("id") Long id, @Valid @RequestBody User updatedUser, BindingResult bindingResult) throws Throwable {
         User user = userService.getById(id);
         UserErrors userErrors = new UserErrors();

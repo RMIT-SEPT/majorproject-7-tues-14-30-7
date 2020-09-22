@@ -30,7 +30,6 @@ import java.util.Optional;
 
 
 @RestController
-@CrossOrigin
 @RequestMapping("/api/worker")
 public class WorkerController {
 
