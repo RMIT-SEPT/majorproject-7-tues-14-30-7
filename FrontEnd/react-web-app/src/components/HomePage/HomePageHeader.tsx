@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react'
 import '../../App.scss';
 import { BrowserRouter as Router,Link } from "react-router-dom";
@@ -25,9 +26,6 @@ export default class HomePageHeader extends Component<headerprops, headerstate> 
 
                 <nav className="navbar" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
-                    {/* <div className="navbar-item">
-                        <Link to="/"><img src={require("./Images/brand.png")} width="112" height="28" alt="nav-img"/></Link>
-                    </div> */}
                     <div className="navbar-item">
                         <HomePageTitle/>
                     </div>
@@ -89,3 +87,8 @@ export default class HomePageHeader extends Component<headerprops, headerstate> 
         )
     }
 }
+
+
+{/* <div className="navbar-item">
+    <Link to="/"><img src={require("./Images/brand.png")} width="112" height="28" alt="nav-img"/></Link>
+</div> */}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Link } from "react-router-dom";
+import { BrowserRouter as Router,Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {createUser} from "../../actions/userActions";
@@ -47,7 +47,9 @@ class RegisterPage extends Component {
                             <hr className = "login-hr"></hr>
                             <div className = "box">
                                 <div className = "box">
+                                <Link to="/" >
                                     <img src={require("../HomePage/Images/brand.png")}></img>
+                                </Link>
                                 </div>
                                 <div className = "title has-text-grey is-5">
                                     Please fill in your details.

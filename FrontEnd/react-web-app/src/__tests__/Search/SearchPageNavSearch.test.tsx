@@ -49,6 +49,16 @@ describe('<NavSearch> component test', () => {
     })
     it("Reloads on submit if pathname includes '/Search/'", () => {
         window.history.replaceState({}, 'searchtest', '/Search/test');
+        Object.defineProperty(window, 'location', {
+            writable: true,
+            value: { assign: jest.fn() }
+          })
+          
+          Object.defineProperty(window.location, 'reload', {
+            writable: true,
+            value: { assign: jest.fn() }
+          })
+        window.location.pathname = "/Search/test"
         window.location.reload = jest.fn();
         wrapper.find("#searchspan").simulate('click');
         expect(window.location.reload).toHaveBeenCalled();

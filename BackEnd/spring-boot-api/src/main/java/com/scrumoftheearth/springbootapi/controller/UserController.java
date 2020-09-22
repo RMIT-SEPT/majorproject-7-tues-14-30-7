@@ -30,13 +30,17 @@ public class UserController {
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
+    //@CrossOrigin(origins = "https://master.d2sj26qe4gyi28.amplifyapp.com")
     @GetMapping("/{id}")
     public ResponseEntity<?> READUser(@PathVariable("id") Long id) throws Throwable {
         User user = userService.getById(id);
         return new ResponseEntity<User>(user, HttpStatus.FOUND);
     }
 
-    @PostMapping("/")
+    @CrossOrigin(origins = "http://localhost:3000")
+    //@CrossOrigin(origins = "https://master.d2sj26qe4gyi28.amplifyapp.com")
+    @PostMapping("")
     public ResponseEntity<?> CREATEUser(@Valid @RequestBody User user, BindingResult bindingResult) {
         UserErrors userErrors = new UserErrors().nonUniqueUserName(userService.checkUserNameNotUnique(user.getUserName()));
         checkValidPasswords(user, userErrors);

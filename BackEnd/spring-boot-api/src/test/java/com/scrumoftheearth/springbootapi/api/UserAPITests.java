@@ -196,7 +196,7 @@ public class UserAPITests {
             String userString = objectMapper.writeValueAsString(testUsers.get(2));
             JsonNode jsonUser = objectMapper.readTree(userString);
             ObjectNode jsonNode = jsonUser.deepCopy();
-            jsonNode.put("createdAt", testUsers.get(2).getCreatedAt().format(dateTimeFormatter));
+            jsonNode.put("createdAt", testUsers.get(2).getCreatedAt().getTime());
             JSONAssert.assertEquals(jsonNode.toString(), resultJson, JSONCompareMode.LENIENT);
         }
 
@@ -226,7 +226,7 @@ public class UserAPITests {
             /* when we want a single string. */
             String editedUserAsJson = objectMapper.writeValueAsString(editedUser);
             ObjectNode editedJsonNode = objectMapper.readTree(editedUserAsJson).deepCopy();
-            editedJsonNode.put("createdAt", testUsers.get(2).getCreatedAt().format(dateTimeFormatter));
+            editedJsonNode.put("createdAt", testUsers.get(2).getCreatedAt().getTime());
             editedUserAsJson = editedJsonNode.toString();
 
             /* https://stackoverflow.com/questions/64036/how-do-you-make-a-deep-copy-of-an-object*/
@@ -245,8 +245,8 @@ public class UserAPITests {
 
             String expectedUserAsString = objectMapper.writeValueAsString(resultUser);
             ObjectNode expectedUserNode = objectMapper.readTree(expectedUserAsString).deepCopy();
-            expectedUserNode.put("updatedAt", resultUser.getUpdatedAt().format(dateTimeFormatter));
-            expectedUserNode.put("createdAt", resultUser.getCreatedAt().format(dateTimeFormatter));
+            expectedUserNode.put("updatedAt", resultUser.getUpdatedAt().getTime());
+            expectedUserNode.put("createdAt", resultUser.getCreatedAt().getTime());
             expectedUserAsString = expectedUserNode.toString();
 
             JSONAssert.assertEquals(expectedUserAsString, resultJson, JSONCompareMode.LENIENT);
@@ -265,7 +265,7 @@ public class UserAPITests {
             /* when we want a single string. */
             String editedUserAsJson = objectMapper.writeValueAsString(editedUser);
             ObjectNode editedJsonNode = objectMapper.readTree(editedUserAsJson).deepCopy();
-            editedJsonNode.put("createdAt", testUsers.get(2).getCreatedAt().format(dateTimeFormatter));
+            editedJsonNode.put("createdAt", testUsers.get(2).getCreatedAt().getTime());
             editedUserAsJson = editedJsonNode.toString();
 
             /* https://stackoverflow.com/questions/64036/how-do-you-make-a-deep-copy-of-an-object*/
@@ -284,8 +284,8 @@ public class UserAPITests {
 
             String expectedUserAsString = objectMapper.writeValueAsString(resultUser);
             ObjectNode expectedUserNode = objectMapper.readTree(expectedUserAsString).deepCopy();
-            expectedUserNode.put("updatedAt", resultUser.getUpdatedAt().format(dateTimeFormatter));
-            expectedUserNode.put("createdAt", resultUser.getCreatedAt().format(dateTimeFormatter));
+            expectedUserNode.put("updatedAt", resultUser.getUpdatedAt().getTime());
+            expectedUserNode.put("createdAt", resultUser.getCreatedAt().getTime());
             expectedUserAsString = expectedUserNode.toString();
 
             JSONAssert.assertEquals(expectedUserAsString, resultJson, JSONCompareMode.LENIENT);
@@ -303,7 +303,7 @@ public class UserAPITests {
             /* when we want a single string. */
             String editedUserAsJson = objectMapper.writeValueAsString(editedUser);
             ObjectNode editedJsonNode = objectMapper.readTree(editedUserAsJson).deepCopy();
-            editedJsonNode.put("createdAt", testUsers.get(2).getCreatedAt().format(dateTimeFormatter));
+            editedJsonNode.put("createdAt", testUsers.get(2).getCreatedAt().getTime());
             editedUserAsJson = editedJsonNode.toString();
 
             when(mockUserService.checkUserNameNotUnique(editedUser.getUserName())).thenReturn(true);
@@ -338,7 +338,7 @@ public class UserAPITests {
             /* when we want a single string. */
             String editedUserAsJson = objectMapper.writeValueAsString(editedUser);
             ObjectNode editedJsonNode = objectMapper.readTree(editedUserAsJson).deepCopy();
-            editedJsonNode.put("createdAt", testUsers.get(2).getCreatedAt().format(dateTimeFormatter));
+            editedJsonNode.put("createdAt", testUsers.get(2).getCreatedAt().getTime());
             editedUserAsJson = editedJsonNode.toString();
 
             when(mockUserService.checkUserNameNotUnique(editedUser.getUserName())).thenReturn(false);
@@ -364,7 +364,7 @@ public class UserAPITests {
             //
             String editedUserAsJson = objectMapper.writeValueAsString(editedUser);
             ObjectNode editedJsonNode = objectMapper.readTree(editedUserAsJson).deepCopy();
-            editedJsonNode.put("createdAt", testUsers.get(2).getCreatedAt().format(dateTimeFormatter));
+            editedJsonNode.put("createdAt", testUsers.get(2).getCreatedAt().getTime());
             editedUserAsJson = editedJsonNode.toString();
 
             when(mockUserService.checkUserNameNotUnique(editedUser.getUserName())).thenReturn(false);

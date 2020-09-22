@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -53,20 +54,20 @@ public class User implements Serializable {
 
     /* https://www.baeldung.com/spring-boot-formatting-json-dates */
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createdAt;
+    @JsonFormat(pattern="yyyy-mm-dd")
+    private Date createdAt;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime updatedAt;
+    @JsonFormat(pattern="yyyy-mm-dd")
+    private Date updatedAt;
 
     @PrePersist
     protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = new Date();
     }
 
     @PreUpdate
     protected void onUpdate() {
-            this.updatedAt = LocalDateTime.now();
+            this.updatedAt = new Date();
     }
 
     public User() { }
@@ -126,11 +127,11 @@ public class User implements Serializable {
         this.homeAddress = homeAddress;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 

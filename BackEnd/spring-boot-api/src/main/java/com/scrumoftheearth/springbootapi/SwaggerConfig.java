@@ -14,6 +14,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
+    /*
     @Bean
     public Docket docket(){
         return new Docket(DocumentationType.SWAGGER_2)
@@ -23,10 +24,12 @@ public class SwaggerConfig {
                 .build();
     }
 
+     */
+
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title("ACME API Documentation")
-                .description("ACME API Information for the Back-end of our program")
+                .title("AGME API Documentation")
+                .description("AGME API Information for the Back-end of our program")
                 .version("V1.0")
                 .build();
     }

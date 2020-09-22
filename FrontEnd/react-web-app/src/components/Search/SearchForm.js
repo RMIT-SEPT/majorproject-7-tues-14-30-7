@@ -84,6 +84,7 @@ export default class SearchForm extends Component {
         }
         
         this.setState({
+            visible: 0,
             set: true, 
             value: this.state.tempval,
             filteredlen: filter,
