@@ -40,11 +40,11 @@ public class WorkerAPITests1 {
     @BeforeEach
     public void setup(){
         testUser1 = new User("testUser1", "test1", "test1",
-                "1 Test Street", "11111111");
+                "1 Test Street", "11111111","","");
         testUser2= new User("testUser2", "test2", "test2",
-                "1 Test Street", "22222222");
+                "1 Test Street", "22222222","","");
         testUser3 = new User("testUser3", "test3", "test3",
-                "1 Test Street", "333333333");
+                "1 Test Street", "333333333","","");
 
         testBusinesses = new ArrayList<>();
         startTimes = new ArrayList<>();

@@ -6,6 +6,7 @@ import { BrowserRouter as Router,Switch,Route } from "react-router-dom";
 import UserHomepage from './components/User/UserHomepage';
 import HomePageContent from './components/HomePage/HomePageContent';
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 function App() {
@@ -20,12 +21,15 @@ function App() {
         </Switch>
       </Router>
 =======
+=======
+>>>>>>> develop
 import SearchPage from './components/Search/SearchPage'
 import EditBusinessPage from './components/Business/EditBusinessPage'
 import LoginPage from './components/Entry/LoginPage';
 import RegisterPage from './components/Entry/RegisterPage';
 import {Provider} from "react-redux";
 import store from './store';
+
 function App() {
   return (
     <div>
@@ -35,9 +39,8 @@ function App() {
             <Route exact path="/" component={HomePageContent} />
             <Route path="/Worker" component={Worker} />
             <Route exact path='/UserHomepage/:id' component={UserHomepage}/>
-            <Route path="/BusinessPage" component={BusinessPage} />
             <Route exact path="/BusinessPage/:id" render={(props) => <BusinessPage {...props}/>}/>
-            <Route path="/BusinessPage/edit/:id" render={(props) => <EditBusinessPage {...props}/>}/>
+          <Route path="/BusinessPage/edit/:id" render={(props) => <EditBusinessPage {...props}/>}/>
             <Route path="/Search/:searchid" render={(props) => <SearchPage {...props}/> } />
             <Route path="/Search" component={SearchPage} /> 
             <Route path="/Login" component={LoginPage} />
@@ -45,6 +48,9 @@ function App() {
           </Switch>
         </Router>
         </Provider>
+<<<<<<< HEAD
+>>>>>>> develop
+=======
 >>>>>>> develop
     </div>
   );
