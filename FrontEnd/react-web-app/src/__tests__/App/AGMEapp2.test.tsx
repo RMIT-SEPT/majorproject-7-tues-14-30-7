@@ -1,10 +1,9 @@
 import React from "react"
 import ReactDOM from 'react-dom'
-import SearchForm from "../components/Search/SearchForm";
+import SearchForm from "../../components/Search/SearchForm";
 import { configure, shallow, render, ShallowWrapper, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import App from "../App";
-import { assert } from "console";
+import App from "../../App";
 
 configure({ adapter: new Adapter()}); 
 
