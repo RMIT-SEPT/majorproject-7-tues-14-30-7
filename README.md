@@ -13,6 +13,7 @@
 
 * Github repository : https://github.com/RMIT-SEPT/majorproject-7-tues-14-30-7
 * Jira Workspace : https://scrumoftheearth.atlassian.net/secure/RapidBoard.jspa?rapidView=1&projectKey=ST7BS&view=planning.nodetail&issueLimit=100
+* Current AWS Front End : https://master.d30q05do7ya65m.amplifyapp.com
 
 
 ## Code documentation
