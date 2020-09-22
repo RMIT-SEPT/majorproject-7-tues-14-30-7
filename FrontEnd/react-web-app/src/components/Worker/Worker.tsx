@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-
-import {BrowserRouter, Router} from "react-router-dom"
 import 'bulma/css/bulma.css'
 import './Worker.scss'
 import Shifts from './Shifts'
-import DropDown from './DropDown'
+import ChangeAvailabilities from './ChangeAvailabilities'
+import ProfileInfo from './ProfileInfo'
+import ServiceInfo from './ServiceInfo'
+import HomePageHeader from '../HomePage/HomePageHeader'
+import queryString from 'query-string'
 
 class Worker extends Component<any, any> {
 
@@ -13,13 +15,14 @@ class Worker extends Component<any, any> {
         this.state = {
             items: [],
             isLoaded: false,
-            showShifts: true
+            showShifts: true,
+            values: queryString.parse(this.props.location.search)
         };
     }
 
 
     componentDidMount() {
-        fetch('http://localhost:8080/api/worker/1').then(res => res.json())
+        fetch('http://localhost:8080/api/worker/' + this.state.values.id).then(res => res.json())
         .then(json => {
             this.setState({
                 isLoaded: true,
@@ -29,6 +32,7 @@ class Worker extends Component<any, any> {
             })
         });
     }
+
 
     
     showOrHideShifts(){
@@ -44,25 +48,17 @@ class Worker extends Component<any, any> {
         }
     }
 
-    deactivateAllLinks(){
+    activateLink = (index) =>{
+        this.state.links[0] = "profile-link"
+        this.state.links[1] = "service-link"
+        this.state.links[2] = "shifts-link"
+        this.state.links[3] = "availability-link"
+        this.state.links[index] = this.state.links[index] + " is-active";
+        var updatedLinks = this.state.links;
         this.setState({
-            links:  ["profile-link", "service-link", "shifts-link", "availability-link"]
+            links: updatedLinks
         })
     }
-
-    activateShiftsLink(){
-        this.setState({
-            links:  ["profile-link", "service-link", "shifts-link is-active", "availability-link"]
-        })
-    }
-
-    activateAvailabilityLink(){
-        this.setState({
-            links:  ["profile-link", "service-link", "shifts-link", "availability-link is-active"]
-        })
-    }
-
-    
 
     render() {
         //State items of this component
@@ -88,10 +84,15 @@ class Worker extends Component<any, any> {
             return <div>Loading...</div>
         }
 
+        else if(items.user == undefined){
+            return <div className="worker-not-found">Worker not found!</div>
+        }
+
         //Display content if loading is complete
         else {
             return (
                 <body className="worker-body">
+                    <HomePageHeader/>
                     <div className="section profile-heading">
                         <div className="columns is-mobile is-multiline">
                             <div className="column is-2">
@@ -103,19 +104,11 @@ class Worker extends Component<any, any> {
                                 <p>
                                     <span className="title is-bold">{firstName + " " + lastName}</span>
                                     <br/>
-                                    <a className="button is-primary is-outlined edit-button" href="#" id="edit-preferences">
-                                                                                                        Edit Profile
+                                    <a className="button is-danger is-outlined edit-button" href="#" id="edit-preferences" onClick={()=>{alert("Your account as been deactivated")}}>
+                                                                                                        Deactivate Profile
                                     </a>
                                     <br/>
                                 </p>
-                                <p className="tagline">
-                                    {
-                                        this.state.items != null ?
-                                        items.description
-                                        : <div>Description did not load</div>
-                                    }
-                                    {items.description}
-                                 </p>
                             </div>
                             <div className="column is-2-tablet is-4-mobile has-text-centered">
                                 <p className="stat-val">3</p>
@@ -134,7 +127,10 @@ class Worker extends Component<any, any> {
                     <div className="profile-options is-fullwidth">
                         <div className="tabs is-fullwidth is-medium">
                             <ul>
-                                <li className={this.state.links[0]}>
+                                <li className={this.state.links[0]}
+                                onClick={()=>{
+                                    this.activateLink(0);
+                                }}>
                                     <a>
                                         <span className="icon">
                                             <i className="fa fa-list"></i>
@@ -142,7 +138,9 @@ class Worker extends Component<any, any> {
                                         <span>Profile Info</span>
                                     </a>
                                 </li>
-                                <li className={this.state.links[1]}>
+                                <li className={this.state.links[1]} onClick={()=>{
+                                    this.activateLink(1);
+                                }}>
                                     <a>
                                         <span className="icon">
                                             <i className="fa fa-list"></i>
@@ -151,9 +149,7 @@ class Worker extends Component<any, any> {
                                     </a>
                                 </li>
                                 <li className={this.state.links[2]} onClick={()=>{
-                                    this.showOrHideShifts();
-                                    this.deactivateAllLinks();
-                                    this.activateShiftsLink();
+                                    this.activateLink(2);
                                 }}>
                                     <a>
                                         <span className="icon">
@@ -163,9 +159,7 @@ class Worker extends Component<any, any> {
                                     </a>
                                 </li>
                                 <li className={this.state.links[3]} onClick={()=>{
-                                    this.showOrHideShifts();
-                                    this.deactivateAllLinks();
-                                    this.activateAvailabilityLink();
+                                    this.activateLink(3);
                                 }}>
                                     <a>
                                         <span className="icon">
@@ -177,13 +171,22 @@ class Worker extends Component<any, any> {
                             </ul>
                         </div>
                         {
-                            this.state.showShifts?
-                            <Shifts/>
+                            this.state.links[0] === "profile-link is-active"?
+                            <ProfileInfo workerId={this.state.values.id}/>
+                            :null}
+                        {
+                            this.state.links[1] === "service-link is-active"?
+                            <ServiceInfo workerId={this.state.values.id}/>
                             :null
                         }
                         {
-                            !this.state.showShifts?
-                            <DropDown/>
+                            this.state.links[2] === "shifts-link is-active"?
+                            <Shifts workerId={this.state.values.id}/>
+                            :null
+                        }
+                        { 
+                            this.state.links[3] === "availability-link is-active"?
+                            <ChangeAvailabilities workerId={this.state.values.id}/>
                             :null
                         }
                         
@@ -191,7 +194,6 @@ class Worker extends Component<any, any> {
                 </body>
             )
         }
-
     }
 }
 
