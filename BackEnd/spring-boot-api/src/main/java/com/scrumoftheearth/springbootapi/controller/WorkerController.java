@@ -28,7 +28,6 @@ import java.util.*;
 
 
 @RestController
-@CrossOrigin
 @RequestMapping("/api/worker")
 @ApiOperation(value = "/api/worker",tags = "Worker Object Controller")
 public class WorkerController {

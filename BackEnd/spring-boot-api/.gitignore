@@ -3,7 +3,6 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-!**/src/main/resources/data
 
 ### STS ###
 .apt_generated
@@ -33,10 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 
-<<<<<<< HEAD
 ### DATA ###
 /src/main/resources/datadatabase.lock.db
-=======
-### Data ###
 /src/main/resources/data/
->>>>>>> develop

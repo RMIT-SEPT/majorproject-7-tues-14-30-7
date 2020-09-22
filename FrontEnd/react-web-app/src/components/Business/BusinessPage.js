@@ -26,7 +26,7 @@ export default class BusinessPage extends React.Component{
     }
 
     populatetable(){
-        fetch("http://localhost:8080/user/1")
+        fetch("http://localhost:8080/api/user/1")
             .then(res =>{
                 res.json()
                 .then(data => {
