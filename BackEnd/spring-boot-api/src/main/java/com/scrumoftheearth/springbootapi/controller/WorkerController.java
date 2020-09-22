@@ -98,6 +98,7 @@ public class WorkerController {
             JsonPatch patch, Worker targetWorker) throws JsonPatchException, JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode patched = patch.apply(objectMapper.convertValue(targetWorker, JsonNode.class));
+        System.out.println(patched.toPrettyString());
         return objectMapper.treeToValue(patched, Worker.class);
     }
 
