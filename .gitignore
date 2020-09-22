@@ -5,3 +5,6 @@ terraform.tfstate
 terraform.tfstate.backup
 tmp/
 /.idea/
+FrontEnd/react-web-app/node_modules/
+FrontEnd/react-web-app/build/
+FrontEnd/react-web-app/src/__snapshots__/

@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### DATA ###
+/src/main/resources/datadatabase.lock.db
+/src/main/resources/data/
