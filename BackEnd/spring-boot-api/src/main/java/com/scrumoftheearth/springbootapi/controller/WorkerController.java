@@ -10,6 +10,7 @@ import com.scrumoftheearth.springbootapi.model.Service;
 import com.scrumoftheearth.springbootapi.model.Worker;
 import com.scrumoftheearth.springbootapi.model.WorkerWState;
 import com.scrumoftheearth.springbootapi.service.WorkerService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.tomcat.jni.Local;
 import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +24,13 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 
 @RestController
 @CrossOrigin
 @RequestMapping("/api/worker")
+@ApiOperation(value = "/api/worker",tags = "Worker Object Controller")
 public class WorkerController {
 
     private WorkerService workerService;
@@ -48,6 +47,8 @@ public class WorkerController {
     }
 
     @PostMapping("")
+    @ApiOperation(value = "Add a new Worker",response = Iterator.class,
+            notes = "used to create a new Worker object and add it to the database")
     public ResponseEntity<?> CREATEWorker(@Valid @RequestBody Worker worker, BindingResult bindingResult){
 
         Optional<ResponseEntity<Map<String, Map<String, String>>>> fieldErrors = getFieldErrors(bindingResult);
@@ -66,11 +67,15 @@ public class WorkerController {
     }
 
     @GetMapping("")
+    @ApiOperation(value = "Getting a List of all Workers",response = Iterable.class,
+            notes = "used get all information about every worker in the database")
     public List<Worker> getAllWorkers(){
         return workerService.getAllWorkers();
     }
 
     @PutMapping("/update={id}")
+    @ApiOperation(value = "Updating a Worker with the given id",response = Iterable.class,
+            notes = "used to update worker information that has the given id, needs all unchanged variable in request")
     public ResponseEntity<?> UPDATEWorker(@Valid @RequestBody Worker updatedWorker,
                                           BindingResult bindingResult) throws Throwable {
 
@@ -81,6 +86,9 @@ public class WorkerController {
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json-patch+json")
+    @ApiOperation(value = "Patching a Worker with the given id",response = Iterable.class,
+            notes = "used to patch worker information that has the given id, needs operation value, variable to change name, " +
+                    "and new value for that updated variable")
     public ResponseEntity<Worker> UPDATEWorker(@PathVariable("id") Long id,
                                                @RequestBody JsonPatch patch) throws Throwable {
         try {
@@ -93,7 +101,8 @@ public class WorkerController {
         }
     }
 
-
+    @ApiOperation(value = "Patch functionality",response = Iterable.class,
+            notes = "This is the main functionality for the patch method")
     private Worker applyPatchToWorker(
             JsonPatch patch, Worker targetWorker) throws JsonPatchException, JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
