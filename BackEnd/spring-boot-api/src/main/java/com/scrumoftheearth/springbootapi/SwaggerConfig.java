@@ -25,8 +25,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title("ACME API Documentation")
-                .description("ACME API Information for the Back-end of our program")
+                .title("AGME API Documentation")
+                .description("AGME API Information for the Back-end of our program")
                 .version("V1.0")
                 .build();
     }
