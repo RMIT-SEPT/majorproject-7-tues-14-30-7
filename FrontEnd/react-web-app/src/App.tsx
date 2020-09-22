@@ -5,24 +5,6 @@ import BusinessPage from './components/Business/BusinessPage';
 import { BrowserRouter as Router,Switch,Route } from "react-router-dom";
 import UserHomepage from './components/User/UserHomepage';
 import HomePageContent from './components/HomePage/HomePageContent';
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
-function App() {
-  return (
-    <div>
-      <Router>
-        <Switch>
-          <Route path="/" exact component={HomePageContent} />
-          <Route path="/Worker" component={Worker} />
-          <Route path="/BusinessPage" component={BusinessPage} />
-          <Route exact path='/UserHomepage/:id' component={UserHomepage}/>
-        </Switch>
-      </Router>
-=======
-=======
->>>>>>> develop
 import SearchPage from './components/Search/SearchPage'
 import EditBusinessPage from './components/Business/EditBusinessPage'
 import LoginPage from './components/Entry/LoginPage';
@@ -48,10 +30,6 @@ function App() {
           </Switch>
         </Router>
         </Provider>
-<<<<<<< HEAD
->>>>>>> develop
-=======
->>>>>>> develop
     </div>
   );
 }

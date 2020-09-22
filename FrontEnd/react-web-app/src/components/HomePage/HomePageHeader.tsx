@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react'
 import '../../App.scss';
 import { BrowserRouter as Router,Link } from "react-router-dom";
@@ -24,27 +25,6 @@ export default class HomePageHeader extends Component<headerprops, headerstate> 
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
                 <nav className="navbar" role="navigation" aria-label="main navigation">
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    <div className="navbar-brand">
-                        <div className="navbar-item">
-                            <Link to="/"><img src={require("./Images/brand.png")} width="112" height="28" alt="nav-img"/></Link>
-                        </div>
-                        
-                        <label
-                            role="button"
-                            className="navbar-burger burger"
-                            aria-label="menu"
-                            aria-expanded="false"
-                            htmlFor="nav-toggle-state"
-                            >
-                            <span aria-hidden="true" />
-                            <span aria-hidden="true" />
-                            <span aria-hidden="true" />
-                        </label>
-=======
-=======
->>>>>>> develop
                 <div className="navbar-brand">
                     {/* <div className="navbar-item">
                         <Link to="/"><img src={require("./Images/brand.png")} width="112" height="28" alt="nav-img"/></Link>
@@ -64,36 +44,13 @@ export default class HomePageHeader extends Component<headerprops, headerstate> 
                         <span aria-hidden="true" />
                         <span aria-hidden="true" />
                     </label>
-<<<<<<< HEAD
->>>>>>> develop
-=======
->>>>>>> develop
                     </div>
                     <input type="checkbox" id="nav-toggle-state" />
 
                     <div className="navbar-menu">
                         <div className="navbar-start">
                             <div className="navbar-item" id="burgerzoomed">
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                <div className="field">
-                                    <div className="control">
-                                        <input className="text is-primary" placeholder="Search"></input>
-                                        <label> 
-                                            <a href="localhost:3000" id="searchbutton">
-                                                <i className="fa fa-search"></i>
-                                            </a>
-                                        </label>
-                                    </div>
-                                </div>
-=======
-
                                 <NavSearch/>
-
->>>>>>> develop
-=======
-                                <NavSearch/>
->>>>>>> develop
                             </div>
                             <div className="navbar-item">
                                 <Link to={"/UserHomePage/" + this.state.currentid}>Dashboard</Link>
@@ -128,28 +85,8 @@ export default class HomePageHeader extends Component<headerprops, headerstate> 
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-                </nav>
-            </div>
-
-        //<HomePageContent/>
-
-        //</div>
-    );
-}
-}
-=======
-            </nav>
-            </div>
-        )
-    }
-}
->>>>>>> develop
-=======
                 </nav>
             </div>
         )
     }
 }
->>>>>>> develop
