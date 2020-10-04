@@ -34,13 +34,11 @@ $colors: map-merge($colors, $addColors);
 //@import '../node_modules/bulma/bulma.sass';
 
 html {
-  overflow-y: auto;
   padding: 0px;
   height: 100%;
 }
 
 body {
-  overflow-y: hidden;
   margin: 0px;
   height: 100%;
 }
@@ -310,4 +308,17 @@ a, a:visited, a:link, a:active {
 
 #loading {
   text-align: center;
+}
+
+.worker-availabilty{
+  border-bottom: 2px solid black;
+  display: inline;
+}
+
+.availability-info{
+  display: flex;
+}
+
+.worker-name{
+  margin: 20px;
 }

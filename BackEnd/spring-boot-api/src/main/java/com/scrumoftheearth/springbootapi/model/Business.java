@@ -1,5 +1,7 @@
 package com.scrumoftheearth.springbootapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cascade;
@@ -30,7 +32,8 @@ public class Business {
     // state of the business
     private BusinessBState businessBState;
 
-    @OneToMany
+    @JsonManagedReference
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
     @ApiModelProperty(name="worker")
     // list of worker for the business
     private List<Worker> workers;

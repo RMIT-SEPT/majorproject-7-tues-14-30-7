@@ -2,23 +2,26 @@ import React from "react"
 import "../../App.scss"
 import HomePageHeader from "../HomePage/HomePageHeader"
 import { Link, withRouter } from 'react-router-dom'
+import WorkerAvailabilities from './WorkerAvailabilities'
 
 export default class BusinessPage extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
-            business: {}
+            business: {},
+            workers: []
         }
     }
 
     componentDidMount(){
-        var busid = this.props.match.params.id
-        var apicall = "http://localhost:8080/api/Business/findById=" + busid;
+        var busId = this.props.match.params.id
+        var apicall = "http://localhost:8080/api/Business/findById=" + busId;
         fetch(apicall)
             .then(response => response.json())
             .then(data => {
                 this.setState({
-                    business: data
+                    business: data,
+                    workers: data.workers
                 })
             })
         this.populatetable();
@@ -149,6 +152,7 @@ export default class BusinessPage extends React.Component{
                                 </Link>
                             </div>
                         </div>
+                        <WorkerAvailabilities busId={this.props.match.params.id} />
                     </div>
                 </div>
             <div className="hero-foot">

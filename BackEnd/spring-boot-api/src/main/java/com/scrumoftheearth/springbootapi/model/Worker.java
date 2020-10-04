@@ -1,6 +1,8 @@
 package com.scrumoftheearth.springbootapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -27,8 +29,10 @@ public class Worker implements Serializable {
     @ApiModelProperty(name="User", required = false)
     //The user account which this worker belongs to
     private User user;
+    @JsonBackReference
     @ManyToOne
-    @ApiModelProperty(name="businesses")
+    @JoinColumn(name="business_id")
+    @ApiModelProperty(name="business")
     //The business that this worker belongs to
     private Business business;
     @OneToOne
@@ -226,7 +230,5 @@ public class Worker implements Serializable {
     public void setShiftEndTimes(List<java.sql.Timestamp> shiftEndTimes) {
         this.shiftEndTimes = shiftEndTimes;
     }
-
-        
 
 }
