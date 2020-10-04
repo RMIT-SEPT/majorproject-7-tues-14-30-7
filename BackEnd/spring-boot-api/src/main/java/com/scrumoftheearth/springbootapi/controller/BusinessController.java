@@ -1,5 +1,10 @@
 package com.scrumoftheearth.springbootapi.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import com.scrumoftheearth.springbootapi.model.Business;
 import com.scrumoftheearth.springbootapi.model.User;
 import com.scrumoftheearth.springbootapi.model.Worker;
@@ -34,7 +39,7 @@ public class BusinessController {
         // if there is a json error
         if(result.hasErrors())
                 return new ResponseEntity<String>("Bad Business Object W.I.P", HttpStatus.BAD_REQUEST);
-       Business toadd = businessService.saveOrUpdate(business);
+       Business toAdd = businessService.saveOrUpdate(business);
        return new ResponseEntity<Business>(business, HttpStatus.CREATED);
     }
 
@@ -65,10 +70,10 @@ public class BusinessController {
     @ApiOperation(value = "Updating a Business with the given id",response = Iterable.class,
             notes = "used to update a business information that has the given id, needs all unchanged variable in request")
     public ResponseEntity<?> updateBusiness(@Valid @RequestBody Business business, BindingResult result, @PathVariable long id){
-        Optional<Business> toupdate = businessService.getById(id);
+        Optional<Business> toUpdate = businessService.getById(id);
 
         // if there is no business associated with the given ID
-        if(!toupdate.isPresent())
+        if(!toUpdate.isPresent())
             return new ResponseEntity<String>("Business doesnt exist W.I.P", HttpStatus.BAD_REQUEST);
 
         // if there is a json error
@@ -77,6 +82,25 @@ public class BusinessController {
         business.setId(id);
         businessService.saveOrUpdate(business);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping(path = "/{id}", consumes = "application/json-patch+json")
+    public ResponseEntity<Business> PATCHBusiness(@PathVariable("id") Long id, @RequestBody JsonPatch patch) {
+        try {
+            Business business = businessService.getById(id).orElse(null);
+            Business businessPatched = applyPatchToBusiness(patch, business);
+            businessService.saveOrUpdate(businessPatched);
+            return ResponseEntity.ok(businessPatched);
+        } catch (JsonPatchException | JsonProcessingException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    private Business applyPatchToBusiness(
+            JsonPatch patch, Business targetBusiness) throws JsonPatchException, JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode patched = patch.apply(objectMapper.convertValue(targetBusiness, JsonNode.class));
+        return objectMapper.treeToValue(patched, Business.class);
     }
 
     @GetMapping("/getWorker={id}")
