@@ -15,7 +15,6 @@ import static com.google.common.base.Predicates.not;
 @EnableSwagger2
 public class SwaggerConfig {
 
-
     @Bean
     public Docket docket(){
         return new Docket(DocumentationType.SWAGGER_2)

@@ -70,6 +70,12 @@ public class Business {
     @OneToMany()
     private List<BusinessHours> openinghours;
 
+    //The user account which this business is owned by belongs to
+    @OneToOne
+    @MapsId
+    @ApiModelProperty(name="User", required = false)
+    private User user;
+
     // blank constructor for production uses
     protected Business() {
         worker = new ArrayList<Worker>();

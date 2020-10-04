@@ -61,8 +61,8 @@ public class BusinessHoursController {
 
     @PutMapping("/update={id}")
     @ApiOperation(value = "updating a Business Hours by its id",response = Iterator.class,
-            notes = "used to get a Business Hours row by its id andd updating it, needs all unchanged variable in request")
-    public ResponseEntity<?> updateBusinessHour(@Valid @RequestBody BusinessHours businessHours,BindingResult result, @PathVariable long id){
+            notes = "used to get a Business Hours row by its id and updating it, needs all unchanged variable in request")
+    public ResponseEntity<?> updateBusinessHour(@Valid @RequestBody BusinessHours businessHours,BindingResult result,@PathVariable long id){
         Optional<BusinessHours> toupdate = businessHourService.getById(id);
 
         //if there is no business associated with the given ID

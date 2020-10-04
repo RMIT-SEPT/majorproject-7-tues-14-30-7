@@ -14,7 +14,13 @@ class RegisterPage extends Component {
             phoneNumber:"",
             homeAddress:"",
             password: "",
-            passwordConfirmation: ""
+            passwordConfirmation: "",
+
+            businessName: "",
+            businessblurb: "",
+            businessdescription: "",
+            businessAddress: "",
+            businessPhoneNumber: ""
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -34,8 +40,32 @@ class RegisterPage extends Component {
             password: this.state.password,
             passwordConfirmation: this.state.passwordConfirmation
         }
+        const newBusiness = {
+            businessName: this.state.businessName,
+            businessblurb: this.state.businessblurb,
+            businessdescription: this.state.businessdescription,
+            businessAddress: this.state.businessAddress,
+            businessPhoneNumber: this.state.businessPhoneNumber
+        }
         console.log(newUser);
+        console.log(newBusiness);
         this.props.createUser(newUser, this.props.history);
+    }
+
+    chechboxchange(e){
+        var bussection = document.getElementById("Sectionbusiness");
+        var custsection = document.getElementById("Sectioncustomer");
+        var workersection = document.getElementById("Sectionworker");
+        bussection.style.display = "none";
+        custsection.style.display = "none";
+        workersection.style.display = "none";
+
+        if(document.getElementById("customer").checked)
+            custsection.style.display = "block";
+        else if(document.getElementById("business").checked)
+            bussection.style.display = "block";
+        else if(document.getElementById("worker").checked)
+            workersection.style.display = "block";
     }
     render() {
         return (
@@ -111,7 +141,71 @@ class RegisterPage extends Component {
                                             </input>
                                         </div>
                                     </div>
-                                    <button type="submit" className="button is-block is-danger is-medium is-fullwidth">Sign Up</button>
+                                    <div className="control" onChange={this.chechboxchange}>
+                                        <label className="is-size-6 mx-5">User Type:</label>
+                                        <br></br>
+                                        <label className="radio mx-5">
+                                            <input type="radio" name="usertype" id="customer"></input>
+                                            Customer
+                                        </label>
+                                        <label className="radio mx-5">
+                                            <input type="radio" name="usertype" id="business"></input>
+                                            Business Owner
+                                        </label>
+                                        <label className="radio mx-5">
+                                            <input type="radio" name="usertype" id="worker"></input>
+                                            Worker
+                                        </label>
+                                    </div>
+                                    <div id="Sectionbusiness" hidden>
+                                        <div className = "field">
+                                            <div className = "control has-text-left">
+                                                Business Name:
+                                                <input className="input is-small" type="text" placeholder="Business Name" 
+                                                name="businessName" value={this.state.businessName} onChange = {this.onChange}>
+                                                </input>
+                                            </div>
+                                        </div>
+                                        <div className = "field">
+                                            <div className = "control has-text-left">
+                                                Business Blurb:
+                                                <input className="input is-small" type="text" placeholder="Business Blurb" 
+                                                name="businessblurb" value={this.state.businessblurb} onChange = {this.onChange}>
+                                                </input>
+                                            </div>
+                                        </div>
+                                        <div className="field">
+                                            <div className = "control has-text-left">
+                                                Business description:
+                                                <input className="input is-small" type="text" placeholder="Business Description" 
+                                                name="businessdescription" value={this.state.businessdescription} onChange = {this.onChange}>
+                                                </input>
+                                            </div>
+                                        </div>
+                                        <div className = "field">
+                                            <div className = "control has-text-left">
+                                                Business Address:
+                                                <input className="input is-small" type="text" placeholder="Business Address" 
+                                                name="businessAddress" value={this.state.businessAddress} onChange = {this.onChange}>
+                                                </input>
+                                            </div>
+                                        </div>
+                                        <div className = "field">
+                                            <div className = "control has-text-left">
+                                                Business Phone Number:
+                                                <input className="input is-small" type="text" placeholder="Business Phone Number" 
+                                                name="businessPhoneNumber" value={this.state.businessPhoneNumber} onChange = {this.onChange}>
+                                                </input>
+                                            </div>
+                                        </div>
+                                        <button type="submit" className="button is-block is-danger is-medium is-fullwidth">Sign Up Business</button>
+                                    </div>
+                                    <div id="Sectioncustomer" hidden>
+                                        <button type="submit" className="button is-block is-danger is-medium is-fullwidth">Sign Up Customer</button>
+                                    </div>
+                                    <div id="Sectionworker" hidden>
+                                        <button type="submit" className="button is-block is-danger is-medium is-fullwidth">Sign Up Worker</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
