@@ -9,6 +9,7 @@ import SearchPage from './components/Search/SearchPage'
 import EditBusinessPage from './components/Business/EditBusinessPage'
 import LoginPage from './components/Entry/LoginPage';
 import RegisterPage from './components/Entry/RegisterPage';
+import WorkerRegisterPage from './components/Entry/WorkerRegisterPage';
 import {Provider} from "react-redux";
 import store from './store';
 
@@ -26,7 +27,7 @@ function App() {
             <Route path="/Search/:searchid" render={(props) => <SearchPage {...props}/> } />
             <Route path="/Search" component={SearchPage} /> 
             <Route path="/Login" component={LoginPage} />
-            <Route path="/Signup" component={RegisterPage} />
+            <Route path="/Signup" component={WorkerRegisterPage} />
           </Switch>
         </Router>
         </Provider>
