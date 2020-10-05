@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "worker")
+@Table(name = "table_worker")
 @ApiModel(description = "Worker Model")
 public class Worker implements Serializable {
     @Id

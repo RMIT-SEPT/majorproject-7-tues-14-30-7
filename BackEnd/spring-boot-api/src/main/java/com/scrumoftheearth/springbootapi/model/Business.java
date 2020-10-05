@@ -18,6 +18,7 @@ import java.util.List;
                 query = "SELECT b.workers FROM Business b WHERE b.id = :id")
 })
 @ApiModel(description = "Business Model")
+@Table(name = "table_business")
 public class Business {
     // business ID
     @Id

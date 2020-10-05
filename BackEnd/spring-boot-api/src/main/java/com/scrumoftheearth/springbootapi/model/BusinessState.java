@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @ApiModel(description = "BusinessState Model")
+@Table(name = "table_business_state")
 public class BusinessState {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
