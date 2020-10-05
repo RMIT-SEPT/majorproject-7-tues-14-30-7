@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "service_state")
+@Table(name = "table_service_state")
 public class ServiceState {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
