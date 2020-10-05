@@ -58,7 +58,7 @@ public class WorkerController {
 
         System.out.println(worker.getShiftEndTimes());
         worker = workerService.saveWorker(worker.getWorkerWState(), worker.getUser().getId(), worker.getDescription(),
-                                          worker.getServices(), worker.getBusinesses(), worker.getAvailableStartTimes(),
+                                          worker.getServices(), worker.getBusiness().getId(), worker.getAvailableStartTimes(),
                                           worker.getAvailableEndTimes(), worker.getShiftStartTimes(),
                                           worker.getShiftEndTimes());
 
