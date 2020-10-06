@@ -56,11 +56,13 @@ class WorkerRegisterPage extends Component {
         console.log(newUser);
         console.log("LOGGING WORKER DETAILS ON THE REGISTER PAGE");
         console.log(newWorkerDetails);
-        this.props.createWorker(newUser, newWorkerDetails, this.props.history);
+        const response = this.props.createWorker(newUser, newWorkerDetails, this.props.history);
+        console.log("Logging response");
+        console.log(response);
     }
     render() {
         const slice = this.state.businesses.map(business =>
-            <option key={business.name + business.phoneNumber} value={business.id} onChange = {this.onChange}>{business.name}</option>
+            <option key={business.id} value={business.id} onChange = {this.onChange}>{business.name}</option>
         )
         return (
             <div className = "hero is-fullheight is-primary">

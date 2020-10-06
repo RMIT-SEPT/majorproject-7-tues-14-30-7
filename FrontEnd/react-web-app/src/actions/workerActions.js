@@ -29,7 +29,7 @@ export const createWorker = (newUser, newWorkerDetails, history) => async dispat
     console.log("FINAL LOG FOR res2")
     console.log(res2);
     const workerID = res2.data.id;
-    history.push(`/Worker/${workerID}`);
+    history.push(`/Worker/?id=${workerID}`);
   } catch (err) {
     dispatch({
       type: GET_ERRORS,
