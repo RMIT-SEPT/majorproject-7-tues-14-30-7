@@ -3,6 +3,7 @@ import { BrowserRouter as Router,Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {createUser} from "../../actions/userActions";
+import {createBusiness} from "../../actions/businessActions";
 
 class RegisterPage extends Component {
     constructor(){
@@ -45,11 +46,19 @@ class RegisterPage extends Component {
             businessblurb: this.state.businessblurb,
             businessdescription: this.state.businessdescription,
             businessAddress: this.state.businessAddress,
-            businessPhoneNumber: this.state.businessPhoneNumber
+            businessPhoneNumber: this.state.businessPhoneNumber,
+            businessUser: newUser
         }
         console.log(newUser);
         console.log(newBusiness);
-        this.props.createUser(newUser, this.props.history);
+
+        if(document.getElementById("customer").checked)
+            this.props.createUser(newUser, this.props.history);
+        else if(document.getElementById("business").checked)
+            this.props.createBusiness(newBusiness, this.props.history);
+        else if(document.getElementById("worker").checked)
+            // workersection.style.display = "block";
+            console.log("TBA")
     }
 
     chechboxchange(e){
@@ -169,17 +178,17 @@ class RegisterPage extends Component {
                                         <div className = "field">
                                             <div className = "control has-text-left">
                                                 Business Blurb:
-                                                <input className="input is-small" type="text" placeholder="Business Blurb" 
+                                                <textarea className="textarea is-small" type="text" placeholder="Business Blurb" 
                                                 name="businessblurb" value={this.state.businessblurb} onChange = {this.onChange}>
-                                                </input>
+                                                </textarea>
                                             </div>
                                         </div>
                                         <div className="field">
                                             <div className = "control has-text-left">
                                                 Business description:
-                                                <input className="input is-small" type="text" placeholder="Business Description" 
+                                                <textarea className="textarea is-small" type="text" placeholder="Business Description" 
                                                 name="businessdescription" value={this.state.businessdescription} onChange = {this.onChange}>
-                                                </input>
+                                                </textarea>
                                             </div>
                                         </div>
                                         <div className = "field">
