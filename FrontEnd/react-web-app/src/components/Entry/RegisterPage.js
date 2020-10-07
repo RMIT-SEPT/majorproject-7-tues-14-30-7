@@ -42,12 +42,12 @@ class RegisterPage extends Component {
             passwordConfirmation: this.state.passwordConfirmation
         }
         const newBusiness = {
-            businessName: this.state.businessName,
-            businessblurb: this.state.businessblurb,
-            businessdescription: this.state.businessdescription,
-            businessAddress: this.state.businessAddress,
-            businessPhoneNumber: this.state.businessPhoneNumber,
-            businessUser: newUser
+            name: this.state.businessName,
+            blurb: this.state.businessblurb,
+            description: this.state.businessdescription,
+            address: this.state.businessAddress,
+            phoneNumber: this.state.businessPhoneNumber,
+            User: newUser
         }
         console.log(newUser);
         console.log(newBusiness);
@@ -237,3 +237,10 @@ export default connect(
     null,
     { createUser }
   )(RegisterPage);
+RegisterPage.propType = {
+    createProject: PropTypes.func.isRequired
+};
+export default connect(
+    null,
+    { createBusiness }
+)(RegisterPage)

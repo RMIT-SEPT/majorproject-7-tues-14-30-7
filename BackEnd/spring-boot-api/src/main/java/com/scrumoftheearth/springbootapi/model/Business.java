@@ -67,14 +67,14 @@ public class Business {
     private String phoneNumber;
 
     // List of business hours
-    @OneToMany()
-    private List<BusinessHours> openinghours;
+//    @OneToMany()
+//    private List<BusinessHours> openinghours;
 
     //The user account which this business is owned by belongs to
     @OneToOne
     @MapsId
     @ApiModelProperty(name="User", required = false)
-    private User user;
+    private User Owner;
 
     // blank constructor for production uses
     protected Business() {

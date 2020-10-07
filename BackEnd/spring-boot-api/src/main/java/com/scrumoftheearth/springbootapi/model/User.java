@@ -63,6 +63,8 @@ public class User implements Serializable {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Worker worker;
 
+    @OneToOne(mappedBy = "Owner", cascade = CascadeType.ALL)
+    private Business business;
     /* https://www.baeldung.com/spring-boot-formatting-json-dates */
 
     @JsonFormat(pattern="yyyy-mm-dd")

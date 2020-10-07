@@ -3,9 +3,11 @@ import { GET_ERRORS } from "./types"
 
 export const createBusiness = (newBusiness, history) => async dispatch => {
     try{
-        const res = await axios.post("http://localhost:8080/api/Business", newBusiness)
+        const res = await axios.post("http://localhost:8080/api/Business", newBusiness);
         const busID = res.data.busID;
-        history.push('/BusinessPage/${busID}')
+        console.log(busID)
+        createBusinesstime(busID);
+        history.push(`/BusinessPage/${busID}`);
     } catch (err) {
         dispatch({
             type: GET_ERRORS,
@@ -13,16 +15,34 @@ export const createBusiness = (newBusiness, history) => async dispatch => {
         })
 
         if(err.reponse.data.errors.businessName != null)
-            alert(err.response.data.errors.businessName)
+            alert(err.response.data.errors.businessName);
         if(err.reponse.data.errors.businessblurb != null)
-            alert(err.response.data.errors.businessblurb)
+            alert(err.response.data.errors.businessblurb);
         if(err.reponse.data.errors.businessdescription != null)
-            alert(err.response.data.errors.businessdescription)
+            alert(err.response.data.errors.businessdescription);
         if(err.reponse.data.errors.businessAddress != null)
-            alert(err.response.data.errors.businessAddress)
+            alert(err.response.data.errors.businessAddress);
         if(err.reponse.data.errors.businessPhoneNumber != null)
-            alert(err.response.data.errors.businessPhoneNumber)
+            alert(err.response.data.errors.businessPhoneNumber);
         if(err.reponse.data.errors.businessUser != null)
-            alert(err.response.data.errors.businessUser)
+            alert(err.response.data.errors.businessUser);
+    }
+
+    function createBusinesstime(id){
+        for(var i = 1; i <= 7;i++){
+            var postbusinessTime = {
+                day: i,
+                business_id: id
+            }
+            
+            fetch('http://localhost:8080/api/BusinessHours',{
+                method: 'POST',
+                header: {
+                    'Accept': "application/json, text/plain, */*",
+                    'Content-Type': "application/json;charset=utf-8"
+                },
+                body: JSON.stringify(postbusinessTime)
+            })
+        }
     }
 }
