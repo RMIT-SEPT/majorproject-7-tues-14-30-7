@@ -56,9 +56,7 @@ class WorkerRegisterPage extends Component {
         console.log(newUser);
         console.log("LOGGING WORKER DETAILS ON THE REGISTER PAGE");
         console.log(newWorkerDetails);
-        const response = this.props.createWorker(newUser, newWorkerDetails, this.props.history);
-        console.log("Logging response");
-        console.log(response);
+        this.props.createWorker(newUser, newWorkerDetails, this.props.history);
     }
     render() {
         const slice = this.state.businesses.map(business =>
