@@ -1,12 +1,20 @@
 import axios from 'axios'
 import { GET_ERRORS } from "./types"
 
-export const createBusiness = (newBusiness, history) => async dispatch => {
+export const createBusiness = (newuser ,newBusiness, history) => async dispatch => {
     try{
         const res = await axios.post("http://localhost:8080/api/Business", newBusiness);
-        const busID = res.data.busID;
+        const busID = res.data.id;
         console.log(busID)
-        createBusinesstime(busID);
+
+        for(var i = 1; i <= 7;i++){
+            var postbusinessTime = {
+                day: i,
+                business_id: busID
+            }
+            console.log(postbusinessTime)
+            const res = await axios.post("http://localhost:8080/api/BusinessHours", postbusinessTime);
+        }
         history.push(`/BusinessPage/${busID}`);
     } catch (err) {
         dispatch({
@@ -26,23 +34,5 @@ export const createBusiness = (newBusiness, history) => async dispatch => {
             alert(err.response.data.errors.businessPhoneNumber);
         if(err.reponse.data.errors.businessUser != null)
             alert(err.response.data.errors.businessUser);
-    }
-
-    function createBusinesstime(id){
-        for(var i = 1; i <= 7;i++){
-            var postbusinessTime = {
-                day: i,
-                business_id: id
-            }
-            
-            fetch('http://localhost:8080/api/BusinessHours',{
-                method: 'POST',
-                header: {
-                    'Accept': "application/json, text/plain, */*",
-                    'Content-Type': "application/json;charset=utf-8"
-                },
-                body: JSON.stringify(postbusinessTime)
-            })
-        }
     }
 }

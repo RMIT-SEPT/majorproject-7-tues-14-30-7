@@ -17,12 +17,12 @@ import java.util.List;
 })
 @ApiModel(description = "Business Model")
 public class Business {
-    // business ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(name="id",required = true,value = "1")
     // business ID
-    private Long id;
+    private long id;
+
     @OneToOne
     @JoinColumn(name = "BusinessBState_id")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
@@ -40,40 +40,30 @@ public class Business {
     // name of business
     private String name;
 
-    @NotBlank(message = "Business blurb is required")
     @ApiModelProperty(name="blurb",required = true,value = "We deliver quality IT services to your home or business")
-    // blurb the business provides
     @NotBlank(message = "Business blurb is required")
+    // blurb the business provides
     private String blurb;
 
     @NotBlank(message = "Business description is required")
     @ApiModelProperty(name="description",required = true,value = "We do new Networking configuration,computer repair and more")
     // description of the business
-    @NotBlank(message = "Business description is required")
     private String description;
 
     @NotBlank(message = "Business address is required")
-    // address of the business
     @ApiModelProperty(name="address",required = true,value = "56/115 Queensberry St, Carlton VIC 3053")
+    // address of the business
     private String address;
 
-    @NotBlank(message = "Business contact number is required")
     @ApiModelProperty(name="phoneNumber",required = true,value = "9925 4468")
-    // address of the business
-    @NotBlank(message = "Business address is required")
-
-    // contact info of the business
     @NotBlank(message = "Business contact number is required")
+    // contact info of the business
     private String phoneNumber;
-
-    // List of business hours
-//    @OneToMany()
-//    private List<BusinessHours> openinghours;
-
-    //The user account which this business is owned by belongs to
+    
     @OneToOne
-    @MapsId
-    @ApiModelProperty(name="User", required = false)
+//    @MapsId
+    @ApiModelProperty(name="Owner", required = false)
+    //The user account which this business is owned by belongs to
     private User Owner;
 
     // blank constructor for production uses
@@ -95,11 +85,11 @@ public class Business {
     }
 
     // getters and setters
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long busid) {
+    public void setId(long busid) {
         this.id = busid;
     }
 

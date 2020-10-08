@@ -47,7 +47,7 @@ class RegisterPage extends Component {
             description: this.state.businessdescription,
             address: this.state.businessAddress,
             phoneNumber: this.state.businessPhoneNumber,
-            User: newUser
+            // Owner: newUser
         }
         console.log(newUser);
         console.log(newBusiness);
@@ -55,7 +55,7 @@ class RegisterPage extends Component {
         if(document.getElementById("customer").checked)
             this.props.createUser(newUser, this.props.history);
         else if(document.getElementById("business").checked)
-            this.props.createBusiness(newBusiness, this.props.history);
+            this.props.createBusiness(newUser,newBusiness, this.props.history);
         else if(document.getElementById("worker").checked)
             // workersection.style.display = "block";
             console.log("TBA")
@@ -171,7 +171,7 @@ class RegisterPage extends Component {
                                             <div className = "control has-text-left">
                                                 Business Name:
                                                 <input className="input is-small" type="text" placeholder="Business Name" 
-                                                name="businessName" value={this.state.businessName} onChange = {this.onChange}>
+                                                name="businessName" value={this.state.businessName} onChange = {this.onChange} required>
                                                 </input>
                                             </div>
                                         </div>
@@ -179,7 +179,7 @@ class RegisterPage extends Component {
                                             <div className = "control has-text-left">
                                                 Business Blurb:
                                                 <textarea className="textarea is-small" type="text" placeholder="Business Blurb" 
-                                                name="businessblurb" value={this.state.businessblurb} onChange = {this.onChange}>
+                                                name="businessblurb" value={this.state.businessblurb} onChange = {this.onChange} required>
                                                 </textarea>
                                             </div>
                                         </div>
@@ -187,7 +187,7 @@ class RegisterPage extends Component {
                                             <div className = "control has-text-left">
                                                 Business description:
                                                 <textarea className="textarea is-small" type="text" placeholder="Business Description" 
-                                                name="businessdescription" value={this.state.businessdescription} onChange = {this.onChange}>
+                                                name="businessdescription" value={this.state.businessdescription} onChange = {this.onChange} required>
                                                 </textarea>
                                             </div>
                                         </div>
@@ -195,7 +195,7 @@ class RegisterPage extends Component {
                                             <div className = "control has-text-left">
                                                 Business Address:
                                                 <input className="input is-small" type="text" placeholder="Business Address" 
-                                                name="businessAddress" value={this.state.businessAddress} onChange = {this.onChange}>
+                                                name="businessAddress" value={this.state.businessAddress} onChange = {this.onChange} required>
                                                 </input>
                                             </div>
                                         </div>
@@ -203,7 +203,7 @@ class RegisterPage extends Component {
                                             <div className = "control has-text-left">
                                                 Business Phone Number:
                                                 <input className="input is-small" type="text" placeholder="Business Phone Number" 
-                                                name="businessPhoneNumber" value={this.state.businessPhoneNumber} onChange = {this.onChange}>
+                                                name="businessPhoneNumber" value={this.state.businessPhoneNumber} onChange = {this.onChange} required>
                                                 </input>
                                             </div>
                                         </div>
@@ -230,17 +230,17 @@ class RegisterPage extends Component {
         )
     }
 }
-RegisterPage.propTypes = {
-    createProject: PropTypes.func.isRequired
-  };
-export default connect(
-    null,
-    { createUser }
-  )(RegisterPage);
-RegisterPage.propType = {
-    createProject: PropTypes.func.isRequired
-};
+// export default connect(
+//     null,
+//     { createUser }
+//   )(RegisterPage);
+// RegisterPage.propType = {
+//     createProject: PropTypes.func.isRequired
+// };
 export default connect(
     null,
     { createBusiness }
 )(RegisterPage)
+RegisterPage.propTypes = {
+    createProject: PropTypes.func.isRequired
+  };
