@@ -12,6 +12,7 @@ import java.util.List;
 // POJO for business
 @Entity
 @NamedQueries({
+        // custom query for getting all worker W.I.P
         @NamedQuery(name = "Business.findAllWorkers",
                 query = "SELECT b.worker FROM Business b WHERE b.id = :id")
 })
@@ -59,9 +60,10 @@ public class Business {
     @NotBlank(message = "Business contact number is required")
     // contact info of the business
     private String phoneNumber;
-    
+
     @OneToOne
 //    @MapsId
+//    @NotBlank(message = "Business must be tied with a User account")
     @ApiModelProperty(name="Owner", required = false)
     //The user account which this business is owned by belongs to
     private User Owner;

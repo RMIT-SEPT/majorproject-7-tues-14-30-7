@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 // POJO for businessHours
@@ -23,12 +23,12 @@ public class BusinessHours {
     // business id
     private long id;
 
-    @NotBlank(message = "BusinessHours must be associated with valid business_id")
+    @NotNull(message = "BusinessHours must be associated with valid business_id")
     @ApiModelProperty(name = "business_id",required = true,value = "1")
     // foreign key to business table,
     private long business_id;
 
-    @NotBlank(message = "Day integer is required")
+    @NotNull(message = "Day integer is required")
     @ApiModelProperty(name = "day",required = true,value = "5")
     // int to save day (monday = 1, tuesday = 2 etc)
     private int day;

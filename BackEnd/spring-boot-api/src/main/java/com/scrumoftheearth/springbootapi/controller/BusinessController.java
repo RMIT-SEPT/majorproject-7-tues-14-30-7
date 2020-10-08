@@ -1,18 +1,19 @@
 package com.scrumoftheearth.springbootapi.controller;
 
 import com.scrumoftheearth.springbootapi.model.Business;
-import com.scrumoftheearth.springbootapi.model.User;
 import com.scrumoftheearth.springbootapi.model.Worker;
 import com.scrumoftheearth.springbootapi.service.BusinessService;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -30,10 +31,7 @@ public class BusinessController {
     @PostMapping("")
     @ApiOperation(value = "Add a new Business",response = Iterable.class,
             notes = "used to create and add a new Business to the database")
-    public ResponseEntity<?> newBusiness(@Valid @RequestBody Business business, BindingResult result){
-        // if there is a json error
-        if(result.hasErrors())
-                return new ResponseEntity<String>("Bad Business Object W.I.P", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> newBusiness(@Valid @RequestBody Business business){
        Business toadd = businessService.saveOrUpdate(business);
        return new ResponseEntity<Business>(business, HttpStatus.CREATED);
     }
@@ -59,21 +57,16 @@ public class BusinessController {
     public void deleteBusiness(@PathVariable long id){
         businessService.deleteById(id);
     }
-    // for updating a business by ID
 
     @PutMapping("/update={id}")
     @ApiOperation(value = "Updating a Business with the given id",response = Iterable.class,
             notes = "used to update a business information that has the given id, needs all unchanged variable in request")
-    public ResponseEntity<?> updateBusiness(@Valid @RequestBody Business business, BindingResult result, @PathVariable long id){
+    public ResponseEntity<?> updateBusiness(@Valid @RequestBody Business business, @PathVariable long id){
         Optional<Business> toupdate = businessService.getById(id);
 
         // if there is no business associated with the given ID
         if(!toupdate.isPresent())
-            return new ResponseEntity<String>("Business doesnt exist W.I.P", HttpStatus.BAD_REQUEST);
-
-        // if there is a json error
-        if(result.hasErrors())
-            return new ResponseEntity<String>("Invaild values for updating W.I.P", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("Business with ID doesnt exist", HttpStatus.BAD_REQUEST);
         business.setId(id);
         businessService.saveOrUpdate(business);
         return ResponseEntity.noContent().build();
@@ -84,5 +77,20 @@ public class BusinessController {
             notes = "used to have a list of all the worker associated with that business")
     public Worker[] getWorkers(@PathVariable long id){
         return businessService.getWorker(id);
+    }
+
+    // handler for Business exceptions, taken from:
+    // Baeldung.com accessed 9/10/2020
+    // https://www.baeldung.com/spring-boot-bean-validation
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String,String> handleValidationExceptions(MethodArgumentNotValidException ex){
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName,errorMessage);
+        });
+        return errors;
     }
 }
