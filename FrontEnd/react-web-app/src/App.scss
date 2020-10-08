@@ -34,13 +34,11 @@ $colors: map-merge($colors, $addColors);
 //@import '../node_modules/bulma/bulma.sass';
 
 html {
-  overflow-y: auto;
   padding: 0px;
   height: 100%;
 }
 
 body {
-  overflow-y: hidden;
   margin: 0px;
   height: 100%;
 }
@@ -61,6 +59,11 @@ body {
   background-color: rgb(221, 221, 221);
   //background-color: rgb(241, 241, 241);
   //height: 92vh;
+}
+
+.content {
+  height: 100vh;
+  text-align: center
 }
 
 #herobanner {
@@ -202,7 +205,6 @@ body {
   #bushide {
     display: none;
   }
-
   #searchlist {
     overflow-y: auto;
   }
@@ -283,6 +285,9 @@ a, a:visited, a:link, a:active {
   display: none;
 }
 
+.navbar-item {
+  text-align: center;
+}
 #nav-toggle-state:checked ~ .navbar-menu {
   display: block;
 }
@@ -299,4 +304,21 @@ a, a:visited, a:link, a:active {
   font-size: 1rem;
   color: black;
   
+}
+
+#loading {
+  text-align: center;
+}
+
+.worker-availabilty{
+  border-bottom: 2px solid black;
+  display: inline;
+}
+
+.availability-info{
+  display: flex;
+}
+
+.worker-name{
+  margin: 20px;
 }

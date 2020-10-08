@@ -1,5 +1,7 @@
 package com.scrumoftheearth.springbootapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cascade;
@@ -13,9 +15,10 @@ import java.util.List;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Business.findAllWorkers",
-                query = "SELECT b.worker FROM Business b WHERE b.id = :id")
+                query = "SELECT b.workers FROM Business b WHERE b.id = :id")
 })
 @ApiModel(description = "Business Model")
+@Table(name = "table_business")
 public class Business {
     // business ID
     @Id
@@ -30,10 +33,11 @@ public class Business {
     // state of the business
     private BusinessBState businessBState;
 
-    @OneToMany
+    @JsonManagedReference
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
     @ApiModelProperty(name="worker")
     // list of worker for the business
-    private List<Worker> worker;
+    private List<Worker> workers;
 
     @NotBlank(message = "Business name is required")
     @ApiModelProperty(name="name",required = true,value = "Jim's Computer Service")
@@ -68,12 +72,12 @@ public class Business {
 
     // List of business hours
     @OneToMany()
-    private List<BusinessHours> openinghours;
+    private List<BusinessHours> openingHours;
 
     // blank constructor for production uses
-    protected Business() {
-        worker = new ArrayList<Worker>();
-        businessBState = new BusinessBState();
+    public Business() {
+        //workers = new ArrayList<Worker>();
+        //businessBState = new BusinessBState();
     }
 
     // constructor for junit testing
@@ -84,7 +88,7 @@ public class Business {
         this.description = description;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        worker = new ArrayList<Worker>();
+        workers = new ArrayList<Worker>();
         businessBState = new BusinessBState();
     }
 
@@ -93,24 +97,24 @@ public class Business {
         return id;
     }
 
-    public void setId(Long busid) {
-        this.id = busid;
+    public void setId(Long busId) {
+        this.id = busId;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String busname) {
-        this.name = busname;
+    public void setName(String busName) {
+        this.name = busName;
     }
 
     public String getBlurb() {
         return blurb;
     }
 
-    public void setBlurb(String busservice) {
-        this.blurb = busservice;
+    public void setBlurb(String busService) {
+        this.blurb = busService;
     }
 
     public BusinessBState getBusinessBState() {
@@ -121,12 +125,12 @@ public class Business {
         this.businessBState = businessBState;
     }
 
-    public List<Worker> getWorkerList() {
-        return worker;
+    public List<Worker> getWorkers() {
+        return workers;
     }
 
-    public void setWorkerList(List<Worker> workerList) {
-        this.worker = workerList;
+    public void setWorkers(List<Worker> workers) {
+        this.workers = workers;
     }
 
     public String getDescription() {

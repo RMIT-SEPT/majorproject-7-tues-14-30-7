@@ -3,7 +3,7 @@ package com.scrumoftheearth.springbootapi.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "workerWState")
+@Table(name = "table_worker_wstate")
 public class WorkerWState {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,15 +2,19 @@ package com.scrumoftheearth.springbootapi.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "user")
+@Table(name = "table_user")
+@ApiModel(description = "User Model")
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,21 +22,27 @@ public class User implements Serializable {
 
     @Column(nullable = false, unique = true)
     @NotBlank(message = "User Name cannot be blank!")
+    @ApiModelProperty(name="userName", required = true)
     private String userName;
 
     @NotBlank(message = "First Name cannot be blank!")
+    @ApiModelProperty(name="firstName", required = true)
     private String firstName;
 
     @NotBlank(message = "Last Name cannot be blank!")
+    @ApiModelProperty(name="lastName", required = true)
     private String lastName;
 
     @NotBlank(message = "Phone Number cannot be blank!")
+    @ApiModelProperty(name="phoneNumber", required = true)
     private String phoneNumber;
 
     @NotBlank(message = "Home Address cannot be blank!")
+    @ApiModelProperty(name="homeAddress", required = true)
     private String homeAddress;
 
     @JsonIgnore
+    @ApiModelProperty(name="saltedHashedPassword", hidden = true)
     private String saltedHashedPassword;
 
     /* Transient indicates that the fields do not get saved to the database.
@@ -41,9 +51,11 @@ public class User implements Serializable {
     *  Note: Validation of Password and Password Confirmation must be handled by the controller.
     * */
     @Transient
+    @ApiModelProperty(name="password", required = true, notes = "Field is Transient")
     private String password;
 
     @Transient
+    @ApiModelProperty(name="passwordConfirmation", required = true, notes = "Field is Transient")
     private String passwordConfirmation;
 
     //CascadeType.ALL - This means if the user is deleted so is the worker
@@ -53,20 +65,22 @@ public class User implements Serializable {
 
     /* https://www.baeldung.com/spring-boot-formatting-json-dates */
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createdAt;
+    @JsonFormat(pattern="yyyy-mm-dd")
+    @ApiModelProperty(name="createdAt")
+    private Date createdAt;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime updatedAt;
+    @JsonFormat(pattern="yyyy-mm-dd")
+    @ApiModelProperty(name="createdAt")
+    private Date updatedAt;
 
     @PrePersist
     protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = new Date();
     }
 
     @PreUpdate
     protected void onUpdate() {
-            this.updatedAt = LocalDateTime.now();
+            this.updatedAt = new Date();
     }
 
     public User() { }
@@ -126,11 +140,11 @@ public class User implements Serializable {
         this.homeAddress = homeAddress;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 

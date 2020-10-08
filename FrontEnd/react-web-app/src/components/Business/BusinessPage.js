@@ -1,23 +1,27 @@
 import React from "react"
 import "../../App.scss"
+import HomePageHeader from "../HomePage/HomePageHeader"
 import { Link, withRouter } from 'react-router-dom'
+import WorkerAvailabilities from './WorkerAvailabilities'
 
 export default class BusinessPage extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
-            business: {}
+            business: {},
+            workers: []
         }
     }
 
     componentDidMount(){
-        var businessid = this.props.match.params.id
-        var apicall = "http://localhost:8080/api/Business/findById=" + businessid
+        var busId = this.props.match.params.id
+        var apicall = "http://localhost:8080/api/Business/findById=" + busId;
         fetch(apicall)
             .then(response => response.json())
             .then(data => {
                 this.setState({
-                    business: data
+                    business: data,
+                    workers: data.workers
                 })
             })
         this.populatetable();
@@ -25,20 +29,20 @@ export default class BusinessPage extends React.Component{
     }
 
     populatetable(){
-        fetch("http://localhost:8080/user/1")
+        fetch("http://localhost:8080/api/user/1")
             .then(res =>{
                 res.json()
                 .then(data => {
                     var dataArray = [];
                     dataArray.push(data);
-                    if(dataArray.length > 0){
+                    if(dataArray.length > 1){
                         var input = "";
 
                         dataArray.forEach((row) =>{
                             input += "<tr>"
                             input += "<td>" + row.firstName + "</td>"
                             input += "<td>" + row.lastName + "</td>"
-                            input += "<td>" + row.homeAddress + "</td>"
+                            input += "<td>" + row.address + "</td>"
                             input += "<td>" + row.phoneNumber + "</td>"
                             input += "<td>" + "TO BE ADDED" + "</td>"
                             input += "<tr>"
@@ -50,21 +54,26 @@ export default class BusinessPage extends React.Component{
     }
     
     populatebusinesshours(){
-        var businessid = this.props.match.params.id
-        fetch("http://localhost:8080/api/BusinessHours/findByBusId=" + businessid)
+        var busid = this.props.match.params.id
+        fetch("http://localhost:8080/api/BusinessHours/findByBusId=" + busid)
             .then(res => {
                 res.json()
                 .then(data => {
                     var dataArray = []
                     dataArray.push(data)
+                    this.setState({
+                        businessTime: dataArray
+                    })
                     var daysarray = ["ERROR/TIME NOT SET","Monday","Tuesday","Wednesday","Thurday","Firday","Saturday","Sunday"]
-                    if(dataArray.length > 0){
-                        var input = "<p className='has-text-weight-bold'>Business Hours</p>"
-
-                        for(var i = 0; i < 1;i++){
+                    var input = "<p className='has-text-weight-bold'>Business Hours</p>"
+                         for(var i = 0; i < 7;i++){
                             dataArray.forEach((row) =>{
-                                var opening = new Date("2015-03-25T" + row[i].openingTime.toString());
+                                if(row[i].openingTime == null || row[i].closingTime == null)
+                                    input += "<p>" + daysarray[i + 1] + ": CLOSED </p>"
+                                else{
+                                    var opening = new Date("2015-03-25T" + row[i].openingTime.toString());
                                 var closing = new Date("2015-03-25T" + row[i].closingTime.toString())
+                                console.log(row[i].openingTime)
                                 var openinghour = opening.getHours() % 12
                                 var closinghour = closing.getHours() % 12
                                 var openingmin;
@@ -93,23 +102,21 @@ export default class BusinessPage extends React.Component{
                                     closingmin = closing.getMinutes()
                                 var openingformatted = openinghour + ":" + openingmin + openingmeridiem
                                 var closingformatted = closinghour + ":" + closingmin + closingmeridiem
-
-                                if(row[i].openingTime == null || row[i].closingTime == null)
-                                    input += "<p>" + daysarray[i + 1] + ": CLOSED </p>"
-                                else
-                                    input += "<p>" + daysarray[i + 1] + ": " + openingformatted +" To " + closingformatted + "</p>"
+                                input += "<p>" + daysarray[i + 1] + ": " + openingformatted +" To " + closingformatted + "</p>"
+                                }               
                             });
                             document.getElementById("businesshours").innerHTML = input;
                         }
                     }
-                })
+                )
             })
     }
 
     render(){
-        {var businessid = this.props.match.params.id}
+        var busid = this.props.match.params.id
         return( 
             <section className="hero is-fullheight is-default is-bold">
+                <HomePageHeader/>
                 <div className="hero is-primary is-bold">
                     <h1 className="title is-1 has-text-centered py-6">{this.state.business.name}</h1>
                 </div>
@@ -140,11 +147,12 @@ export default class BusinessPage extends React.Component{
                                         <div id="businesshours"></div>
                                     </div>
                                 </div>
-                                <Link to={"edit/" + businessid}>
+                                <Link to={"edit/" + this.state.business.id}>
                                     <div className="button is-primary">Edit Business</div>
                                 </Link>
                             </div>
                         </div>
+                        <WorkerAvailabilities busId={this.props.match.params.id} />
                     </div>
                 </div>
             <div className="hero-foot">

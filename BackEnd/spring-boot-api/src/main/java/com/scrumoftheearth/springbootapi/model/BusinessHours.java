@@ -16,6 +16,7 @@ import java.sql.Timestamp;
         query = "SELECT h FROM BusinessHours h WHERE h.business_id = ?1 ORDER BY h.day")
 })
 @ApiModel(description = "BusinessTime Model")
+@Table(name = "table_business_hours")
 public class BusinessHours {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,12 +34,12 @@ public class BusinessHours {
     // long to save day (monday = 1, tuesday = 2 etc)
     private int day;
 
-    @JsonFormat(pattern = ("HH:mm:ss"))
+    @JsonFormat(pattern = ("HH:mm"))
     @ApiModelProperty(name="openingTime",value = "09:00:00")
     // opening time
     private Timestamp openingTime;
 
-    @JsonFormat(pattern = ("HH:mm:ss"))
+    @JsonFormat(pattern = ("HH:mm"))
     @ApiModelProperty(name = "closingTime",value = "17:00:00")
     // closing time
     private Timestamp closingTime;
