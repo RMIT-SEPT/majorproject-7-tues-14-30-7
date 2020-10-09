@@ -116,9 +116,11 @@ export default class BusinessPage extends React.Component{
         var busid = this.props.match.params.id
         return( 
             <section className="hero is-fullheight is-default is-bold">
-                <HomePageHeader/>
+                <div className="header">
+                    <HomePageHeader/>
+                </div>
                 <div className="hero is-primary is-bold">
-                    <h1 className="title is-1 has-text-centered py-6">{this.state.business.name}</h1>
+                    <h1 className="title is-1 has-text-centered py-6 business-title">{this.state.business.name}</h1>
                 </div>
                 <div className="hero-body">
                     <div className="container has-text-centered">
@@ -155,24 +157,24 @@ export default class BusinessPage extends React.Component{
                         <WorkerAvailabilities busId={this.props.match.params.id} />
                     </div>
                 </div>
-            <div className="hero-foot">
-                <div className="container">
-                    <div className="columns">
+                <div className="hero-foot">
+                    <div className="container">
+                        <div className="columns">
+                            <div className="column">
+                        <div className="notification is-link">
+                            <p className="has-text-weight-bold">Address:</p>
+                            <p>{this.state.business.address}</p>
+                            </div>
+                        </div>
                         <div className="column">
-                    <div className="notification is-link">
-                        <p className="has-text-weight-bold">Address:</p>
-                        <p>{this.state.business.address}</p>
+                        <div className="notification is-link">
+                            <p className="has-text-weight-bold">Mobile Number:</p>
+                            <p>{this.state.business.phoneNumber}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div className="column">
-                    <div className="notification is-link">
-                        <p className="has-text-weight-bold">Mobile Number:</p>
-                        <p>{this.state.business.phoneNumber}</p>
                         </div>
-                    </div>
                     </div>
                 </div>
-            </div>
             </section>
         )
     }

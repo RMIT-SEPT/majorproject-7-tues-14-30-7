@@ -13,7 +13,6 @@ import java.util.List;
 
 // POJO for business
 @Entity
-@Table(name = "business")
 @NamedQueries({
         @NamedQuery(name = "Business.findAllWorkers",
                 query = "SELECT b.workers FROM Business b WHERE b.id = :id")

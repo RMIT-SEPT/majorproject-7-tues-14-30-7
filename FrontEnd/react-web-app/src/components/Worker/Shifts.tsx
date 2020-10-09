@@ -44,9 +44,9 @@ class Shifts extends Component<any, any> {
                     var endAmPm = endHours >= 12 ? 'pm' : 'am';
 
                     startHours = startHours % 12;
-                    startHours = startHours == 0 ? startHours : 12;
+                    startHours = startHours == 0 ? 12 : startHours;
                     endHours = endHours % 12;
-                    endHours = endHours == 0 ? endHours : 12;
+                    endHours = endHours == 0 ? 12 : endHours;
                     
                     console.log(startMinutes < 10);
                     
@@ -69,29 +69,32 @@ class Shifts extends Component<any, any> {
                     var startTimeFormatted = startHours + ':' + startMinutesToString + ' ' + startAmPm;
                     var endTimeFormatted = endHours + ':' + endMinutesToString + ' ' + endAmPm;
 
-
-                    return  (
-                        <div className="column is-2-tablet is--mobile">
-                            <div className="card">
-                                <div className="card-image">
-                                    <figure className="image is-4by3">
-                                        <img alt="" src="http://placehold.it/300x225"/>
-                                    </figure>
-                                </div>
-                                <div className="card-content">
-                                    <div className="container">
-                                        <span className="tag is-dark subtitle">{days[shiftStartDate.getDay()]}</span>
-                                        <p>{shiftStartDate.getDate() + "/" + shiftStartDate.getMonth() + "/" + shiftStartDate.getFullYear()}</p>
-                                        <p>{startTimeFormatted +  " - " + endTimeFormatted}</p>
+                    var dateToday = new Date();
+                    //If this date is from the past then don't show it
+                    if(shiftEndDate >= dateToday) {
+                        return  (
+                            <div className="column is-2-tablet is--mobile">
+                                <div className="card">
+                                    <div className="card-image">
+                                        <figure className="image is-4by3">
+                                            <img alt="" src="http://placehold.it/300x225"/>
+                                        </figure>
                                     </div>
+                                    <div className="card-content">
+                                        <div className="container">
+                                            <span className="tag is-dark subtitle">{days[shiftStartDate.getDay()]}</span>
+                                            <p>{shiftStartDate.getDate() + "/" + (shiftStartDate.getMonth()+1) + "/" + shiftStartDate.getFullYear()}</p>
+                                            <p>{startTimeFormatted +  " - " + endTimeFormatted}</p>
+                                        </div>
+                                    </div>
+                                    <footer className="card-footer">
+                                        <a className="card-footer-item">Report Unavailable</a>
+                                    </footer>
                                 </div>
-                                <footer className="card-footer">
-                                    <a className="card-footer-item">Report Unavailable</a>
-                                </footer>
+                                <br/>
                             </div>
-                            <br/>
-                        </div>
-                    )          
+                        )
+                    }          
                 })}
             </div>
         );

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { start } from 'repl';
 import "../../App.scss"
 
 class WorkerAvailabilities extends Component<any, any> {
@@ -7,7 +8,7 @@ class WorkerAvailabilities extends Component<any, any> {
         super(props);
         this.state = {
             business: {},
-            workers: []
+            workers: [],
         };
     }
 
@@ -24,54 +25,133 @@ class WorkerAvailabilities extends Component<any, any> {
             })
     }
 
+    initiateView(){
+        var worker0 = document.getElementById("worker-0");
+        var worker1 = document.getElementById("worker-1");
+        var worker2 = document.getElementById("worker-2");
+
+        if(worker0!=null){
+            worker0.style.display = "block";
+        }
+        if(worker1!=null) {
+            worker1.style.display = "block";
+        }
+        if(worker2!=null) {
+            worker2.style.display = "block";
+        }
+    }
+
+    getNextWorkers(){
+        var amountOfGroups = Math.ceil(this.state.workers.length/3);
+
+        if(this.state.page < amountOfGroups){
+            var startIndex = this.state.page*this.state.workersPerPage;
+            Array.from(Array(3), (e, j) => {
+                var worker = document.getElementById("worker-"+(startIndex+j));
+                if(worker != null){
+                    worker.style.display = "none";
+                    
+                }
+            }
+        )}
+        else{
+            alert("You have reached the end");
+        }
+    }
+
+    getPrevWorkers(){
+
+    }
+
+
+
     render(){
         var workers = this.state.workers;
         var days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
         var shiftStartDate;
         var shiftEndDate;
         var daysInMonth = 31;
+        var page = 0;
+        var workersPerPage = 3;
         return(
-            <div>
-                <h3 className="subtitle is-4 worker-availabilty">Worker Availabilities:</h3>
+            <div> 
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                <h3 className="subtitle is-4 availability-title">Worker Availabilities:</h3>
                 {
                     workers.map((worker,i)=> {
                         var currentDate = new Date();
+                        //Odd bug which won't let me use the date increment in the for loop below so I have to do it like this for now
+                        currentDate.setDate(currentDate.getDate()-1);
+                        var dateIncrement = 0;
                         return(
-                            <div className="container">
+                            <div className="container worker-availability" id={"worker-" + i} style={{display:'none'}}>
                                 <h4 className="subtitle is-4 worker-name">{worker.user.firstName + " " + worker.user.lastName}</h4>
                                 <div className="columns is-mobile shifts">
                                 {
                                     Array.from(Array(daysInMonth), (e, j) => {
-                                        var uniqueDate = (currentDate.getDate()+j) + "/" + (currentDate.getMonth()+1) + "/" + currentDate.getFullYear();
+                                        currentDate.setDate(currentDate.getDate()+1);
+                                        var uniqueDate = (currentDate.getDate() + "/" + (currentDate.getMonth()+1) + "/" + currentDate.getFullYear());
+                                        dateIncrement++;
                                         return(
-                                        <div className="column is-2-tablet is--mobile">
+                                        <div className="column is-2-tablet is--mobile worker-date-card">
                                             <div className="card">
                                                 <div className="card-content">
                                                     <div className="container">
-                                                        <span className="tag is-dark subtitle">{days[(currentDate.getDay()+i%7)]}</span>
-                                                        <p id={uniqueDate+ " " + i}>{uniqueDate}</p>
+                                                        <span className="tag is-dark subtitle">{days[(currentDate.getDay())]}</span>
+                                                        <p id={uniqueDate+ " " + i}>{uniqueDate}<p>Unavailable Times:</p></p>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <br/>
                                         </div>
                                         )
                                     })
                                 }
                                 </div>
                                 {
+
                                     worker.shiftStartTimes.map((shiftTime,k)=> {
-                                        var shiftStartDate = new Date(worker.shiftStartTimes[k].toString());
-                                        var shiftEndDate = new Date(worker.shiftEndTimes[k].toString());
+                                        
+                                        var shiftStartDate = new Date(worker.shiftStartTimes[k]);
+                                        var shiftEndDate = new Date(worker.shiftEndTimes[k]);
                                         var shiftDate = (shiftStartDate.getDate()) + "/" + (shiftStartDate.getMonth()+1) + "/" + shiftStartDate.getFullYear();
-                                        var workingTimes = shiftStartDate.getHours() + ":" + shiftStartDate.getMinutes() +
-                                        "-" + shiftEndDate.getHours() + ":" + shiftEndDate.getMinutes();
-                                        var theDiv = document.getElementById(shiftDate+ " " +i);
-                                        console.log(shiftDate+" "+i);
+                                        var startHours = shiftStartDate.getHours();
+                                        var startMinutes = shiftStartDate.getMinutes();
+                                        var endHours = shiftEndDate.getHours();
+                                        var endMinutes = shiftEndDate.getMinutes();
+
+                                        var startAmPm = startHours >= 12 ? 'pm' : 'am';
+                                        var endAmPm = endHours >= 12 ? 'pm' : 'am';
+
+                                        startHours = startHours % 12;
+                                        startHours = startHours == 0 ? 12 : startHours;
+                                        endHours = endHours % 12;
+                                        endHours = endHours == 0 ? 12 : endHours;
+                                        
+                                        var startMinutesToString;
+                                        var endMinutesToString;
+
+                                        if(startMinutes < 10){
+                                            startMinutesToString = "0"+startMinutes;
+                                        }
+                                        else{
+                                            startMinutesToString = startMinutes;
+                                        }
+                                        if(endMinutes < 10){
+                                            endMinutesToString = "0"+endMinutes;
+                                        }
+                                        else{
+                                            endMinutesToString = endMinutes;
+                                        }
+
+                                        var startTimeFormatted = startHours + ':' + startMinutesToString + ' ' + startAmPm;
+                                        var endTimeFormatted = endHours + ':' + endMinutesToString + ' ' + endAmPm;
+                                        var workingTimes = startTimeFormatted + " - " + endTimeFormatted;
+                                        var theDiv = document.getElementById(shiftDate + " " + i);
                                         var pElement = document.createElement('p');
                                         pElement.className = workingTimes;
                                         pElement.innerText = workingTimes;
                                         if(theDiv != null){
+                                            console.log(startHours);
                                             if(theDiv.getElementsByClassName(workingTimes)[0] == null){
                                                 theDiv.appendChild(pElement);
                                             }
@@ -81,6 +161,66 @@ class WorkerAvailabilities extends Component<any, any> {
                             </div>
                         )
                     })}
+                <div className="pagination">
+                    <button className="worker-nav-button" onClick={()=>{
+                            var amountOfGroups = Math.ceil(this.state.workers.length/workersPerPage);
+
+                            if(page > 0){
+                                var startIndex = page*workersPerPage;
+                                Array.from(Array(workersPerPage), (e, j) => {
+                                    var worker = document.getElementById("worker-"+(startIndex+j));
+                                    if(worker != null){
+                                        worker.style.display = "none";
+                                    }
+                                },
+                            )
+                            page = page - 1;
+                            startIndex = page*workersPerPage;
+    
+                            Array.from(Array(workersPerPage), (e, j) => {
+                                var worker = document.getElementById("worker-"+(startIndex+j));
+                                if(worker != null){
+                                    worker.style.display = "block";
+                                }
+                            },
+                        )
+                        }
+                        else{
+                            alert("Cannot go further back");
+                        }
+                        
+                        }}>Prev</button>
+
+
+                    <button className="worker-nav-button" onClick={()=>{
+                        var amountOfGroups = Math.ceil(this.state.workers.length/workersPerPage);
+
+                        if(page < amountOfGroups-1){
+                            var startIndex = page*workersPerPage;
+                            Array.from(Array(workersPerPage), (e, j) => {
+                                var worker = document.getElementById("worker-"+(startIndex+j));
+                                if(worker != null){
+                                    worker.style.display = "none";
+                                }
+                            },
+                        )
+                        page = page + 1;
+                        startIndex = page*workersPerPage;
+
+                        Array.from(Array(workersPerPage), (e, j) => {
+                            var worker = document.getElementById("worker-"+(startIndex+j));
+                            if(worker != null){
+                                worker.style.display = "block";
+                            }
+                        },
+                    )
+                    }
+                    else{
+                        alert("You have reached the end");
+                    }
+                    }}>Next</button>
+                </div>
+                {this.initiateView()}
             </div>
         )
     }
