@@ -14,4 +14,6 @@ public interface WorkerRepository extends CrudRepository<Worker, Long> {
 
     @Override
     Optional<Worker> findById(Long id);
+
+    List<Worker> findbybusid(long busid);
 }

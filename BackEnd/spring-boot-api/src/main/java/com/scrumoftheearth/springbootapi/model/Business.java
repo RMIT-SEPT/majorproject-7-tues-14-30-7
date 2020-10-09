@@ -1,6 +1,5 @@
 package com.scrumoftheearth.springbootapi.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,10 +12,6 @@ import java.util.List;
 
 // POJO for business
 @Entity
-@NamedQueries({
-        @NamedQuery(name = "Business.findAllWorkers",
-                query = "SELECT b.workers FROM Business b WHERE b.id = :id")
-})
 @ApiModel(description = "Business Model")
 @Table(name = "table_business")
 public class Business {

@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import com.scrumoftheearth.springbootapi.model.Business;
-import com.scrumoftheearth.springbootapi.model.User;
-import com.scrumoftheearth.springbootapi.model.Worker;
 import com.scrumoftheearth.springbootapi.service.BusinessService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,12 +99,5 @@ public class BusinessController {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode patched = patch.apply(objectMapper.convertValue(targetBusiness, JsonNode.class));
         return objectMapper.treeToValue(patched, Business.class);
-    }
-
-    @GetMapping("/getWorker={id}")
-    @ApiOperation(value = "Getting the List of worker",response = Iterable.class,
-            notes = "used to have a list of all the worker associated with that business")
-    public Worker[] getWorkers(@PathVariable long id){
-        return businessService.getWorker(id);
     }
 }

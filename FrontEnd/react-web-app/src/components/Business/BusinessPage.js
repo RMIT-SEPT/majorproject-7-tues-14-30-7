@@ -29,24 +29,21 @@ export default class BusinessPage extends React.Component{
     }
 
     populatetable(){
-        fetch("http://localhost:8080/api/user/1")
+        fetch("http://localhost:8080/api/worker/findWorkerbyBusId=1")
             .then(res =>{
                 res.json()
-                .then(data => {
-                    var dataArray = [];
-                    dataArray.push(data);
-                    if(dataArray.length > 1){
-                        var input = "";
-
-                        dataArray.forEach((row) =>{
+                .then(data =>{
+                    if(data.length > 0){
+                        var input = ""
+                        
+                        for(var i = 0; i < data.length;i++){
                             input += "<tr>"
-                            input += "<td>" + row.firstName + "</td>"
-                            input += "<td>" + row.lastName + "</td>"
-                            input += "<td>" + row.address + "</td>"
-                            input += "<td>" + row.phoneNumber + "</td>"
-                            input += "<td>" + "TO BE ADDED" + "</td>"
+                            input += "<td>" + data[i].user.firstName + "</td>"
+                            input += "<td>" + data[i].user.lastName + "</td>"
+                            input += "<td>" + data[i].user.homeAddress + "</td>"
+                            input += "<td>" + data[i].user.phoneNumber + "</td>"
                             input += "<tr>"
-                        });
+                        }
                         document.getElementById("workertable").innerHTML = input;
                     }
                 })
@@ -134,7 +131,6 @@ export default class BusinessPage extends React.Component{
                                         <th>Last Name</th>
                                         <th>Home Address</th>
                                         <th>Number</th>
-                                        <th>Email</th>  
                                     </tr>
                                     </thead>
                                     <tbody id="workertable"></tbody>

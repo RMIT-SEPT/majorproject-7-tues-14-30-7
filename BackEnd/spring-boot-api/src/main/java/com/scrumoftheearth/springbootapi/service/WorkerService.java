@@ -94,4 +94,8 @@ public class WorkerService {
         worker.addService(service);
         return workerRepository.save(worker);
     }
+
+    public List<Worker> getWorkerByBusId(long busid){
+        return workerRepository.findbybusid(busid);
+    }
 }
