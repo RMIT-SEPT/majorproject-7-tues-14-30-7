@@ -14,6 +14,7 @@ import store from './store';
 import EditUser from './components/User/EditUser';
 import ContactPage from './components/Contact/ContactPage';
 import Booking from './components/Booking/Booking'
+import NoMatch from './components/NoMatch/NoMatch';
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
             <Route path="/Login" component={LoginPage} />
             <Route path="/Signup" component={RegisterPage} />
             <Route path="/Booking" component={Booking} />
+
+            <Route component={NoMatch}/>
           </Switch>
         </Router>
         </Provider>

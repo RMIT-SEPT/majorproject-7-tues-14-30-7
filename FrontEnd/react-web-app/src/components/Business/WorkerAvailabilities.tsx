@@ -99,7 +99,9 @@ class WorkerAvailabilities extends Component<any, any> {
                                                 
                                                 <Link to={{
                                                     pathname: "/Booking/",
-                                                    state: {v: "data (can be from state)"} // Should be received as props, so this.props.variablename   
+                                                    state: {
+                                                        v: "test"
+                                                    } // Should be received as props, but weirdly is this.props.location.state.v   
                                                 }}>
                                                     <div className="card-content" >
                                                         <div className="container" >

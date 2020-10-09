@@ -7,15 +7,15 @@ export default class Booking extends Component {
     constructor() {
         super()
         this.state = {
-            example: null
+            example: []
         }
     }
 
     componentDidMount() {
-        if(this.props.v) {
+        if(this.props.location.state.v) {
             this.setState({
-                example: this.props.v
-            }, () => console.log(this.state.example))
+                example: this.props.location.state.v
+            })
         }
     }
 
@@ -32,7 +32,8 @@ export default class Booking extends Component {
                     <div className="container is-fluid" id="searchcontainer">
                         <div className="box" id="searchlist">
                             <p>
-                                {this.props.v}
+                                {this.state.example}
+                                <br></br>
                                 booking info here
                             </p>
                             <button>booking button</button>
