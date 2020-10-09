@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.scss';
 import Worker from './components/Worker/Worker';
-import BusinessPage from './components/Business/BusinessPage';
+import BusinessPage2 from './components/Business/BusinessPage2';
 import { BrowserRouter as Router,Switch,Route } from "react-router-dom";
 import UserHomepage from './components/User/UserHomepage';
 import HomePageContent from './components/HomePage/HomePageContent';
@@ -11,6 +11,9 @@ import LoginPage from './components/Entry/LoginPage';
 import RegisterPage from './components/Entry/RegisterPage';
 import {Provider} from "react-redux";
 import store from './store';
+import EditUser from './components/User/EditUser';
+import ContactPage from './components/Contact/ContactPage';
+import Booking from './components/Booking/Booking'
 
 function App() {
   return (
@@ -21,12 +24,15 @@ function App() {
             <Route exact path="/" component={HomePageContent} />
             <Route path="/Worker" component={Worker} />
             <Route exact path='/UserHomepage/:id' component={UserHomepage}/>
-            <Route exact path="/BusinessPage/:id" render={(props) => <BusinessPage {...props}/>}/>
-          <Route path="/BusinessPage/edit/:id" render={(props) => <EditBusinessPage {...props}/>}/>
+            <Route path = "/UserHomepage/EditUser/:id" render={(props) => <EditUser {...props}/>}/>
+            <Route exact path="/BusinessPage/:id" render={(props) => <BusinessPage2 {...props}/>}/>
+            <Route path="/BusinessPage/edit/:id" render={(props) => <EditBusinessPage {...props}/>}/>
             <Route path="/Search/:searchid" render={(props) => <SearchPage {...props}/> } />
-            <Route path="/Search" component={SearchPage} /> 
+            <Route path="/Search" component={SearchPage} />
+            <Route path="/Contact" component={ContactPage}/> 
             <Route path="/Login" component={LoginPage} />
             <Route path="/Signup" component={RegisterPage} />
+            <Route path="/Booking" component={Booking} />
           </Switch>
         </Router>
         </Provider>

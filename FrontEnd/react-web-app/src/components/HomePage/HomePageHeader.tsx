@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import '../../App.scss';
 import { BrowserRouter as Router,Link } from "react-router-dom";
@@ -23,6 +22,7 @@ export default class HomePageHeader extends Component<headerprops, headerstate> 
         return (
             <div>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
                 <nav className="navbar" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
                     <div className="navbar-item">
@@ -63,7 +63,7 @@ export default class HomePageHeader extends Component<headerprops, headerstate> 
                                     </div>
                                     <div className="navbar-dropdown">
                                         <div className="navbar-item" id="bushide">
-                                        <Link to="/">Contact Us</Link>
+                                        <Link to="/Contact">Contact Us</Link>
                                         </div>
                                     </div>
                                 </div>

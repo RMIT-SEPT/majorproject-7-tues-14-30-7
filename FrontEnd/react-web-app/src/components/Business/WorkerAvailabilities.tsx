@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { start } from 'repl';
 import "../../App.scss"
+import { BrowserRouter as Router,Link } from "react-router-dom";
 
 class WorkerAvailabilities extends Component<any, any> {
 
@@ -10,6 +11,7 @@ class WorkerAvailabilities extends Component<any, any> {
             business: {},
             workers: [],
         };
+
     }
 
     componentDidMount(){
@@ -55,15 +57,13 @@ class WorkerAvailabilities extends Component<any, any> {
             }
         )}
         else{
-            alert("You have reached the end");
+            //alert("You have reached the end");
         }
     }
 
     getPrevWorkers(){
 
     }
-
-
 
     render(){
         var workers = this.state.workers;
@@ -76,7 +76,7 @@ class WorkerAvailabilities extends Component<any, any> {
         return(
             <div> 
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-                <h3 className="subtitle is-4 availability-title">Worker Availabilities:</h3>
+                <h3 className="subtitle is-4 availability-title" style={{fontWeight: "bold", paddingTop: "10px"}}>Worker Availabilities</h3>
                 {
                     workers.map((worker,i)=> {
                         var currentDate = new Date();
@@ -85,7 +85,7 @@ class WorkerAvailabilities extends Component<any, any> {
                         var dateIncrement = 0;
                         return(
                             <div className="container worker-availability" id={"worker-" + i} style={{display:'none'}}>
-                                <h4 className="subtitle is-4 worker-name">{worker.user.firstName + " " + worker.user.lastName}</h4>
+                                <h4 className="subtitle worker-name"><span style={{fontWeight: "bold"}}>{worker.user.firstName + " " + worker.user.lastName}:</span></h4>
                                 <div className="columns is-mobile shifts">
                                 {
                                     Array.from(Array(daysInMonth), (e, j) => {
@@ -93,14 +93,23 @@ class WorkerAvailabilities extends Component<any, any> {
                                         var uniqueDate = (currentDate.getDate() + "/" + (currentDate.getMonth()+1) + "/" + currentDate.getFullYear());
                                         dateIncrement++;
                                         return(
-                                        <div className="column is-2-tablet is--mobile worker-date-card">
-                                            <div className="card">
-                                                <div className="card-content">
-                                                    <div className="container">
-                                                        <span className="tag is-dark subtitle">{days[(currentDate.getDay())]}</span>
-                                                        <p id={uniqueDate+ " " + i}>{uniqueDate}<p>Unavailable Times:</p></p>
+                                        <div className="column worker-date-card">
+                                            <div className="card" style={{width: "200px", height: "180px", border: "1px solid rgb(179, 179, 179)", borderRadius: "7px", overflowY: "auto"}}>
+                                                
+                                                
+                                                <Link to={{
+                                                    pathname: "/Booking/",
+                                                    state: {v: "data (can be from state)"} // Should be received as props, so this.props.variablename   
+                                                }}>
+                                                    <div className="card-content" >
+                                                        <div className="container" >
+                                                            <span className="tag is-dark subtitle">{days[(currentDate.getDay())]}</span>
+                                                            <p id={uniqueDate+ " " + i}><span style={{fontWeight: "bold"}}>{uniqueDate}</span><p>Unavailable Times:</p></p>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </Link>
+
+
                                             </div>
                                         </div>
                                         )
@@ -148,8 +157,10 @@ class WorkerAvailabilities extends Component<any, any> {
                                         var workingTimes = startTimeFormatted + " - " + endTimeFormatted;
                                         var theDiv = document.getElementById(shiftDate + " " + i);
                                         var pElement = document.createElement('p');
+                                        var pElement2 = <div style={{backgroundColor: "red"}}></div>
                                         pElement.className = workingTimes;
                                         pElement.innerText = workingTimes;
+                                        pElement.style.fontSize = "0.8rem";
                                         if(theDiv != null){
                                             console.log(startHours);
                                             if(theDiv.getElementsByClassName(workingTimes)[0] == null){
@@ -186,7 +197,7 @@ class WorkerAvailabilities extends Component<any, any> {
                         )
                         }
                         else{
-                            alert("Cannot go further back");
+                            //alert("Cannot go further back");
                         }
                         
                         }}>Prev</button>
@@ -216,7 +227,7 @@ class WorkerAvailabilities extends Component<any, any> {
                     )
                     }
                     else{
-                        alert("You have reached the end");
+                        //alert("You have reached the end");
                     }
                     }}>Next</button>
                 </div>
