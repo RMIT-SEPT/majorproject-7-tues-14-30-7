@@ -27,6 +27,7 @@ class ChangeAvailabilties extends Component<any, any> {
             endTimeFriday: "00:00",
             endTimeSaturday: "00:00",
             endTimeSunday: "00:00",
+            business: {}
         };
     }
 
@@ -95,7 +96,15 @@ class ChangeAvailabilties extends Component<any, any> {
                         'op':'replace',
                         'path': ('/availableEndTimes/' + i),
                         'value':endTimes[i]
+                    },
+                    {
+                        "op":"add",
+                        "path":"/business",
+                        "value":{
+                            "id": this.state.items.busId
+                        }
                     }
+                    
                 ],
                 {
                     headers: {'content-type': 'application/json-patch+json'}

@@ -23,10 +23,10 @@ class Worker extends Component<any, any> {
 
     componentDidMount() {
         fetch('http://localhost:8080/api/worker/' + this.state.values.id).then(res => res.json())
-        .then(json => {
+        .then(data => {
             this.setState({
                 isLoaded: true,
-                items: json,
+                items: data,
                 links: ["profile-link", "service-link", "shifts-link is-active","availability-link"],
                 link: null
             })

@@ -76,6 +76,9 @@ public class Worker implements Serializable {
     @ApiModelProperty(name="updatedAt")
     //The Date that the worker was last updated
     private Date updatedAt;
+    //Holds business id that the worker belongs to
+    @ApiModelProperty(name="busId")
+    private long busId;
 
     public Worker(){
     }
@@ -93,6 +96,7 @@ public class Worker implements Serializable {
         this.availableEndTimes = availableEndTimes;
         this.shiftStartTimes = shiftStartTimes;
         this.shiftEndTimes = shiftEndTimes;
+        this.busId = business.getId();
     }
     //Gets Identification number of Worker
     public Long getId(){
@@ -229,6 +233,16 @@ public class Worker implements Serializable {
     //Sets a list of end dates and times for a worker
     public void setShiftEndTimes(List<java.sql.Timestamp> shiftEndTimes) {
         this.shiftEndTimes = shiftEndTimes;
+    }
+
+    //Gets the id for the business that the worker belongs to
+    public long getBusId() {
+        return busId;
+    }
+
+    //Sets the id for the business that the worker belongs to
+    public void setBusId(long busId) {
+        this.busId = busId;
     }
 
 }
