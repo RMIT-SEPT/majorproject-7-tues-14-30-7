@@ -40,7 +40,7 @@ export default class BusinessPage extends React.Component{
                             input += "<tr>"
                             input += "<td>" + data[i].user.firstName + "</td>"
                             input += "<td>" + data[i].user.lastName + "</td>"
-                            input += "<td>" + data[i].user.homeAddress + "</td>"
+                            // input += "<td>" + data[i].user.homeAddress + "</td>"
                             input += "<td>" + data[i].user.phoneNumber + "</td>"
                             input += "<tr>"
                         }
@@ -129,7 +129,6 @@ export default class BusinessPage extends React.Component{
                                         <tr>
                                         <th>First Name</th>
                                         <th>Last Name</th>
-                                        <th>Home Address</th>
                                         <th>Number</th>
                                     </tr>
                                     </thead>
