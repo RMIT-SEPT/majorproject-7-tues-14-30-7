@@ -64,9 +64,7 @@ class RegisterPage extends Component {
             description: this.state.businessdescription,
             address: this.state.businessAddress,
             phoneNumber: this.state.businessPhoneNumber,
-            User: newUser
         }
-
 
         const newWorkerDetails = {
             id: this.state.id
@@ -78,7 +76,6 @@ class RegisterPage extends Component {
         if(document.getElementById("customer").checked){
             this.props.registerAction(newUser, newBusiness, newWorkerDetails, 1, this.props.history);
         } else if(document.getElementById("business").checked){
-            console.log("registering action")
             this.props.registerAction(newUser, newBusiness, newWorkerDetails, 2, this.props.history);
         }
         else if(document.getElementById("worker").checked){

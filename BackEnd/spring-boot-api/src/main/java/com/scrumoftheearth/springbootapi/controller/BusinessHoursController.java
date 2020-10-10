@@ -6,13 +6,12 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/BusinessHours")
@@ -29,10 +28,14 @@ public class BusinessHoursController {
     @PostMapping("")
     @ApiOperation(value = "Add a new Business Hours",response = Iterator.class,
             notes = "used to create a new Business Hours object and add it to the database")
-    public ResponseEntity<?> newBusinessHour(@Valid @RequestBody BusinessHours businessHours, BindingResult result){
-        // if there is a json error
-        if(result.hasErrors())
-            return new ResponseEntity<String>("Bad Business Hour Object W.I.P", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> newBusinessHour(@Valid @RequestBody BusinessHours businessHours){
+        // business_id cant be less than zero
+        if(businessHours.getBusiness_id() <= 0)
+            return new ResponseEntity<String>("BusinessHours must be associated with valid business_id",HttpStatus.BAD_REQUEST);
+
+        // day integer cant be less than 0 or more than 8
+        if(businessHours.getDay() < 1 || businessHours.getDay() > 7)
+            return new ResponseEntity<String>("day integer must be between 1 (Monday) to 7 (Sunday)",HttpStatus.BAD_REQUEST);
         BusinessHours toadd = businessHourService.saveOrUpdate(businessHours);
         return new ResponseEntity<BusinessHours>(businessHours, HttpStatus.CREATED);
     }
@@ -61,17 +64,21 @@ public class BusinessHoursController {
 
     @PutMapping("/update={id}")
     @ApiOperation(value = "updating a Business Hours by its id",response = Iterator.class,
-            notes = "used to get a Business Hours row by its id andd updating it, needs all unchanged variable in request")
-    public ResponseEntity<?> updateBusinessHour(@Valid @RequestBody BusinessHours businessHours,BindingResult result, @PathVariable long id){
+            notes = "used to get a Business Hours row by its id and updating it, needs all unchanged variable in request")
+    public ResponseEntity<?> updateBusinessHour(@Valid @RequestBody BusinessHours businessHours,@PathVariable long id){
         Optional<BusinessHours> toupdate = businessHourService.getById(id);
+
+        // business_id cant be less than zero
+        if(businessHours.getBusiness_id() <= 0)
+            return new ResponseEntity<String>("BusinessHours must be associated with valid business_id",HttpStatus.BAD_REQUEST);
+
+        // day integer cant be less than 0 or more than 8
+        if(businessHours.getDay() < 1 || businessHours.getDay() > 7)
+            return new ResponseEntity<String>("day integer must be between 1 (Monday) to 7 (Sunday)",HttpStatus.BAD_REQUEST);
 
         //if there is no business associated with the given ID
         if(!toupdate.isPresent())
-            return  new ResponseEntity<String>("Business hour object doesnt exist W.I.P",HttpStatus.BAD_REQUEST);
-
-        // if there is a json error
-        if(result.hasErrors())
-            return new ResponseEntity<String>("Invalid values for updating W.I.P",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("Business hour object with given ID doesnt exist",HttpStatus.BAD_REQUEST);
         businessHours.setId(id);
         businessHourService.saveOrUpdate(businessHours);
         return ResponseEntity.noContent().build();

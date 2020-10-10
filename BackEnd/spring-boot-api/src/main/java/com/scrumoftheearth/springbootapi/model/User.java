@@ -65,6 +65,9 @@ public class User implements Serializable {
 
     /* https://www.baeldung.com/spring-boot-formatting-json-dates */
 
+    @OneToOne(mappedBy = "Owner", cascade = CascadeType.ALL)
+    private Business business;
+
     @JsonFormat(pattern="yyyy-mm-dd")
     @ApiModelProperty(name="createdAt")
     private Date createdAt;

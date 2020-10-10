@@ -12,17 +12,18 @@ import java.util.List;
 // POJO for business
 @Entity
 @NamedQueries({
+        // custom query for getting all worker W.I.P
         @NamedQuery(name = "Business.findAllWorkers",
                 query = "SELECT b.worker FROM Business b WHERE b.id = :id")
 })
 @ApiModel(description = "Business Model")
 public class Business {
-    // business ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(name="id",required = true,value = "1")
     // business ID
-    private Long id;
+    private long id;
+
     @OneToOne
     @JoinColumn(name = "BusinessBState_id")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
@@ -40,35 +41,32 @@ public class Business {
     // name of business
     private String name;
 
-    @NotBlank(message = "Business blurb is required")
     @ApiModelProperty(name="blurb",required = true,value = "We deliver quality IT services to your home or business")
-    // blurb the business provides
     @NotBlank(message = "Business blurb is required")
+    // blurb the business provides
     private String blurb;
 
     @NotBlank(message = "Business description is required")
     @ApiModelProperty(name="description",required = true,value = "We do new Networking configuration,computer repair and more")
     // description of the business
-    @NotBlank(message = "Business description is required")
     private String description;
 
     @NotBlank(message = "Business address is required")
-    // address of the business
     @ApiModelProperty(name="address",required = true,value = "56/115 Queensberry St, Carlton VIC 3053")
+    // address of the business
     private String address;
 
-    @NotBlank(message = "Business contact number is required")
     @ApiModelProperty(name="phoneNumber",required = true,value = "9925 4468")
-    // address of the business
-    @NotBlank(message = "Business address is required")
-
-    // contact info of the business
     @NotBlank(message = "Business contact number is required")
+    // contact info of the business
     private String phoneNumber;
 
-    // List of business hours
-    @OneToMany()
-    private List<BusinessHours> openinghours;
+    @OneToOne
+//    @MapsId
+//    @NotBlank(message = "Business must be tied with a User account")
+    @ApiModelProperty(name="Owner", required = false)
+    //The user account which this business is owned by belongs to
+    private User Owner;
 
     // blank constructor for production uses
     protected Business() {
@@ -89,11 +87,11 @@ public class Business {
     }
 
     // getters and setters
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long busid) {
+    public void setId(long busid) {
         this.id = busid;
     }
 
@@ -121,14 +119,6 @@ public class Business {
         this.businessBState = businessBState;
     }
 
-    public List<Worker> getWorkerList() {
-        return worker;
-    }
-
-    public void setWorkerList(List<Worker> workerList) {
-        this.worker = workerList;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -151,5 +141,21 @@ public class Business {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public List<Worker> getWorker() {
+        return worker;
+    }
+
+    public void setWorker(List<Worker> worker) {
+        this.worker = worker;
+    }
+
+    public User getOwner() {
+        return Owner;
+    }
+
+    public void setOwner(User owner) {
+        Owner = owner;
     }
 }
