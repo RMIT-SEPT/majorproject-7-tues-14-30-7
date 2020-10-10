@@ -27,7 +27,7 @@ function App() {
             <Route path="/Search/:searchid" render={(props) => <SearchPage {...props}/> } />
             <Route path="/Search" component={SearchPage} /> 
             <Route path="/Login" component={LoginPage} />
-            <Route path="/Signup" component={WorkerRegisterPage} />
+            <Route path="/Signup" component={RegisterPage} />
           </Switch>
         </Router>
         </Provider>
