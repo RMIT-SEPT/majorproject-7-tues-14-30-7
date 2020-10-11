@@ -16,6 +16,11 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@NamedQueries({
+        // custom query for getting all workers tied by a busID
+        @NamedQuery(name = "Worker.findbybusid",
+        query = "SELECT w FROM Worker w WHERE w.busId = ?1")
+})
 @Table(name = "table_worker")
 @ApiModel(description = "Worker Model")
 public class Worker implements Serializable {

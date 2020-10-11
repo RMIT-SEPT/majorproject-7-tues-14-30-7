@@ -130,5 +130,10 @@ public class WorkerController {
         return Optional.empty();
     }
 
-
+    @GetMapping("/findWorkerbyBusId={id}")
+    @ApiOperation(value = "Getting all the worker associated with the given Business id",response = Iterator.class,
+            notes = "used to get a List<Worker> that has a busId variable the same as the given id")
+    public List<Worker> getbybusId(@PathVariable long id){
+        return workerService.getWorkerByBusId(id);
+    }
 }
