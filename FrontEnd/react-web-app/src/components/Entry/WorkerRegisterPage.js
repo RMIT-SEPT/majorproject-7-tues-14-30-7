@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router,Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {registerAction} from "../../actions/registerAction";
+import {createWorker} from "../../actions/workerActions";
 
-class RegisterPage extends Component {
+class WorkerRegisterPage extends Component {
     constructor(){
         super();
         this.state ={
@@ -15,13 +15,6 @@ class RegisterPage extends Component {
             homeAddress:"",
             password: "",
             passwordConfirmation: "",
-
-            businessName: "",
-            businessblurb: "",
-            businessdescription: "",
-            businessAddress: "",
-            businessPhoneNumber: "",
-
             businesses:[],
             loading: true,
             id: 1
@@ -57,49 +50,13 @@ class RegisterPage extends Component {
             password: this.state.password,
             passwordConfirmation: this.state.passwordConfirmation
         }
-
-        const newBusiness = {
-            name: this.state.businessName,
-            blurb: this.state.businessblurb,
-            description: this.state.businessdescription,
-            address: this.state.businessAddress,
-            phoneNumber: this.state.businessPhoneNumber,
-        }
-
         const newWorkerDetails = {
             id: this.state.id
         }
         console.log(newUser);
-        console.log(newBusiness);
+        console.log("LOGGING WORKER DETAILS ON THE REGISTER PAGE");
         console.log(newWorkerDetails);
-
-        if(document.getElementById("customer").checked){
-            this.props.registerAction(newUser, newBusiness, newWorkerDetails, 1, this.props.history);
-        } else if(document.getElementById("business").checked){
-            this.props.registerAction(newUser, newBusiness, newWorkerDetails, 2, this.props.history);
-        }
-        else if(document.getElementById("worker").checked){
-            this.props.registerAction(newUser, newBusiness, newWorkerDetails, 3, this.props.history);
-        }
-    }
-
-    checkboxchange(e){
-        var bussection = document.getElementById("Sectionbusiness");
-        var custsection = document.getElementById("Sectioncustomer");
-        var workersection = document.getElementById("Sectionworker");
-        bussection.style.display = "none";
-        custsection.style.display = "none";
-        workersection.style.display = "none";
-
-        if(document.getElementById("customer").checked){
-            custsection.style.display = "block";
-        }
-        else if(document.getElementById("business").checked){
-            bussection.style.display = "block";
-        }
-        else if(document.getElementById("worker").checked){
-            workersection.style.display = "block";
-        }
+        this.props.createWorker(newUser, newWorkerDetails, this.props.history);
     }
     render() {
         const slice = this.state.businesses.map(business =>
@@ -178,78 +135,16 @@ class RegisterPage extends Component {
                                             </input>
                                         </div>
                                     </div>
-                                    <div className="control" onChange={this.checkboxchange}>
-                                        <label className="is-size-6 mx-5">User Type:</label>
-                                        <br></br>
-                                        <label className="radio mx-5">
-                                        <input type="radio" name="usertype" id="customer"></input>
-                                        Customer
-                                        </label>
-                                        <label className="radio mx-5">
-                                        <input type="radio" name="usertype" id="business"></input>
-                                        Business Owner
-                                        </label>
-                                        <label className="radio mx-5">
-                                        <input type="radio" name="usertype" id="worker"></input>
-                                        Worker
-                                        </label>
+                                    <div className = "field">
+                                        <div className = "control has-text-left">
+                                            Select a business:
+                                            <select className = "input is-small" type="business" placeholder="Business"
+                                            name="id" value={this.state.id} onChange = {this.onChange}>
+                                            {slice}
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div id="Sectionbusiness" hidden>
-                                        <div className = "field">
-                                            <div className = "control has-text-left">
-                                                Business Name:
-                                                <input className="input is-small" type="text" placeholder="Business Name" 
-                                                name="businessName" value={this.state.businessName} onChange = {this.onChange}>
-                                                </input>
-                                            </div>
-                                        </div>
-                                        <div className = "field">
-                                            <div className = "control has-text-left">
-                                                Business Blurb:
-                                                <textarea className="textarea is-small" type="text" placeholder="Business Blurb" 
-                                                name="businessblurb" value={this.state.businessblurb} onChange = {this.onChange}>
-                                                </textarea>
-                                            </div>
-                                        </div>
-                                        <div className="field">
-                                            <div className = "control has-text-left">
-                                                Business description:
-                                                <textarea className="textarea is-small" type="text" placeholder="Business Description" 
-                                                name="businessdescription" value={this.state.businessdescription} onChange = {this.onChange}>
-                                                </textarea>
-                                            </div>
-                                        </div>
-                                        <div className = "field">
-                                            <div className = "control has-text-left">
-                                                Business Address:
-                                                <input className="input is-small" type="text" placeholder="Business Address" 
-                                                name="businessAddress" value={this.state.businessAddress} onChange = {this.onChange}>
-                                                </input>
-                                            </div>
-                                        </div>
-                                        <div className = "field">
-                                            <div className = "control has-text-left">
-                                                Business Phone Number:
-                                                <input className="input is-small" type="text" placeholder="Business Phone Number" 
-                                                name="businessPhoneNumber" value={this.state.businessPhoneNumber} onChange = {this.onChange}>
-                                                </input>
-                                            </div>
-                                        </div>
-                                        <button type="submit" className="button is-block is-danger is-medium is-fullwidth">Sign Up Business</button>
-                                    </div>
-                                    <div id="Sectionworker" hidden>
-                                    <div className = "control has-text-left">
-                                        Select a business:
-                                        <select className = "input is-small" type="business" placeholder="Business"
-                                        name="id" value={this.state.id} onChange = {this.onChange}>
-                                        {slice}
-                                        </select>
-                                    </div>
-                                    <button type="submit" className="button is-block is-danger is-medium is-fullwidth">Sign Up Worker</button>
-                                </div>
-                                    <div id="Sectioncustomer" hidden>
-                                        <button type="submit" className="button is-block is-danger is-medium is-fullwidth">Sign Up Customer</button>
-                                    </div>
+                                    <button type="submit" className="button is-block is-danger is-medium is-fullwidth">Sign Up</button>
                                 </form>
                             </div>
                         </div>
@@ -265,10 +160,10 @@ class RegisterPage extends Component {
         )
     }
 }
-RegisterPage.propTypes = {
+WorkerRegisterPage.propTypes = {
     createProject: PropTypes.func.isRequired
   };
 export default connect(
     null,
-    { registerAction }
-  )(RegisterPage);
+    { createWorker }
+  )(WorkerRegisterPage);

@@ -42,7 +42,7 @@ export default class HomePageContent extends Component {
          * The HomePageBusinessBox is created for each of the 5 businesses.
         */ 
         const slice = this.state.businesses.slice(0, 5).map(business =>
-            <div key={business.name + business.phoneNumber}>
+            <div key={business.id}>
                 <HomePageBusinessBox name={business.name} id={business.id} desc={business.description} phoneNumber={business.phoneNumber}/>
             </div>   
         )

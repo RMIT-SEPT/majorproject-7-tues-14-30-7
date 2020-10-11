@@ -66,7 +66,7 @@ class LoginPage extends Component {
                             </div>
                         </div>
                         <p className="has-text-grey">
-                            <Link to="/Register">
+                            <Link to="/Signup">
                             <a>Sign Up</a>&nbsp;·&nbsp;
                             </Link>
                             <a>Contact Us</a>

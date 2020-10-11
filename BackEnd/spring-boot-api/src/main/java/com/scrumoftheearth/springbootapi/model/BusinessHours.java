@@ -5,15 +5,15 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
-// POJO for businessHour
+// POJO for businessHours
 @Entity
 @NamedQueries({
         // custom query for getting all business time
         @NamedQuery(name = "BusinessHours.findAllBusTime",
-        query = "SELECT h FROM BusinessHours h WHERE h.business_id = ?1 ORDER BY h.day")
+                query = "SELECT h FROM BusinessHours h WHERE h.business_id = ?1 ORDER BY h.day")
 })
 @ApiModel(description = "BusinessTime Model")
 @Table(name = "table_business_hours")
@@ -24,14 +24,14 @@ public class BusinessHours {
     // business id
     private long id;
 
-//    @NotBlank(message = "BusinessHours must be associated with valid business_id")
+    @NotNull(message = "BusinessHours must be associated with valid business_id")
     @ApiModelProperty(name = "business_id",required = true,value = "1")
     // foreign key to business table,
     private long business_id;
 
-//    @NotBlank(message = "Day integer is required")
+    @NotNull(message = "Day integer is required")
     @ApiModelProperty(name = "day",required = true,value = "5")
-    // long to save day (monday = 1, tuesday = 2 etc)
+    // int to save day (monday = 1, tuesday = 2 etc)
     private int day;
 
     @JsonFormat(pattern = ("HH:mm"))
@@ -82,19 +82,19 @@ public class BusinessHours {
         this.day = day;
     }
 
-//    public Time getOpeningTime() {
-//        return openingTime;
-//    }
-//
-//    public void setOpeningTime(Time openingTime) {
-//        this.openingTime = openingTime;
-//    }
-//
-//    public Time getClosingTime() {
-//        return closingTime;
-//    }
-//
-//    public void setClosingTime(Time closingTime) {
-//        this.closingTime = closingTime;
-//    }
+    public Timestamp getOpeningTime() {
+        return openingTime;
+    }
+
+    public void setOpeningTime(Timestamp openingTime) {
+        this.openingTime = openingTime;
+    }
+
+    public Timestamp getClosingTime() {
+        return closingTime;
+    }
+
+    public void setClosingTime(Timestamp closingTime) {
+        this.closingTime = closingTime;
+    }
 }
