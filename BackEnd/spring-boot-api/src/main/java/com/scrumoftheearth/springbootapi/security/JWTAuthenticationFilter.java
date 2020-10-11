@@ -9,6 +9,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -50,7 +51,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withSubject(((SecurityUser) auth.getPrincipal()).getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.JWT_EXPIRE_TIME))
                 .sign(HMAC512(SecurityConstants.SECRET_KEY));
-        res.addHeader(SecurityConstants.HEADER_TAG, SecurityConstants.TOKEN_PREFIX + token);
+
+        res.addCookie(new Cookie(SecurityConstants.TOKEN_TYPE, token));
     }
 
 }

@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "table_user")
 @ApiModel(description = "User Model")
 public class User implements Serializable {
     @Id

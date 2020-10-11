@@ -16,6 +16,7 @@ import java.sql.Timestamp;
                 query = "SELECT h FROM BusinessHours h WHERE h.business_id = ?1 ORDER BY h.day")
 })
 @ApiModel(description = "BusinessTime Model")
+@Table(name = "table_business_hours")
 public class BusinessHours {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,7 +1,8 @@
 import React from "react"
 import "../../App.scss"
 import HomePageHeader from "../HomePage/HomePageHeader"
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom''
+import WorkerAvailabilities from './WorkerAvailabilities'
 
 export default class BusinessPage extends React.Component{
     constructor(props) {
@@ -18,7 +19,8 @@ export default class BusinessPage extends React.Component{
             .then(response => response.json())
             .then(data => {
                 this.setState({
-                    business: data
+                    business: data,
+                    workers: data.workers
                 })
             })
         this.populatetable();
@@ -29,21 +31,18 @@ export default class BusinessPage extends React.Component{
         fetch("http://localhost:8080/api/Business/getWorker=" + this.state.busid)
             .then(res =>{
                 res.json()
-                .then(data => {
-                    var dataArray = [];
-                    dataArray.push(data);
-                    if(dataArray.length > 1){
-                        var input = "";
-
-                        dataArray.forEach((row) =>{
+                .then(data =>{
+                    if(data.length > 0){
+                        var input = ""
+                        
+                        for(var i = 0; i < data.length;i++){
                             input += "<tr>"
-                            input += "<td>" + row.firstName + "</td>"
-                            input += "<td>" + row.lastName + "</td>"
-                            input += "<td>" + row.address + "</td>"
-                            input += "<td>" + row.phoneNumber + "</td>"
-                            input += "<td>" + "TO BE ADDED" + "</td>"
+                            input += "<td>" + data[i].user.firstName + "</td>"
+                            input += "<td>" + data[i].user.lastName + "</td>"
+                            // input += "<td>" + data[i].user.homeAddress + "</td>"
+                            input += "<td>" + data[i].user.phoneNumber + "</td>"
                             input += "<tr>"
-                        });
+                        }
                         document.getElementById("workertable").innerHTML = input;
                     }
                 })
@@ -115,9 +114,11 @@ export default class BusinessPage extends React.Component{
     render(){
         return( 
             <section className="hero is-fullheight is-default is-bold">
-                <HomePageHeader/>
+                <div className="header">
+                    <HomePageHeader/>
+                </div>
                 <div className="hero is-primary is-bold">
-                    <h1 className="title is-1 has-text-centered py-6">{this.state.business.name}</h1>
+                    <h1 className="title is-1 has-text-centered py-6 business-title">{this.state.business.name}</h1>
                 </div>
                 <div className="hero-body">
                     <div className="container has-text-centered">
@@ -129,9 +130,7 @@ export default class BusinessPage extends React.Component{
                                         <tr>
                                         <th>First Name</th>
                                         <th>Last Name</th>
-                                        <th>Home Address</th>
                                         <th>Number</th>
-                                        <th>Email</th>  
                                     </tr>
                                     </thead>
                                     <tbody id="workertable"></tbody>
@@ -151,26 +150,27 @@ export default class BusinessPage extends React.Component{
                                 </Link>
                             </div>
                         </div>
+                        <WorkerAvailabilities busId={this.props.match.params.id} />
                     </div>
                 </div>
-            <div className="hero-foot">
-                <div className="container">
-                    <div className="columns">
+                <div className="hero-foot">
+                    <div className="container">
+                        <div className="columns">
+                            <div className="column">
+                        <div className="notification is-link">
+                            <p className="has-text-weight-bold">Address:</p>
+                            <p>{this.state.business.address}</p>
+                            </div>
+                        </div>
                         <div className="column">
-                    <div className="notification is-link">
-                        <p className="has-text-weight-bold">Address:</p>
-                        <p>{this.state.business.address}</p>
+                        <div className="notification is-link">
+                            <p className="has-text-weight-bold">Mobile Number:</p>
+                            <p>{this.state.business.phoneNumber}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div className="column">
-                    <div className="notification is-link">
-                        <p className="has-text-weight-bold">Mobile Number:</p>
-                        <p>{this.state.business.phoneNumber}</p>
                         </div>
-                    </div>
                     </div>
                 </div>
-            </div>
             </section>
         )
     }

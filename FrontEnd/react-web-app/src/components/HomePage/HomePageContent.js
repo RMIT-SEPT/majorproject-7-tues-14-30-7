@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import "../../App.scss"
 import HomePageBusinessBox from './HomePageBusinessBox';
 import HomePageHeader from './HomePageHeader';
+import axios from 'axios';
 
 export default class HomePageContent extends Component {
     constructor(props) {
@@ -15,14 +16,23 @@ export default class HomePageContent extends Component {
     
     async componentDidMount(){
         // Gets all businesses and stores them in this.state.businesses, the loading state is set to false.
-        fetch("http://localhost:8080/api/Business/")
-            .then(response => response.json())
-            .then(data => {
-                this.setState({
-                    businesses: data,
-                    loading: false
-                })
+        await axios
+        .get('http://localhost:8080/api/Business')
+        .then(({ data })=>{
+            this.setState({
+                businesses: data,
+                loading: false
             })
+        })
+
+        // fetch("http://localhost:8080/api/Business/")
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         this.setState({
+        //             businesses: data,
+        //             loading: false
+        //         })
+        //     })
     }
 
     render() {
@@ -47,13 +57,13 @@ export default class HomePageContent extends Component {
                     <div className="column is-one-fifths">
                         <div className="header is-primary" id="herobanner2small">
                             <span style={{ textAlign: "center" }}>AGME</span> <br />
-                            <span style={{ fontWeight: "normal", fontSize: "1rem" }}>book anything</span></div>
+                            <span style={{ fontWeight: "normal", fontSize: "1rem" }}>Booking Made Easy</span></div>
                         <section className="hero is-primary" id="herobanner2">
                             <div className="hero-body">
                                 <div className="container" id="herobanner">
                                     <h1 className="title has-text-centered">
                                         <span style={{ fontWeight: "bold" }} id="herotitle">AGME</span><br />
-                                        <span id="subtitle">book anything</span>
+                                        <span id="subtitle">Booking Made Easy</span>
                                     </h1>
                                 </div>
                             </div>
@@ -81,13 +91,13 @@ export default class HomePageContent extends Component {
                     <div className="column is-one-fifths">
                         <div className="header is-primary" id="herobanner2small">
                             <span style={{ textAlign: "center" }}>AGME</span> <br />
-                            <span style={{ fontWeight: "normal", fontSize: "1rem" }}>book anything</span></div>
+                            <span style={{ fontWeight: "normal", fontSize: "1rem" }}>Booking Made Easy</span></div>
                         <section className="hero is-primary" id="herobanner2">
                             <div className="hero-body">
                                 <div className="container" id="herobanner">
                                     <h1 className="title has-text-centered">
                                         <span style={{ fontWeight: "bold" }} id="herotitle">AGME</span><br />
-                                        <span id="subtitle">book anything</span>
+                                        <span id="subtitle">Booking Made Easy</span>
                                     </h1>
                                 </div>
                             </div>
@@ -114,13 +124,13 @@ export default class HomePageContent extends Component {
                     <div className="column is-one-fifths">
                         <div className="header is-primary" id="herobanner2small">
                             <span style={{ textAlign: "center" }}>AGME</span> <br />
-                            <span style={{ fontWeight: "normal", fontSize: "1rem" }}>book anything</span></div>
+                            <span style={{ fontWeight: "normal", fontSize: "1rem" }}>Booking Made Easy</span></div>
                         <section className="hero is-primary" id="herobanner2">
                             <div className="hero-body">
                                 <div className="container" id="herobanner">
                                     <h1 className="title has-text-centered">
                                         <span style={{ fontWeight: "bold" }} id="herotitle">AGME</span><br />
-                                        <span id="subtitle">book anything</span>
+                                        <span id="subtitle">Booking Made Easy</span>
                                     </h1>
                                 </div>
                             </div>

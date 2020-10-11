@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import '../../App.scss';
 import { BrowserRouter as Router,Link } from "react-router-dom";
@@ -64,7 +63,7 @@ export default class HomePageHeader extends Component<headerprops, headerstate> 
                                     </div>
                                     <div className="navbar-dropdown">
                                         <div className="navbar-item" id="bushide">
-                                        <Link to="/">Contact Us</Link>
+                                        <Link to="/Contact">Contact Us</Link>
                                         </div>
                                     </div>
                                 </div>
