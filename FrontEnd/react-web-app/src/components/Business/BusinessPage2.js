@@ -56,7 +56,7 @@ export default class BusinessPage2 extends React.Component{
                     var dataArray = []
                     dataArray.push(data)
                     var daysarray = ["ERROR/TIME NOT SET","Monday","Tuesday","Wednesday","Thurday","Firday","Saturday","Sunday"]
-                    var input = "<p className='has-text-weight-bold'>Business Hours</p>"
+                    var input = ""
 
                          for(var i = 0; i < 7;i++){
                             dataArray.forEach((row) =>{
@@ -145,11 +145,6 @@ export default class BusinessPage2 extends React.Component{
                                             <div id="businesshours"></div>
 
                                         </div>
-                                        <div className="has-text-centered">
-                                            <Link to={"edit/" + this.state.business.id}>
-                                                <div className="button" id="submitbutton">Edit Business</div>
-                                            </Link>
-                                        </div>
                                         <div className="workerlistpadding" style={{paddingTop: "30px", paddingLeft: "5vw"}}>
                                             <h3 className="subtitle is-4" style={{paddingLeft: "30%", fontWeight: 'bold'}}>Worker List</h3>
                                             <table className="table">
@@ -163,6 +158,11 @@ export default class BusinessPage2 extends React.Component{
                                                 <tbody id="workertable"></tbody>
                                             </table>
                                         </div>
+                                    </div>
+                                    <div className="has-text-centered pt-6">
+                                        <Link to={"edit/" + this.state.business.id}>
+                                            <div className="button" id="submitbutton">Edit Business</div>
+                                        </Link>
                                     </div>
                                 </div>
                                 <p></p>

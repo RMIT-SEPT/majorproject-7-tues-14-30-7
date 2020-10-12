@@ -5,7 +5,8 @@ export default class EditBusinessPage extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            businessTime: []
+            businessTime: [],
+            busid: this.props.match.params.id
         }
         this.updateBusiness = this.updateBusiness.bind(this)
         this.updateBusinessTime = this.updateBusinessTime.bind(this)
@@ -13,8 +14,8 @@ export default class EditBusinessPage extends React.Component{
 
     //API call for getting the business info 
     componentDidMount(){
-        var busid = this.props.match.params.id
-        var businessApi = "http://localhost:8080/api/Business/findById=" + busid;
+        var businessApi = "http://localhost:8080/api/Business/findById=" + this.state.busid;
+
         fetch(businessApi)
             .then(response => response.json())
             .then(data => {
@@ -27,7 +28,8 @@ export default class EditBusinessPage extends React.Component{
                 document.getElementById("address").value = data.address;
                 document.getElementById("phoneNumber").value = data.phoneNumber;
             })
-        var businessTimeApi ="http://localhost:8080/api/BusinessHours/findByBusId=" + busid;
+        var businessTimeApi ="http://localhost:8080/api/BusinessHours/findByBusId=" + this.state.busid;
+
         fetch(businessTimeApi)
             .then(response => response.json())
             .then(data =>{
@@ -51,16 +53,16 @@ export default class EditBusinessPage extends React.Component{
 
     // API call of put to update the business info
     updateBusiness(){
-        var busid = this.props.match.params.id
         var updateBusiness = {
-            id: busid,
+            id: this.state.busid,
             name: document.getElementById("name").value,
             blurb: document.getElementById("blurb").value,
             description: document.getElementById("description").value,
             address: document.getElementById("address").value,
             phoneNumber: document.getElementById("phoneNumber").value
         }
-        var apiupdate = 'http://localhost:8080/api/Business/update=' + busid
+
+        var apiupdate = 'http://localhost:8080/api/Business/update=' + this.state.busid
         fetch(apiupdate,{
             method: 'PUT',
             headers: {
