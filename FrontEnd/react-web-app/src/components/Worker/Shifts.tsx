@@ -8,7 +8,7 @@ class Shifts extends Component<any, any> {
         this.state = {
             items: [],
             isLoaded: false,
-            shiftStartTimes: []
+            shiftStartTimes: [],
         };
     }
 
@@ -30,8 +30,8 @@ class Shifts extends Component<any, any> {
         var days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
         return (
             <div className="columns is-mobile shifts">
-
-                {shiftStartTimes.map((shiftInfo, i)=> {
+                
+                {this.props.futureShiftCount == 0 ? <div className="center">No shifts for this week!</div> : shiftStartTimes.map((shiftInfo, i)=> {
 
                     var shiftStartDate = new Date(shiftStartTimes[i].toString());
                     var shiftEndDate = new Date(shiftEndTimes[i].toString());
@@ -87,9 +87,6 @@ class Shifts extends Component<any, any> {
                                             <p>{startTimeFormatted +  " - " + endTimeFormatted}</p>
                                         </div>
                                     </div>
-                                    <footer className="card-footer">
-                                        <a className="card-footer-item">Report Unavailable</a>
-                                    </footer>
                                 </div>
                                 <br/>
                             </div>
