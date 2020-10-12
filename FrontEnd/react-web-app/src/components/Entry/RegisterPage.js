@@ -268,6 +268,9 @@ class RegisterPage extends Component {
                                 <Link to="/Login">
                                 <a>Login</a>
                                 </Link>
+                                <div>
+                                    <br></br>
+                                </div>
                             </p>
                         </div>
                     </div>
