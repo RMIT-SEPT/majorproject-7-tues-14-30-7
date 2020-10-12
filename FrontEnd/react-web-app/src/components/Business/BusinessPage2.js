@@ -112,67 +112,69 @@ export default class BusinessPage2 extends React.Component{
 
     render(){
         var busid = this.props.match.params.id
-        return( 
-            <div id="hpcontent">
-                <HomePageHeader/>
-                <div style={{height: "100vh"}}>
-                    <section className="header" id="userherobanner">
-                        <div className="container" style={{height: "130px", paddingTop: "30px"}}>
-                            <h1 className="title has-text-centered">
-                                <span style={{ fontWeight: "bold", color: "white", fontSize: "3.2vh"}}>{this.state.business.name}</span>
-                            </h1>
-                        </div>
-                    </section>
-                    <div className="container is-fluid" id="businesslistcontainer">
-                        <div className="box" id="businesslist" style={{overflowX: "auto"}}>
-                            <div className="columns">
-                                <div className="column is-7">
-                                    
-                                    <div style={{border: "solid 1px rgb(216, 216, 216)", borderRadius: "7px"}}>
-                                        <WorkerAvailabilities busId={this.props.match.params.id}/>
-                                    </div>
-
-                                </div>
-                                <div className="column is-5">
-                                    <div className="has-text-centered" id="blurbbox">
-                                        <p>{this.state.business.blurb}</p>
-                                        <br></br>
-                                        <p>{this.state.business.description}</p>
-                                    </div>
-                                    <div className="notification has-text-centered" id="noti">
-                                        <p style={{fontWeight: "bold", textDecoration: "underline"}}>Business Hours</p>
-                                        <div id="businesshours"></div>
-
-                                    </div>
-                                    <div className="has-text-centered">
-                                        <Link to={"edit/" + this.state.business.id}>
-                                            <div className="button" id="submitbutton">Edit Business</div>
-                                        </Link>
-                                    </div>
-                                    <div className="workerlistpadding" style={{paddingTop: "30px", paddingLeft: "5vw"}}>
-                                        <h3 className="subtitle is-4" style={{paddingLeft: "30%", fontWeight: 'bold'}}>Worker List</h3>
-                                        <table className="table">
-                                            <thead>
-                                                <tr>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
-                                                <th>Number</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="workertable"></tbody>
-                                        </table>
-                                    </div>
-                                </div>
+        return(
+            <div>
+                <HomePageHeader/> 
+                <div id="hpcontent">
+                    <div style={{height: "100vh"}}>
+                        <section className="header" id="userherobanner">
+                            <div className="container" style={{height: "130px", paddingTop: "30px"}}>
+                                <h1 className="title has-text-centered">
+                                    <span style={{ fontWeight: "bold", color: "white", fontSize: "3.2vh"}}>{this.state.business.name}</span>
+                                </h1>
                             </div>
-                            <p></p>
-                            <br></br>
-                            <p></p>
-                            <p></p>
-                            <br></br>
-                            <p></p>
-                            <p></p>
-                            <br></br>
-                            <p></p>
+                        </section>
+                        <div className="container is-fluid" id="businesslistcontainer">
+                            <div className="box" id="businesslist" style={{overflowX: "auto"}}>
+                                <div className="columns">
+                                    <div className="column is-7">
+                                        
+                                        <div style={{border: "solid 1px rgb(216, 216, 216)", borderRadius: "7px"}}>
+                                            <WorkerAvailabilities busId={this.props.match.params.id}/>
+                                        </div>
+
+                                    </div>
+                                    <div className="column is-5">
+                                        <div className="has-text-centered" id="blurbbox">
+                                            <p>{this.state.business.blurb}</p>
+                                            <br></br>
+                                            <p>{this.state.business.description}</p>
+                                        </div>
+                                        <div className="notification has-text-centered" id="noti">
+                                            <p style={{fontWeight: "bold", textDecoration: "underline"}}>Business Hours</p>
+                                            <div id="businesshours"></div>
+
+                                        </div>
+                                        <div className="has-text-centered">
+                                            <Link to={"edit/" + this.state.business.id}>
+                                                <div className="button" id="submitbutton">Edit Business</div>
+                                            </Link>
+                                        </div>
+                                        <div className="workerlistpadding" style={{paddingTop: "30px", paddingLeft: "5vw"}}>
+                                            <h3 className="subtitle is-4" style={{paddingLeft: "30%", fontWeight: 'bold'}}>Worker List</h3>
+                                            <table className="table">
+                                                <thead>
+                                                    <tr>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Number</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="workertable"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p></p>
+                                <br></br>
+                                <p></p>
+                                <p></p>
+                                <br></br>
+                                <p></p>
+                                <p></p>
+                                <br></br>
+                                <p></p>
+                            </div>
                         </div>
                     </div>
                 </div>
