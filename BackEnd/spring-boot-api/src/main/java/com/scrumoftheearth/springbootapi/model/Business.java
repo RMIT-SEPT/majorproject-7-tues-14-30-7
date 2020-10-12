@@ -12,11 +12,6 @@ import java.util.List;
 
 // POJO for business
 @Entity
-@NamedQueries({
-        // custom query for getting all worker W.I.P
-        @NamedQuery(name = "Business.findAllWorkers",
-                query = "SELECT b.worker FROM Business b WHERE b.id = :id")
-})
 @ApiModel(description = "Business Model")
 @Table(name = "table_business")
 public class Business {
