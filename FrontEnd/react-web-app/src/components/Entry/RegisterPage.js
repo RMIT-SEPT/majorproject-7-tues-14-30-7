@@ -3,6 +3,7 @@ import { BrowserRouter as Router,Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {registerAction} from "../../actions/registerAction";
+import HomePageHeader from '../HomePage/HomePageHeader';
 
 class RegisterPage extends Component {
     constructor(){
@@ -106,161 +107,170 @@ class RegisterPage extends Component {
             <option key={business.id} value={business.id} onChange = {this.onChange}>{business.name}</option>
         )
         return (
-            <div className = "hero is-fullheight is-primary">
-                <div className = "hero-body">
-                    <div className = "container has-text-centered">
-                        <div className = "column is-8 is-offset-2">
-                            <h3 className = "title has-text-white">Registration</h3>
-                            <hr className = "login-hr"></hr>
-                            <div className = "box">
-                                <div className = "box">
-                                <Link to="/" >
-                                    <img src={require("../HomePage/Images/brand.png")}></img>
-                                </Link>
-                                </div>
-                                <div className = "title has-text-grey is-5">
-                                    Please fill in your details.
-                                </div>
-                                <form id="register" onSubmit={this.onSubmit}>
-                                    <div className = "field">
-                                        <div className = "control has-text-left">
-                                            Username:
-                                            <input className="input is-small" type="text" placeholder="Username" 
-                                            name="userName" value={this.state.userName} onChange = {this.onChange}>
-                                            </input>
-                                        </div>
-                                    </div>
-                                    <div className = "field">
-                                        <div className = "control has-text-left">
-                                            First Name:
-                                            <input className = "input is-small" type="text" placeholder="First Name" 
-                                            name="firstName" value={this.state.firstName} onChange = {this.onChange}>
-                                            </input>
-                                        </div>
-                                    </div>
-                                    <div className = "field">
-                                        <div className = "control has-text-left">
-                                            Last Name:
-                                            <input className = "input is-small" type="text" placeholder="Last Name" 
-                                            name="lastName" value={this.state.lastName} onChange = {this.onChange}>
-                                            </input>
-                                        </div>
-                                    </div>
-                                    <div className = "field">
-                                        <div className = "control has-text-left">
-                                            Phone Number:
-                                            <input className = "input is-small" type="text" placeholder="Phone Number" 
-                                            name="phoneNumber" value={this.state.phoneNumber} onChange = {this.onChange}>
-                                            </input>
-                                        </div>
-                                    </div>
-                                    <div className = "field">
-                                        <div className = "control has-text-left">
-                                            Address:
-                                            <input className = "input is-small" type="text" placeholder="Home Address" 
-                                            name="homeAddress" value={this.state.homeAddress} onChange = {this.onChange}>
-                                            </input>
-                                        </div>
-                                    </div>
-                                    <div className = "field">
-                                        <div className = "control has-text-left">
-                                            Password:
-                                            <input className = "input is-small" type="password" placeholder="Password"
-                                            name="password" value={this.state.password} onChange = {this.onChange}>
-                                            </input>
-                                        </div>
-                                    </div>
-                                    <div className = "field">
-                                        <div className = "control has-text-left">
-                                            Confirm Password:
-                                            <input className = "input is-small" type="password" placeholder="Password"
-                                            name="passwordConfirmation" value={this.state.passwordConfirmation} onChange = {this.onChange}>
-                                            </input>
-                                        </div>
-                                    </div>
-                                    <div className="control" onChange={this.checkboxchange}>
-                                        <label className="is-size-6 mx-5">User Type:</label>
-                                        <br></br>
-                                        <label className="radio mx-5">
-                                        <input type="radio" name="usertype" id="customer"></input>
-                                        Customer
-                                        </label>
-                                        <label className="radio mx-5">
-                                        <input type="radio" name="usertype" id="business"></input>
-                                        Business Owner
-                                        </label>
-                                        <label className="radio mx-5">
-                                        <input type="radio" name="usertype" id="worker"></input>
-                                        Worker
-                                        </label>
-                                    </div>
-                                    <div id="Sectionbusiness" hidden>
-                                        <div className = "field">
-                                            <div className = "control has-text-left">
-                                                Business Name:
-                                                <input className="input is-small" type="text" placeholder="Business Name" 
-                                                name="businessName" value={this.state.businessName} onChange = {this.onChange}>
-                                                </input>
-                                            </div>
-                                        </div>
-                                        <div className = "field">
-                                            <div className = "control has-text-left">
-                                                Business Blurb:
-                                                <textarea className="textarea is-small" type="text" placeholder="Business Blurb" 
-                                                name="businessblurb" value={this.state.businessblurb} onChange = {this.onChange}>
-                                                </textarea>
-                                            </div>
-                                        </div>
-                                        <div className="field">
-                                            <div className = "control has-text-left">
-                                                Business description:
-                                                <textarea className="textarea is-small" type="text" placeholder="Business Description" 
-                                                name="businessdescription" value={this.state.businessdescription} onChange = {this.onChange}>
-                                                </textarea>
-                                            </div>
-                                        </div>
-                                        <div className = "field">
-                                            <div className = "control has-text-left">
-                                                Business Address:
-                                                <input className="input is-small" type="text" placeholder="Business Address" 
-                                                name="businessAddress" value={this.state.businessAddress} onChange = {this.onChange}>
-                                                </input>
-                                            </div>
-                                        </div>
-                                        <div className = "field">
-                                            <div className = "control has-text-left">
-                                                Business Phone Number:
-                                                <input className="input is-small" type="text" placeholder="Business Phone Number" 
-                                                name="businessPhoneNumber" value={this.state.businessPhoneNumber} onChange = {this.onChange}>
-                                                </input>
-                                            </div>
-                                        </div>
-                                        <button type="submit" className="button is-block is-danger is-medium is-fullwidth">Sign Up Business</button>
-                                    </div>
-                                    <div id="Sectionworker" hidden>
-                                    <div className = "control has-text-left">
-                                        Select a business:
-                                        <select className = "input is-small" type="business" placeholder="Business"
-                                        name="id" value={this.state.id} onChange = {this.onChange}>
-                                        {slice}
-                                        </select>
-                                    </div>
-                                    <button type="submit" className="button is-block is-danger is-medium is-fullwidth">Sign Up Worker</button>
-                                </div>
-                                    <div id="Sectioncustomer" hidden>
-                                        <button type="submit" className="button is-block is-danger is-medium is-fullwidth">Sign Up Customer</button>
-                                    </div>
-                                </form>
-                            </div>
+            <div>
+                <HomePageHeader/>
+                <div id="hpcontent" style={{height: "100vh"}}>
+                    <section className="header" id="userherobanner">
+                        <div className="container" style={{height: "115px", paddingTop: "30px"}}>
+                            <h1 className="title has-text-centered">
+                                <span style={{ fontWeight: "bold", color: "white", fontSize: "3.2vh"}}>Register</span>
+                            </h1>
                         </div>
-                        <p className="has-text-grey">
-                            Already Signed Up?&nbsp;·&nbsp;
-                            <Link to="/Login">
-                            <a>Login</a>
-                            </Link>
-                        </p>
+                    </section>
+                        <div className = "container has-text-centered" id="businesslistcontainer">
+                            <div className = "column is-8 is-offset-2">
+                                <div className = "box" style={{overflowY: "auto", height: "75vh"}}>
+                                    <div className = "box">
+                                    <Link to="/" >
+                                        <span className="title" id="brand" style={{color: "black"}}>AGME</span>
+                                    </Link>
+                                    </div>
+                                    <div className = "title has-text-grey is-5">
+                                        Please fill in your details.
+                                    </div>
+                                    <form id="register" onSubmit={this.onSubmit}>
+                                        <div className = "field">
+                                            <div className = "control has-text-left">
+                                                Username:
+                                                <input className="input is-small" type="text" placeholder="Username" 
+                                                name="userName" value={this.state.userName} onChange = {this.onChange}>
+                                                </input>
+                                            </div>
+                                        </div>
+                                        <div className = "field">
+                                            <div className = "control has-text-left">
+                                                First Name:
+                                                <input className = "input is-small" type="text" placeholder="First Name" 
+                                                name="firstName" value={this.state.firstName} onChange = {this.onChange}>
+                                                </input>
+                                            </div>
+                                        </div>
+                                        <div className = "field">
+                                            <div className = "control has-text-left">
+                                                Last Name:
+                                                <input className = "input is-small" type="text" placeholder="Last Name" 
+                                                name="lastName" value={this.state.lastName} onChange = {this.onChange}>
+                                                </input>
+                                            </div>
+                                        </div>
+                                        <div className = "field">
+                                            <div className = "control has-text-left">
+                                                Phone Number:
+                                                <input className = "input is-small" type="text" placeholder="Phone Number" 
+                                                name="phoneNumber" value={this.state.phoneNumber} onChange = {this.onChange}>
+                                                </input>
+                                            </div>
+                                        </div>
+                                        <div className = "field">
+                                            <div className = "control has-text-left">
+                                                Address:
+                                                <input className = "input is-small" type="text" placeholder="Home Address" 
+                                                name="homeAddress" value={this.state.homeAddress} onChange = {this.onChange}>
+                                                </input>
+                                            </div>
+                                        </div>
+                                        <div className = "field">
+                                            <div className = "control has-text-left">
+                                                Password:
+                                                <input className = "input is-small" type="password" placeholder="Password"
+                                                name="password" value={this.state.password} onChange = {this.onChange}>
+                                                </input>
+                                            </div>
+                                        </div>
+                                        <div className = "field">
+                                            <div className = "control has-text-left">
+                                                Confirm Password:
+                                                <input className = "input is-small" type="password" placeholder="Password"
+                                                name="passwordConfirmation" value={this.state.passwordConfirmation} onChange = {this.onChange}>
+                                                </input>
+                                            </div>
+                                        </div>
+                                        <div className="control" onChange={this.checkboxchange}>
+                                            <label className="is-size-6 mx-5">User Type:</label>
+                                            <br></br>
+                                            <label className="radio mx-5">
+                                            <input type="radio" name="usertype" id="customer"></input>
+                                            &nbsp;Customer
+                                            </label>
+                                            <label className="radio mx-5">
+                                            <input type="radio" name="usertype" id="business"></input>
+                                            &nbsp;Business Owner
+                                            </label>
+                                            <label className="radio mx-5">
+                                            <input type="radio" name="usertype" id="worker"></input>
+                                            &nbsp;Worker
+                                            </label>
+                                        </div>
+                                        <div id="Sectionbusiness" hidden>
+                                            <div className = "field">
+                                                <div className = "control has-text-left">
+                                                    Business Name:
+                                                    <input className="input is-small" type="text" placeholder="Business Name" 
+                                                    name="businessName" value={this.state.businessName} onChange = {this.onChange}>
+                                                    </input>
+                                                </div>
+                                            </div>
+                                            <div className = "field">
+                                                <div className = "control has-text-left">
+                                                    Business Blurb:
+                                                    <textarea className="textarea is-small" type="text" placeholder="Business Blurb" 
+                                                    name="businessblurb" value={this.state.businessblurb} onChange = {this.onChange}>
+                                                    </textarea>
+                                                </div>
+                                            </div>
+                                            <div className="field">
+                                                <div className = "control has-text-left">
+                                                    Business description:
+                                                    <textarea className="textarea is-small" type="text" placeholder="Business Description" 
+                                                    name="businessdescription" value={this.state.businessdescription} onChange = {this.onChange}>
+                                                    </textarea>
+                                                </div>
+                                            </div>
+                                            <div className = "field">
+                                                <div className = "control has-text-left">
+                                                    Business Address:
+                                                    <input className="input is-small" type="text" placeholder="Business Address" 
+                                                    name="businessAddress" value={this.state.businessAddress} onChange = {this.onChange}>
+                                                    </input>
+                                                </div>
+                                            </div>
+                                            <div className = "field">
+                                                <div className = "control has-text-left">
+                                                    Business Phone Number:
+                                                    <input className="input is-small" type="text" placeholder="Business Phone Number" 
+                                                    name="businessPhoneNumber" value={this.state.businessPhoneNumber} onChange = {this.onChange}>
+                                                    </input>
+                                                </div>
+                                            </div>
+                                            <button type="submit" className="button is-block is-medium has-text-white is-fullwidth" style={{backgroundColor: "rgb(247, 71, 71)",
+                                                fontWeight: "bold"}}>Sign Up Business</button>
+                                        </div>
+                                        <div id="Sectionworker" hidden>
+                                        <div className = "control has-text-left">
+                                            Select a business:
+                                            <select className = "input is-small" type="business" placeholder="Business"
+                                            name="id" value={this.state.id} onChange = {this.onChange}>
+                                            {slice}
+                                            </select>
+                                        </div>
+                                        <button type="submit" className="button is-block has-text-white is-medium is-fullwidth" style={{backgroundColor: "rgb(247, 71, 71)",
+                                            fontWeight: "bold"}}>Sign Up Worker</button>
+                                    </div>
+                                        <div id="Sectioncustomer" hidden>
+                                            <button type="submit" className="button is-block is-medium has-text-white is-fullwidth" style={{backgroundColor: "rgb(247, 71, 71)",
+                                                fontWeight: "bold"}}>Sign Up Customer</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <p className="has-text-grey">
+                                Already Signed Up?&nbsp;·&nbsp;
+                                <Link to="/Login">
+                                <a>Login</a>
+                                </Link>
+                            </p>
+                        </div>
                     </div>
-                </div>
             </div>
         )
     }
