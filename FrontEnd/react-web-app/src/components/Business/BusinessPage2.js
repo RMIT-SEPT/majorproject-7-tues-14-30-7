@@ -28,7 +28,7 @@ export default class BusinessPage2 extends React.Component{
 
 
     populatetable(){
-        fetch("http://localhost:8080/api/Business/getWorker=" + this.state.busid)
+        fetch("http://localhost:8080/api/worker/findWorkerbyBusId=" + this.state.busid)
             .then(res =>{
                 res.json()
                 .then(data =>{
