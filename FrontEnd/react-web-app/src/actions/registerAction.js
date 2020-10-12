@@ -34,11 +34,10 @@ export const registerAction = (newUser, newBusiness, newWorkerDetails, form, his
             user:{
                 id: userID
             },
-            businesses: [
+            business:
                 {
                     id: newWorkerDetails.id
-                }
-            ],
+                },
             workerWState: null,
             services: [],
             availableStartTimes: [],

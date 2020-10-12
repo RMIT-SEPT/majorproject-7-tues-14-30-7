@@ -9,7 +9,6 @@ import SearchPage from './components/Search/SearchPage'
 import EditBusinessPage from './components/Business/EditBusinessPage'
 import LoginPage from './components/Entry/LoginPage';
 import RegisterPage from './components/Entry/RegisterPage';
-import WorkerRegisterPage from './components/Entry/WorkerRegisterPage';
 import {Provider} from "react-redux";
 import store from './store';
 import EditUser from './components/User/EditUser';
