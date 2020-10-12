@@ -17,7 +17,6 @@ class Worker extends Component<any, any> {
             isLoaded: false,
             showShifts: true,
             values: queryString.parse(this.props.location.search),
-            futureShiftCount: 0
         };
     }
 
@@ -40,7 +39,7 @@ class Worker extends Component<any, any> {
             var shiftEndDate = new Date(shiftInfo.toString());
             if(shiftEndDate >= dateToday){
                 this.setState({
-                    futureShiftCount: this.state.items.futureShiftCount += 1
+                    futureShiftCount: this.state.items.futureShiftCount + 1
                 })
             }
         })
@@ -92,6 +91,14 @@ class Worker extends Component<any, any> {
             firstName = items.user.firstName;
             lastName = items.user.lastName;
             shifts = items.shiftStartTimes;
+            var futureShiftCount = 0;
+            var dateToday = new Date();
+            this.state.items.shiftEndTimes.map((shiftInfo, i)=> {
+                var shiftEndDate = new Date(shiftInfo.toString());
+                if(shiftEndDate >= dateToday){
+                    futureShiftCount = futureShiftCount + 1;
+                }
+            })
         }
 
         //If fetch loading is not complete then continue loading
@@ -126,7 +133,7 @@ class Worker extends Component<any, any> {
                                 </p>
                             </div>
                             <div className="column is-1-tablet is-4-mobile has-text-centered">
-                                <p className="stat-val">{this.state.futureShiftCount}</p>
+                                <p className="stat-val">{futureShiftCount}</p>
                                 <p className="stat-key">Shifts for this week</p>
                             </div>
                             <div className="column is-1-tablet is-4-mobile has-text-centered">
