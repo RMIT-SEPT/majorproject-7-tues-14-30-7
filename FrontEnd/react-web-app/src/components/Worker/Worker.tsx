@@ -48,7 +48,7 @@ class Worker extends Component<any, any> {
 
     
     showOrHideShifts(){
-        if(this.state.showShifts == true){
+        if(this.state.showShifts === true){
             this.setState({
                 showShifts:false
             })
@@ -82,7 +82,7 @@ class Worker extends Component<any, any> {
         var shifts = [];
 
         //Will check if the data has been fetched correctly
-        if(items.user == undefined){
+        if(items.user === undefined){
             firstName = "Worker not found";
             lastName = "worker not found";
         }
@@ -106,7 +106,7 @@ class Worker extends Component<any, any> {
             return <div>Loading...</div>
         }
 
-        else if(items.user == undefined){
+        else if(items.user === undefined){
             return <div className="worker-not-found">Worker not found!</div>
         }
 
@@ -126,9 +126,9 @@ class Worker extends Component<any, any> {
                                 <p>
                                     <span className="title is-bold worker-name">{firstName + " " + lastName}</span>
                                     <br/>
-                                    <a className="button is-danger is-outlined edit-button" href="#" id="edit-preferences" onClick={()=>{alert("Your account as been deactivated")}}>
+                                    <div className="button is-danger is-outlined edit-button" id="edit-preferences" onClick={()=>{alert("Your account as been deactivated")}}>
                                                                                                         Deactivate Profile
-                                    </a>
+                                    </div>
                                     <br/>
                                 </p>
                             </div>
