@@ -55,13 +55,17 @@ class ProfileInfo extends Component<any, any> {
         }
 
         return(
-            <div className="worker-not-found    ">
-                <p>User Name: {" " + user.userName}</p>
-                <p>First Name:{" " + user.firstName}</p>
-                <p>Last Name: {" " + user.lastName}</p>
-                <p>Account Creation Date: {" " + items.created_At}</p>
-                <p>Last Account Update: {" " + items.updated_At}</p>
-                <p>Businesses: {" " + business.name}</p>
+            <div className="worker-profile-info">
+                <p><div className="subtitle">User Name:</div> {" " + user.userName}</p>
+                <p><div className="subtitle">Name:</div>{" " + user.firstName}</p>
+                <p><div className="subtitle">Last Name:</div> {" " + user.lastName}</p>
+                <p><div className="subtitle">Account Creation Date:</div> {" " + items.createdAt}</p>
+                {
+                    items.updatedAt != null ?
+                    <p><div className="subtitle">Last Account Update:</div> {" " + items.updatedAt}</p>
+                    :<p><div className="subtitle">Last Account Update:</div>{" never"}</p>
+                }
+                <p><div className="subtitle">Businesses:</div> {" " + business.name}</p>
             </div>
         )
     }
