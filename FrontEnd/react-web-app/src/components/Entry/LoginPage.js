@@ -1,8 +1,9 @@
-
 import React, { Component } from 'react'
 import { BrowserRouter as Router,Switch,Route,Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import HomePageHeader from "../HomePage/HomePageHeader";
+
 
 class LoginPage extends Component {
     constructor(){
@@ -30,17 +31,27 @@ class LoginPage extends Component {
     }
     render() {
         return (
-            <div className = "hero is-fullheight is-primary">
-                <div className = "hero-body">
+            <div>
+                <HomePageHeader/>
+                <div id="hpcontent" style={{height: "100vh"}}>
+                    <section className="header" id="userherobanner">
+                        <div className="container" style={{height: "115px", paddingTop: "30px"}}>
+                            <h1 className="title has-text-centered">
+                                <span style={{ fontWeight: "bold", color: "white", fontSize: "3.2vh"}}>Login</span>
+                            </h1>
+                        </div>
+                    </section>
+                    <p></p>
+                    <br></br>
+                    <p></p>
+                    <br></br>
+                    
                     <div className = "container has-text-centered">
                         <div className = "column is-8 is-offset-2">
-                            <h3 className = "title has-text-white">Login</h3>
-                            <hr className = "login-hr"></hr>
-                            <p className = "subtitle has-text-white">Temporary subtitle</p>
                             <div className = "box">
                                 <div className = "box">
                                 <Link to="/" >
-                                    <img src={require("../HomePage/Images/brand.png")}></img>
+                                    <span className="title" id="brand" style={{color: "black"}}>AGME</span>
                                 </Link>
                                 </div>
                                 <div className = "title has-text-grey is-5">
@@ -61,15 +72,18 @@ class LoginPage extends Component {
                                         </input>
                                         </div>
                                     </div>
-                                    <button className="button is-block is-danger is-large is-fullwidth">Login</button>
+                                    <button className="button is-block is-medium is-fullwidth has-text-white" style={{backgroundColor: "rgb(247, 71, 71)",
+                                            fontWeight: "bold"}}>Login</button>
                                 </form>
                             </div>
                         </div>
                         <p className="has-text-grey">
                             <Link to="/Signup">
-                            <a>Sign Up</a>&nbsp;·&nbsp;
+                                <span style={{color: "dodgerblue"}}>Sign Up</span>&nbsp;·&nbsp;
                             </Link>
-                            <a>Contact Us</a>
+                            <Link to="/Contact">
+                                <span style={{color: "dodgerblue"}}>Contact Us</span>
+                            </Link>
                         </p>
                     </div>
                 </div>
