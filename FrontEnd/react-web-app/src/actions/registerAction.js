@@ -15,7 +15,7 @@ export const registerAction = (newUser, newBusiness, newWorkerDetails, form, his
         const busID = resbus.data.id;
         console.log(busID);
 
-        for(var i= 7; i <=7; i++){
+        for(var i= 1; i <=7; i++){
             var postbusinessTime = {
                 day: i,
                 business_id: busID

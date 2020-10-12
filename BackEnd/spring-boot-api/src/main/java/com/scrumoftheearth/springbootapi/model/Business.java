@@ -12,11 +12,6 @@ import java.util.List;
 
 // POJO for business
 @Entity
-@NamedQueries({
-        // custom query for getting all worker W.I.P
-        @NamedQuery(name = "Business.findAllWorkers",
-                query = "SELECT b.worker FROM Business b WHERE b.id = :id")
-})
 @ApiModel(description = "Business Model")
 @Table(name = "table_business")
 public class Business {
@@ -144,14 +139,6 @@ public class Business {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public List<Worker> getWorker() {
-        return worker;
-    }
-
-    public void setWorker(List<Worker> worker) {
-        this.worker = worker;
     }
 
     public User getOwner() {
