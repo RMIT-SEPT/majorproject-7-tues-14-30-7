@@ -1,5 +1,6 @@
 import React from "react"
 import "../../App.scss"
+import axios from 'axios'
 import HomePageHeader from "../HomePage/HomePageHeader"
 import { Link, withRouter } from 'react-router-dom'
 import WorkerAvailabilities from "./WorkerAvailabilities"
@@ -13,18 +14,16 @@ export default class BusinessPage2 extends React.Component{
         }
     }
 
-    componentDidMount(){
-        var apicall = "http://localhost:8080/api/Business/findById=" + this.state.busid;
-        fetch(apicall)
-            .then(response => response.json())
-            .then(data => {
-                this.setState({
-                    business: data,
-                    workers: data.workers
-                })
+    async componentDidMount() {
+        await axios
+        .get('http://localhost:8080/api/Business/findById='+ this.state.busid)
+        .then(({ data })=>{
+            this.setState({
+                business: data,
             })
+        })
         this.populatetable();
-        this.populatebusinesshours()
+        this.populatebusinesshours();
     }
 
 

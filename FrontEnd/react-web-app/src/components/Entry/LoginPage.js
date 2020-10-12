@@ -1,8 +1,8 @@
+
 import React, { Component } from 'react'
 import { BrowserRouter as Router,Switch,Route,Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {userLogin} from "../../actions/userLogin";
 
 class LoginPage extends Component {
     constructor(){
@@ -77,10 +77,4 @@ class LoginPage extends Component {
         )
     }
 }
-LoginPage.propTypes = {
-    createProject: PropTypes.func.isRequired
-  };
-export default connect(
-    null,
-    { userLogin }
-  )(LoginPage);
+export default LoginPage;
