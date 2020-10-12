@@ -1,7 +1,7 @@
 import React from "react"
 import "../../App.scss"
 import HomePageHeader from "../HomePage/HomePageHeader"
-import { Link } from 'react-router-dom''
+import { Link } from 'react-router-dom'
 import WorkerAvailabilities from './WorkerAvailabilities'
 
 export default class BusinessPage extends React.Component{
@@ -39,7 +39,6 @@ export default class BusinessPage extends React.Component{
                             input += "<tr>"
                             input += "<td>" + data[i].user.firstName + "</td>"
                             input += "<td>" + data[i].user.lastName + "</td>"
-                            // input += "<td>" + data[i].user.homeAddress + "</td>"
                             input += "<td>" + data[i].user.phoneNumber + "</td>"
                             input += "<tr>"
                         }

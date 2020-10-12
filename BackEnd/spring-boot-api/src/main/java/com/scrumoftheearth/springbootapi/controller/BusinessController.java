@@ -72,7 +72,7 @@ public class BusinessController {
         Optional<Business> toUpdate = businessService.getById(id);
 
         // if there is no business associated with the given ID
-        if(!toupdate.isPresent())
+        if(!toUpdate.isPresent())
             return new ResponseEntity<String>("Business with ID doesnt exist", HttpStatus.BAD_REQUEST);
 
         business.setId(id);

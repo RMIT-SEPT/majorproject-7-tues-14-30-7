@@ -146,14 +146,6 @@ public class Business {
         this.phoneNumber = phoneNumber;
     }
 
-    public List<Worker> getWorker() {
-        return worker;
-    }
-
-    public void setWorker(List<Worker> worker) {
-        this.worker = worker;
-    }
-
     public User getOwner() {
         return Owner;
     }
