@@ -86,6 +86,10 @@ class WorkerAvailabilities extends Component<any, any> {
                         return(
                             <div className="container worker-availability" id={"worker-" + i} style={{display:'none'}}>
                                 <h4 className="subtitle worker-name"><span style={{fontWeight: "bold"}}>{worker.user.firstName + " " + worker.user.lastName}:</span></h4>
+                                <p></p>
+                                <br></br>
+                                <br></br>
+                                <br></br>
                                 <div className="columns is-mobile shifts">
                                 {
                                     Array.from(Array(daysInMonth), (e, j) => {
