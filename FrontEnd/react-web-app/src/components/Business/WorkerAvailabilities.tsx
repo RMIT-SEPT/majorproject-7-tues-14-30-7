@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { start } from 'repl';
 import "../../App.scss"
 import { BrowserRouter as Router,Link } from "react-router-dom";
+import axios from 'axios';
 
 class WorkerAvailabilities extends Component<any, any> {
 
@@ -14,17 +15,16 @@ class WorkerAvailabilities extends Component<any, any> {
 
     }
 
-    componentDidMount(){
+    async componentDidMount() {
         var busId = this.props.busId;
-        var apicall = "http://localhost:8080/api/Business/findById=" + busId;
-        fetch(apicall)
-            .then(response => response.json())
-            .then(data => {
-                this.setState({
-                    business: data,
-                    workers: data.workers
-                })
+        await axios
+        .get('http://localhost:8080/api/Business/findById=' + busId)
+        .then(({ data })=>{
+            this.setState({
+                business: data,
+                workers: data.workers
             })
+        })
     }
 
     initiateView(){

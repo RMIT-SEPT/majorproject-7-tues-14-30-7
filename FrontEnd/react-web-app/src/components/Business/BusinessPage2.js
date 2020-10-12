@@ -1,5 +1,6 @@
 import React from "react"
 import "../../App.scss"
+import axios from 'axios'
 import HomePageHeader from "../HomePage/HomePageHeader"
 import { Link, withRouter } from 'react-router-dom'
 import WorkerAvailabilities from "./WorkerAvailabilities"
@@ -12,18 +13,17 @@ export default class BusinessPage2 extends React.Component{
         }
     }
 
-    componentDidMount(){
-        var busid = this.props.match.params.id
-        var apicall = "http://localhost:8080/api/Business/findById=" + busid;
-        fetch(apicall)
-            .then(response => response.json())
-            .then(data => {
-                this.setState({
-                    business: data
-                })
+    async componentDidMount() {
+        var busId = this.props.match.params.id
+        await axios
+        .get('http://localhost:8080/api/Business/findById='+ busId)
+        .then(({ data })=>{
+            this.setState({
+                business: data,
             })
+        })
         this.populatetable();
-        this.populatebusinesshours()
+        this.populatebusinesshours();
     }
 
     populatetable(){
@@ -62,7 +62,7 @@ export default class BusinessPage2 extends React.Component{
                     this.setState({
                         businessTime: dataArray
                     })
-                    var daysarray = ["ERROR/TIME NOT SET","Monday","Tuesday","Wednesday","Thurday","Firday","Saturday","Sunday"]
+                    var daysarray = ["ERROR/TIME NOT SET","Monday","Tuesday","Wednesday","Thurday","Friday","Saturday","Sunday"]
                     //var input = "<p className='has-text-weight-bold'>Business Hours</p>"
                     var input = ''
                          for(var i = 0; i < 7;i++){
