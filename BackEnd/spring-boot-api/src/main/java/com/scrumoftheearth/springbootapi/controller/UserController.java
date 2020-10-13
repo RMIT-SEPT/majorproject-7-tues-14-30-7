@@ -2,6 +2,7 @@ package com.scrumoftheearth.springbootapi.controller;
 
 import com.scrumoftheearth.springbootapi.error.NotUniqueException;
 import com.scrumoftheearth.springbootapi.model.User;
+import com.scrumoftheearth.springbootapi.security.SecurityUser;
 import com.scrumoftheearth.springbootapi.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -33,9 +35,13 @@ public class UserController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "Get a user by ID", response = User.class, httpMethod = "GET")
-    public ResponseEntity<?> READUser(@PathVariable("id") Long id) throws Throwable {
+    public ResponseEntity<?> READUser(@PathVariable("id") Long id, Principal principal) throws Throwable {
         User user = userService.getById(id);
-        return new ResponseEntity<User>(user, HttpStatus.FOUND);
+        if (user.getUserName().equals(principal.getName())) {
+            return new ResponseEntity<>(user, HttpStatus.FOUND);
+        } else {
+            return new ResponseEntity<>("Client not Authorized to access this resource!", HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @PostMapping("")
@@ -51,6 +57,10 @@ public class UserController {
             String encryptedPass = bCryptPasswordEncoder.encode(user.getPassword());
             user.setSaltedHashedPassword(encryptedPass);
             user = userService.saveUser(user);
+            // Do not return the password to the client!!
+            // That could leak the password to a malicious user!
+            user.setPassword(null);
+            user.setPasswordConfirmation(null);
         } catch (NotUniqueException ex) {
             throw new RuntimeException("Failed at saving User due to uniqueness! This should not occur!", ex);
         }
