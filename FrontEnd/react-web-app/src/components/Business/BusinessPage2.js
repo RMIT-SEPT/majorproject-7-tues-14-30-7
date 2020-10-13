@@ -66,26 +66,29 @@ export default class BusinessPage2 extends React.Component{
                                     var opening = new Date("2015-03-25T" + row[i].openingTime.toString());
                                     var closing = new Date("2015-03-25T" + row[i].closingTime.toString())
                                     console.log(row[i].openingTime)
-                                    var openinghour = opening.getHours() % 12
-                                    var closinghour = closing.getHours() % 12
+                                    var openinghour = opening.getHours()
+                                    var closinghour = closing.getHours() 
                                     var openingmin;
                                     var closingmin;
                                     var openingmeridiem
                                     var closingmeridiem
+                                    console.log(closinghour)
                                     if(openinghour == 0)
                                         openinghour = 12    
 
                                     if(closinghour == 0)
                                         closinghour = 12
 
-                                    if(openinghour >= 12)
+                                    if(openinghour >= 12){
                                         openingmeridiem = " pm"
-                                    else
+                                        openinghour = opening.getHours() % 12
+                                    }else
                                         openingmeridiem = " am"
 
-                                    if(closinghour >= 12)
+                                    if(closinghour >= 12){
                                         closingmeridiem = " pm"
-                                    else
+                                        closinghour = closing.getHours() % 12
+                                    }else
                                         closingmeridiem = " am"
 
                                     if(opening.getMinutes() < 10)
