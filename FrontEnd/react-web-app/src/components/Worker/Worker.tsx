@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-
-import {BrowserRouter, Router} from "react-router-dom"
 import 'bulma/css/bulma.css'
 import './Worker.scss'
 import Shifts from './Shifts'
-import DropDown from './DropDown'
+import ChangeAvailabilities from './ChangeAvailabilities'
+import ProfileInfo from './ProfileInfo'
+import ServiceInfo from './ServiceInfo'
+import HomePageHeader from '../HomePage/HomePageHeader'
+import queryString from 'query-string'
 
 class Worker extends Component<any, any> {
 
@@ -13,22 +15,36 @@ class Worker extends Component<any, any> {
         this.state = {
             items: [],
             isLoaded: false,
-            showShifts: true
+            showShifts: true,
+            values: queryString.parse(this.props.location.search),
         };
     }
 
 
     componentDidMount() {
-        fetch('http://localhost:8080/api/worker/1').then(res => res.json())
-        .then(json => {
+        fetch('http://localhost:8080/api/worker/' + this.state.values.id).then(res => res.json())
+        .then(data => {
             this.setState({
                 isLoaded: true,
-                items: json,
+                items: data,
                 links: ["profile-link", "service-link", "shifts-link is-active","availability-link"],
                 link: null
             })
         });
     }
+
+    getFutureShiftsCount(){
+        var dateToday = new Date();
+        this.state.items.shiftEndTimes.map((shiftInfo, i)=> {
+            var shiftEndDate = new Date(shiftInfo.toString());
+            if(shiftEndDate >= dateToday){
+                this.setState({
+                    futureShiftCount: this.state.items.futureShiftCount + 1
+                })
+            }
+        })
+    }
+
 
     
     showOrHideShifts(){
@@ -44,25 +60,17 @@ class Worker extends Component<any, any> {
         }
     }
 
-    deactivateAllLinks(){
+    activateLink = (index) =>{
+        this.state.links[0] = "profile-link"
+        this.state.links[1] = "service-link"
+        this.state.links[2] = "shifts-link"
+        this.state.links[3] = "availability-link"
+        this.state.links[index] = this.state.links[index] + " is-active";
+        var updatedLinks = this.state.links;
         this.setState({
-            links:  ["profile-link", "service-link", "shifts-link", "availability-link"]
+            links: updatedLinks
         })
     }
-
-    activateShiftsLink(){
-        this.setState({
-            links:  ["profile-link", "service-link", "shifts-link is-active", "availability-link"]
-        })
-    }
-
-    activateAvailabilityLink(){
-        this.setState({
-            links:  ["profile-link", "service-link", "shifts-link", "availability-link is-active"]
-        })
-    }
-
-    
 
     render() {
         //State items of this component
@@ -71,6 +79,7 @@ class Worker extends Component<any, any> {
         //Will be assigned based on whether the fetch was successful or not
         var firstName = null;
         var lastName = null;
+        var shifts = [];
 
         //Will check if the data has been fetched correctly
         if(items.user == undefined){
@@ -81,6 +90,15 @@ class Worker extends Component<any, any> {
         else{
             firstName = items.user.firstName;
             lastName = items.user.lastName;
+            shifts = items.shiftStartTimes;
+            var futureShiftCount = 0;
+            var dateToday = new Date();
+            this.state.items.shiftEndTimes.map((shiftInfo, i)=> {
+                var shiftEndDate = new Date(shiftInfo.toString());
+                if(shiftEndDate >= dateToday){
+                    futureShiftCount = futureShiftCount + 1;
+                }
+            })
         }
 
         //If fetch loading is not complete then continue loading
@@ -88,10 +106,15 @@ class Worker extends Component<any, any> {
             return <div>Loading...</div>
         }
 
+        else if(items.user == undefined){
+            return <div className="worker-not-found">Worker not found!</div>
+        }
+
         //Display content if loading is complete
         else {
             return (
                 <body className="worker-body">
+                    <HomePageHeader/>
                     <div className="section profile-heading">
                         <div className="columns is-mobile is-multiline">
                             <div className="column is-2">
@@ -101,59 +124,37 @@ class Worker extends Component<any, any> {
                             </div>
                             <div className="column is-4-tablet is-10-mobile name">
                                 <p>
-                                    <span className="title is-bold">{firstName + " " + lastName}</span>
+                                    <span className="title is-bold worker-name">{firstName + " " + lastName}</span>
                                     <br/>
-                                    <a className="button is-primary is-outlined edit-button" href="#" id="edit-preferences">
-                                                                                                        Edit Profile
+                                    <a className="button is-danger is-outlined edit-button" href="#" id="edit-preferences" onClick={()=>{alert("Your account as been deactivated")}}>
+                                                                                                        Deactivate Profile
                                     </a>
                                     <br/>
                                 </p>
-                                <p className="tagline">
-                                    {
-                                        this.state.items != null ?
-                                        items.description
-                                        : <div>Description did not load</div>
-                                    }
-                                    {items.description}
-                                 </p>
                             </div>
-                            <div className="column is-2-tablet is-4-mobile has-text-centered">
-                                <p className="stat-val">3</p>
-                                <p className="stat-key">Shifts</p>
+                            <div className="column is-1-tablet is-4-mobile has-text-centered">
+                                <p className="stat-val">{futureShiftCount}</p>
+                                <p className="stat-key">Shifts for this week</p>
                             </div>
-                            <div className="column is-2-tablet is-4-mobile has-text-centered">
+                            <div className="column is-1-tablet is-4-mobile has-text-centered">
+                                <p className="stat-val">{shifts.length}</p>
+                                <p className="stat-key">Total Shifts</p>
+                            </div>
+                            <div className="column is-1-tablet is-4-mobile has-text-centered">
                                 <p className="stat-val">4</p>
                                 <p className="stat-key">Services</p>
                             </div>
                             <div className="column is-2-tablet is-4-mobile has-text-centered">
-                                <p className="stat-val">99%</p>
-                                <p className="stat-key">Customer Satisfaction</p>
+                                <p className="stat-val">{this.state.items.createdAt}</p>
+                                <p className="stat-key">Date Created</p>
                             </div>
                         </div>
                     </div>
                     <div className="profile-options is-fullwidth">
                         <div className="tabs is-fullwidth is-medium">
                             <ul>
-                                <li className={this.state.links[0]}>
-                                    <a>
-                                        <span className="icon">
-                                            <i className="fa fa-list"></i>
-                                        </span>
-                                        <span>Profile Info</span>
-                                    </a>
-                                </li>
-                                <li className={this.state.links[1]}>
-                                    <a>
-                                        <span className="icon">
-                                            <i className="fa fa-list"></i>
-                                        </span>
-                                        <span>Services</span>
-                                    </a>
-                                </li>
                                 <li className={this.state.links[2]} onClick={()=>{
-                                    this.showOrHideShifts();
-                                    this.deactivateAllLinks();
-                                    this.activateShiftsLink();
+                                    this.activateLink(2);
                                 }}>
                                     <a>
                                         <span className="icon">
@@ -163,9 +164,7 @@ class Worker extends Component<any, any> {
                                     </a>
                                 </li>
                                 <li className={this.state.links[3]} onClick={()=>{
-                                    this.showOrHideShifts();
-                                    this.deactivateAllLinks();
-                                    this.activateAvailabilityLink();
+                                    this.activateLink(3);
                                 }}>
                                     <a>
                                         <span className="icon">
@@ -177,13 +176,22 @@ class Worker extends Component<any, any> {
                             </ul>
                         </div>
                         {
-                            this.state.showShifts?
-                            <Shifts/>
+                            this.state.links[0] === "profile-link is-active"?
+                            <ProfileInfo workerId={this.state.values.id}/>
+                            :null}
+                        {
+                            this.state.links[1] === "service-link is-active"?
+                            <ServiceInfo workerId={this.state.values.id}/>
                             :null
                         }
                         {
-                            !this.state.showShifts?
-                            <DropDown/>
+                            this.state.links[2] === "shifts-link is-active"?
+                            <Shifts workerId={this.state.values.id} futureShiftCount={this.state.futureShiftCount}/>
+                            :null
+                        }
+                        { 
+                            this.state.links[3] === "availability-link is-active"?
+                            <ChangeAvailabilities workerId={this.state.values.id}/>
                             :null
                         }
                         
@@ -191,7 +199,6 @@ class Worker extends Component<any, any> {
                 </body>
             )
         }
-
     }
 }
 
