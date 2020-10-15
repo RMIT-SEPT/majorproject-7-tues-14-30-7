@@ -7,6 +7,7 @@ import ProfileInfo from './ProfileInfo'
 import ServiceInfo from './ServiceInfo'
 import HomePageHeader from '../HomePage/HomePageHeader'
 import queryString from 'query-string'
+import * as Constants from "../../../src/constants"
 
 class Worker extends Component<any, any> {
 
@@ -22,7 +23,7 @@ class Worker extends Component<any, any> {
 
 
     componentDidMount() {
-        fetch('http://localhost:8080/api/worker/' + this.state.values.id).then(res => res.json())
+        fetch(Constants.BACKEND_URL + '/api/worker/' + this.state.values.id).then(res => res.json())
         .then(data => {
             this.setState({
                 isLoaded: true,

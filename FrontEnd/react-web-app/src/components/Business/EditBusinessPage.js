@@ -1,5 +1,6 @@
 import React from 'react'
 import "../../App.scss"
+import * as Constants from "../../../src/constants"
 
 export default class EditBusinessPage extends React.Component{
     constructor(props){
@@ -14,7 +15,7 @@ export default class EditBusinessPage extends React.Component{
 
     //API call for getting the business info 
     componentDidMount(){
-        var businessApi = "http://localhost:8080/api/Business/findById=" + this.state.busid;
+        var businessApi = Constants.BACKEND_URL + "/api/Business/findById=" + this.state.busid;
 
         fetch(businessApi)
             .then(response => response.json())
@@ -28,7 +29,7 @@ export default class EditBusinessPage extends React.Component{
                 document.getElementById("address").value = data.address;
                 document.getElementById("phoneNumber").value = data.phoneNumber;
             })
-        var businessTimeApi ="http://localhost:8080/api/BusinessHours/findByBusId=" + this.state.busid;
+        var businessTimeApi = Constants.BACKEND_URL + "/api/BusinessHours/findByBusId=" + this.state.busid;
 
         fetch(businessTimeApi)
             .then(response => response.json())
@@ -62,7 +63,7 @@ export default class EditBusinessPage extends React.Component{
             phoneNumber: document.getElementById("phoneNumber").value
         }
 
-        var apiupdate = 'http://localhost:8080/api/Business/update=' + this.state.busid
+        var apiupdate = Constants.BACKEND_URL + '/api/Business/update=' + this.state.busid
         fetch(apiupdate,{
             method: 'PUT',
             headers: {
@@ -77,7 +78,7 @@ export default class EditBusinessPage extends React.Component{
     // does 7 businessAPI call to update the businessHours
     updateBusinessTime(){
         for(var i = 1; i < 8;i++){
-            var apicall = 'http://localhost:8080/api/BusinessHours/update=' + this.state.businessTime[i - 1].id
+            var apicall = Constants.BACKEND_URL + '/api/BusinessHours/update=' + this.state.businessTime[i - 1].id
             var opening = i + "Opening"
             var closing = i + "Closing"
             var updatebusinessTime = {

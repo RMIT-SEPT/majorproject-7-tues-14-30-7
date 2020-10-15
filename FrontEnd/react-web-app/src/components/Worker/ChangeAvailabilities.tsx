@@ -86,7 +86,7 @@ class ChangeAvailabilties extends Component<any, any> {
         for(var i=0;i<7;i++){
             console.log(startTimes[i] + " " + endTimes[i])
             try {
-                const response = await axios.patch('http://localhost:8080/api/worker/1',
+                const response = await axios.patch(Constants.BACKEND_URL + '/api/worker/' + this.props.workerId,
                 [
                     {
                         'op':'replace',

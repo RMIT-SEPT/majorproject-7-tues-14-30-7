@@ -3,6 +3,7 @@ import "../../App.scss"
 import HomePageBusinessBox from './HomePageBusinessBox';
 import HomePageHeader from './HomePageHeader';
 import axios from 'axios';
+import * as Constants from "../../../src/constants"
 
 export default class HomePageContent extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ export default class HomePageContent extends Component {
     async componentDidMount(){
         // Gets all businesses and stores them in this.state.businesses, the loading state is set to false.
         await axios
-        .get('http://localhost:8080/api/Business')
+        .get(Constants.BACKEND_URL + '/api/Business')
         .then(({ data })=>{
             this.setState({
                 businesses: data,

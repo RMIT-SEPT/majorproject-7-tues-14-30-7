@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './Worker.scss'
 import 'bulma/css/bulma.css'
+import * as Constants from "../../../src/constants"
 
 
 class ServiceInfo extends Component<any, any> {
@@ -14,7 +15,7 @@ class ServiceInfo extends Component<any, any> {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8080/api/worker/' + this.props.workerId).then(res => res.json())
+        fetch(Constants.BACKEND_URL + '/api/worker/' + this.props.workerId).then(res => res.json())
         .then(json => {
             this.setState({
                 isLoaded: true,

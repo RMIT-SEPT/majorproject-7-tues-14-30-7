@@ -4,6 +4,7 @@ import axios from 'axios'
 import HomePageHeader from "../HomePage/HomePageHeader"
 import { Link, withRouter } from 'react-router-dom'
 import WorkerAvailabilities from "./WorkerAvailabilities"
+import * as Constants from "../../../src/constants"
 
 export default class BusinessPage2 extends React.Component{
     constructor(props) {
@@ -16,7 +17,7 @@ export default class BusinessPage2 extends React.Component{
 
     async componentDidMount() {
         await axios
-        .get('http://localhost:8080/api/Business/findById='+ this.state.busid)
+        .get(Constants.BACKEND_URL + '/api/Business/findById='+ this.state.busid)
         .then(({ data })=>{
             this.setState({
                 business: data,
@@ -28,7 +29,7 @@ export default class BusinessPage2 extends React.Component{
 
 
     populatetable(){
-        fetch("http://localhost:8080/api/worker/findWorkerbyBusId=" + this.state.busid)
+        fetch(Constants.BACKEND_URL + "/api/worker/findWorkerbyBusId=" + this.state.busid)
             .then(res =>{
                 res.json()
                 .then(data =>{
@@ -49,7 +50,7 @@ export default class BusinessPage2 extends React.Component{
     }
     
     populatebusinesshours(){
-        fetch("http://localhost:8080/api/BusinessHours/findByBusId=" + this.state.busid)
+        fetch(Constants.BACKEND_URL + "/api/BusinessHours/findByBusId=" + this.state.busid)
             .then(res => {
                 res.json()
                 .then(data => {
