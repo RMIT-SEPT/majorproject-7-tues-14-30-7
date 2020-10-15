@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {registerAction} from "../../actions/registerAction";
 import HomePageHeader from '../HomePage/HomePageHeader';
+import * as Constants from "../../../src/constants"
 
 class RegisterPage extends Component {
     constructor(){
@@ -33,7 +34,7 @@ class RegisterPage extends Component {
 
     async componentDidMount(){
         // Gets all businesses and stores them in this.state.businesses, the loading state is set to false.
-        fetch("http://localhost:8080/api/Business/")
+        fetch(Constants.BACKEND_URL + "/api/Business/")
             .then(response => response.json())
             .then(data => {
                 this.setState({

@@ -81,13 +81,8 @@ export default class HomePageHeader extends Component<headerprops, headerstate> 
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
-                    </nav>
-                </div>
-=======
                 </nav>
             </div>
->>>>>>> develop
         )
     }
 }

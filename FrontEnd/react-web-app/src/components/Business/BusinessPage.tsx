@@ -1,5 +1,6 @@
 import React from "react"
 import "../../App.scss"
+import * as Constants from "../../../src/constants"
 
 export default class BusinessPage extends React.Component<{},any>{
     constructor(props: number) {
@@ -11,7 +12,7 @@ export default class BusinessPage extends React.Component<{},any>{
     }
 
     componentDidMount(){
-        var apicall = "http://localhost:8080/api/Business/findById=" + this.state.businessId
+        var apicall = Constants.BACKEND_URL + "/api/Business/findById=" + this.state.businessId
         fetch(apicall)
             .then(response => response.json())
             .then(data => {
@@ -23,7 +24,7 @@ export default class BusinessPage extends React.Component<{},any>{
     }
 
     populatetable(){
-        fetch("http://localhost:8080/user/1")
+        fetch(Constants.BACKEND_URL + "/user/1")
             .then(res =>{
                 res.json()
                 .then(data => {
