@@ -72,13 +72,13 @@ class ChangeAvailabilties extends Component<any, any> {
 
         //Check for start time strings not in the proper format
         for(var i=0;i<startTimes.length;i++){
-            if(startTimes[i].length==5){
+            if(startTimes[i].length===5){
                 startTimes[i] = startTimes[i]+":00"
             }
         }
         //Check for end time strings not in the proper format
         for(var i=0;i<endTimes.length;i++){
-            if(endTimes[i].length==5){
+            if(endTimes[i].length===5){
                 endTimes[i] = endTimes[i]+":00"
             }
         }

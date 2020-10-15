@@ -33,7 +33,7 @@ class Shifts extends Component<any, any> {
         return (
             <div className="columns is-mobile shifts">
                 
-                {this.props.futureShiftCount == 0 ? <div className="center">No shifts for this now!</div> : shiftStartTimes.map((shiftInfo, i)=> {
+                {this.props.futureShiftCount === 0 ? <div className="center">No shifts for this now!</div> : shiftStartTimes.map((shiftInfo, i)=> {
 
                     var shiftStartDate = new Date(shiftStartTimes[i].toString());
                     var shiftEndDate = new Date(shiftEndTimes[i].toString());
@@ -46,9 +46,9 @@ class Shifts extends Component<any, any> {
                     var endAmPm = endHours >= 12 ? 'pm' : 'am';
 
                     startHours = startHours % 12;
-                    startHours = startHours == 0 ? 12 : startHours;
+                    startHours = startHours === 0 ? 12 : startHours;
                     endHours = endHours % 12;
-                    endHours = endHours == 0 ? 12 : endHours;
+                    endHours = endHours === 0 ? 12 : endHours;
                     
                     console.log(startMinutes < 10);
                     

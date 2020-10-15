@@ -45,7 +45,7 @@ class ProfileInfo extends Component<any, any> {
         var business = null;
 
         //Will check if the data has been fetched correctly
-        if(items.user == undefined && business == undefined){
+        if(items.user === undefined && business === undefined){
             user = "not found"
             business = "business not found"
         }

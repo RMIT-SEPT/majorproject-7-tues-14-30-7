@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { start } from 'repl';
+// import { start } from 'repl';
 import "../../App.scss"
 import { BrowserRouter as Router,Link } from "react-router-dom";
 import axios from 'axios';
@@ -139,9 +139,9 @@ class WorkerAvailabilities extends Component<any, any> {
                                         var endAmPm = endHours >= 12 ? 'pm' : 'am';
 
                                         startHours = startHours % 12;
-                                        startHours = startHours == 0 ? 12 : startHours;
+                                        startHours = startHours === 0 ? 12 : startHours;
                                         endHours = endHours % 12;
-                                        endHours = endHours == 0 ? 12 : endHours;
+                                        endHours = endHours === 0 ? 12 : endHours;
                                         
                                         var startMinutesToString;
                                         var endMinutesToString;
@@ -170,7 +170,7 @@ class WorkerAvailabilities extends Component<any, any> {
                                         pElement.style.fontSize = "0.8rem";
                                         if(theDiv != null){
                                             console.log(startHours);
-                                            if(theDiv.getElementsByClassName(workingTimes)[0] == null){
+                                            if(theDiv.getElementsByClassName(workingTimes)[0] === null){
                                                 theDiv.appendChild(pElement);
                                             }
                                         }
