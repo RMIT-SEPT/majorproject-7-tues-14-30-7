@@ -4,6 +4,7 @@ import axios from 'axios'
 import HomePageHeader from "../HomePage/HomePageHeader"
 import { Link, withRouter } from 'react-router-dom'
 import WorkerAvailabilities from "./WorkerAvailabilities"
+import * as Constants from "../../../src/constants"
 
 export default class BusinessPage2 extends React.Component{
     constructor(props) {
@@ -16,7 +17,7 @@ export default class BusinessPage2 extends React.Component{
 
     async componentDidMount() {
         await axios
-        .get('http://localhost:8080/api/Business/findById='+ this.state.busid)
+        .get(Constants.BACKEND_URL + '/api/Business/findById='+ this.state.busid)
         .then(({ data })=>{
             this.setState({
                 business: data,
@@ -28,7 +29,7 @@ export default class BusinessPage2 extends React.Component{
 
 
     populatetable(){
-        fetch("http://localhost:8080/api/worker/findWorkerbyBusId=" + this.state.busid)
+        fetch(Constants.BACKEND_URL + "/api/worker/findWorkerbyBusId=" + this.state.busid)
             .then(res =>{
                 res.json()
                 .then(data =>{
@@ -49,7 +50,7 @@ export default class BusinessPage2 extends React.Component{
     }
     
     populatebusinesshours(){
-        fetch("http://localhost:8080/api/BusinessHours/findByBusId=" + this.state.busid)
+        fetch(Constants.BACKEND_URL + "/api/BusinessHours/findByBusId=" + this.state.busid)
             .then(res => {
                 res.json()
                 .then(data => {
@@ -145,25 +146,28 @@ export default class BusinessPage2 extends React.Component{
                                             <div id="businesshours"></div>
 
                                         </div>
-                                        <div className="workerlistpadding" style={{paddingTop: "30px", paddingLeft: "5vw"}}>
-                                            <h3 className="subtitle is-4" style={{paddingLeft: "30%", fontWeight: 'bold'}}>Worker List</h3>
-                                            <table className="table">
-                                                <thead>
-                                                    <tr>
-                                                    <th>First Name</th>
-                                                    <th>Last Name</th>
-                                                    <th>Number</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody id="workertable"></tbody>
-                                            </table>
+                                        <div style={{border: "solid 1px rgb(216, 216, 216)", borderRadius: "7px", height: "250px", overflowY: "auto"}}>
+                                            <div className="workerlistpadding" style={{paddingTop: "30px", paddingLeft: "5vw"}}>
+                                                <h3 className="subtitle is-4" style={{paddingLeft: "30%", fontWeight: 'bold'}}>Worker List</h3>
+                                                <table className="table" style={{marginLeft: "0%"}}>
+                                                    <thead>
+                                                        <tr>
+                                                        <th>First Name</th>
+                                                        <th>Last Name</th>
+                                                        <th>Number</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="workertable"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div className="has-text-centered pt-4">
+                                            <Link to={"edit/" + this.state.business.id}>
+                                                <div className="button" id="submitbutton">Edit Business</div>
+                                            </Link>
                                         </div>
                                     </div>
-                                    <div className="has-text-centered pt-6">
-                                        <Link to={"edit/" + this.state.business.id}>
-                                            <div className="button" id="submitbutton">Edit Business</div>
-                                        </Link>
-                                    </div>
+                                    
                                 </div>
                                 <p></p>
                                 <br></br>

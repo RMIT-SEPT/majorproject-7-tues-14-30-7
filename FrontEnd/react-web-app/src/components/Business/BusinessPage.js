@@ -3,6 +3,7 @@ import "../../App.scss"
 import HomePageHeader from "../HomePage/HomePageHeader"
 import { Link } from 'react-router-dom'
 import WorkerAvailabilities from './WorkerAvailabilities'
+import * as Constants from "../../../src/constants"
 
 export default class BusinessPage extends React.Component{
     constructor(props) {
@@ -14,7 +15,7 @@ export default class BusinessPage extends React.Component{
     }
 
     componentDidMount(){
-        var apicall = "http://localhost:8080/api/Business/findById=" + this.state.busid;
+        var apicall = Constants.BACKEND_URL + "/api/Business/findById=" + this.state.busid;
         fetch(apicall)
             .then(response => response.json())
             .then(data => {
@@ -28,7 +29,7 @@ export default class BusinessPage extends React.Component{
     }
 
     populatetable(){
-        fetch("http://localhost:8080/api/Business/getWorker=" + this.state.busid)
+        fetch(Constants.BACKEND_URL + "/api/Business/getWorker=" + this.state.busid)
             .then(res =>{
                 res.json()
                 .then(data =>{
@@ -49,7 +50,7 @@ export default class BusinessPage extends React.Component{
     }
     
     populatebusinesshours(){
-        fetch("http://localhost:8080/api/BusinessHours/findByBusId=" + this.state.busid)
+        fetch(Constants.BACKEND_URL + "/api/BusinessHours/findByBusId=" + this.state.busid)
             .then(res => {
                 res.json()
                 .then(data => {

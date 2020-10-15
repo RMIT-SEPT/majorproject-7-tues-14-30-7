@@ -3,7 +3,8 @@ import './Worker.scss'
 import 'bulma/css/bulma.css'
 import TimePicker from 'react-time-picker'
 import axios from "axios"
-//import queryString from 'query-string'
+import * as Constants from "../../../src/constants"
+import queryString from 'query-string'
 
 
 class ChangeAvailabilties extends Component<any, any> {
@@ -32,7 +33,7 @@ class ChangeAvailabilties extends Component<any, any> {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8080/api/worker/' + this.props.workerId).then(res => res.json())
+        fetch(Constants.BACKEND_URL + '/api/worker/' + this.props.workerId).then(res => res.json())
         .then(json => {
             this.setState({
                 isLoaded: true,
@@ -85,7 +86,7 @@ class ChangeAvailabilties extends Component<any, any> {
         for(var i=0;i<7;i++){
             console.log(startTimes[i] + " " + endTimes[i])
             try {
-                const response = await axios.patch('http://localhost:8080/api/worker/1',
+                const response = await axios.patch(Constants.BACKEND_URL + '/api/worker/' + this.props.workerId,
                 [
                     {
                         'op':'replace',

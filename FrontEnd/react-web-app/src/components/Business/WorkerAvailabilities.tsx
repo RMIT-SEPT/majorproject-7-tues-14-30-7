@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import "../../App.scss"
 import { BrowserRouter as Router,Link } from "react-router-dom";
 import axios from 'axios';
+import * as Constants from "../../../src/constants"
 
 class WorkerAvailabilities extends Component<any, any> {
 
@@ -18,7 +19,7 @@ class WorkerAvailabilities extends Component<any, any> {
     async componentDidMount() {
         var busId = this.props.busId;
         await axios
-        .get('http://localhost:8080/api/Business/findById=' + busId)
+        .get(Constants.BACKEND_URL + '/api/Business/findById=' + busId)
         .then(({ data })=>{
             this.setState({
                 business: data,

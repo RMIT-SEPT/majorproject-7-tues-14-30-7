@@ -3,6 +3,7 @@ import "../../../src/App.scss"
 import { useParams } from 'react-router-dom';
 import HomePageHeader from '../HomePage/HomePageHeader';
 import { BrowserRouter as Router,Link } from "react-router-dom";
+import * as Constants from "../../../src/constants"
 
 export default function UserHomepage() {
     useEffect(() => {
@@ -19,7 +20,7 @@ export default function UserHomepage() {
     });
 
     const fetchUser = async () => {
-        const fetchUser = await fetch(`http://localhost:8080/api/user/${id}`);
+        const fetchUser = await fetch(Constants.BACKEND_URL + `/api/user/${id}`);
         const user = await fetchUser.json();
         setUser(user);
     };
