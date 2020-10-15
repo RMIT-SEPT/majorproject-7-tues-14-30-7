@@ -3,13 +3,13 @@ import { GET_ERRORS } from "./types";
 
 export const registerAction = (newUser, newBusiness, newWorkerDetails, form, history) => async dispatch => {
   try {
-      if(form == 1){
+      if(form === 1){
             const res = await axios.post("http://localhost:8080/api/user", newUser);
             console.log(res.data.id);
             const userID = res.data.id;
             history.push(`/UserHomepage/${userID}`);
       }
-      if(form == 2){
+      if(form === 2){
         console.log("here")
         const resbus = await axios.post("http://localhost:8080/api/Business", newBusiness);
         const busID = resbus.data.id;
@@ -26,7 +26,7 @@ export const registerAction = (newUser, newBusiness, newWorkerDetails, form, his
         console.log("end of loop");
         history.push(`/BusinessPage/${busID}`);
       }
-      if(form == 3){
+      if(form === 3){
         const res = await axios.post("http://localhost:8080/api/user", newUser);
         console.log(res.data.id);
         const userID = res.data.id;

@@ -4,6 +4,7 @@ import axios from 'axios'
 import HomePageHeader from "../HomePage/HomePageHeader"
 import { Link, withRouter } from 'react-router-dom'
 import WorkerAvailabilities from "./WorkerAvailabilities"
+import * as Constants from "../../../src/constants"
 
 export default class BusinessPage2 extends React.Component{
     constructor(props) {
@@ -16,7 +17,7 @@ export default class BusinessPage2 extends React.Component{
 
     async componentDidMount() {
         await axios
-        .get('http://localhost:8080/api/Business/findById='+ this.state.busid)
+        .get(Constants.BACKEND_URL + '/api/Business/findById='+ this.state.busid)
         .then(({ data })=>{
             this.setState({
                 business: data,
@@ -28,7 +29,7 @@ export default class BusinessPage2 extends React.Component{
 
 
     populatetable(){
-        fetch("http://localhost:8080/api/worker/findWorkerbyBusId=" + this.state.busid)
+        fetch(Constants.BACKEND_URL + "/api/worker/findWorkerbyBusId=" + this.state.busid)
             .then(res =>{
                 res.json()
                 .then(data =>{
@@ -49,7 +50,7 @@ export default class BusinessPage2 extends React.Component{
     }
     
     populatebusinesshours(){
-        fetch("http://localhost:8080/api/BusinessHours/findByBusId=" + this.state.busid)
+        fetch(Constants.BACKEND_URL + "/api/BusinessHours/findByBusId=" + this.state.busid)
             .then(res => {
                 res.json()
                 .then(data => {
@@ -60,7 +61,7 @@ export default class BusinessPage2 extends React.Component{
 
                          for(var i = 0; i < 7;i++){
                             dataArray.forEach((row) =>{
-                                if(row[i].openingTime == null || row[i].closingTime == null)
+                                if(row[i].openingTime === null || row[i].closingTime === null)
                                     input += "<p>" + daysarray[i + 1] + ": CLOSED </p>"
                                 else{
                                     var opening = new Date("2015-03-25T" + row[i].openingTime.toString());
@@ -72,10 +73,10 @@ export default class BusinessPage2 extends React.Component{
                                     var closingmin;
                                     var openingmeridiem
                                     var closingmeridiem
-                                    if(openinghour == 0)
+                                    if(openinghour === 0)
                                         openinghour = 12    
 
-                                    if(closinghour == 0)
+                                    if(closinghour === 0)
                                         closinghour = 12
 
                                     if(openinghour >= 12)
@@ -111,7 +112,7 @@ export default class BusinessPage2 extends React.Component{
     }
 
     render(){
-        var busid = this.props.match.params.id
+        //var busid = this.props.match.params.id
         return(
             <div>
                 <HomePageHeader/> 
