@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import "../../App.scss"
 import HomePageBusinessBox from '../HomePage/HomePageBusinessBox';
 import axios from 'axios'
+import * as Constants from "../../../src/constants"
 
 export default class SearchForm extends Component {
     constructor(props) {
@@ -46,7 +47,7 @@ export default class SearchForm extends Component {
         }
 
         await axios
-        .get('http://localhost:8080/api/Business')
+        .get(Constants.BACKEND_URL + '/api/Business')
         .then(({ data })=>{
             this.setState({
                 businesses: data,

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './Worker.scss'
 import 'bulma/css/bulma.css'
+import * as Constants from "../../../src/constants"
 
 
 class ProfileInfo extends Component<any, any> {
@@ -16,14 +17,14 @@ class ProfileInfo extends Component<any, any> {
 
     componentDidMount() {
         //Fetch worker information
-        fetch('http://localhost:8080/api/worker/' + this.props.workerId).then(res => res.json())
+        fetch(Constants.BACKEND_URL + '/api/worker/' + this.props.workerId).then(res => res.json())
         .then(json => {
             this.setState({
                 isLoaded: true,
                 items: json,
             })
             //Fetch the business that belongs to the worker
-            fetch("http://localhost:8080/api/Business/findById=" + json.busId)
+            fetch(Constants.BACKEND_URL + "/api/Business/findById=" + json.busId)
             .then(response => response.json())
             .then(json => {
                 this.setState({
@@ -44,7 +45,7 @@ class ProfileInfo extends Component<any, any> {
         var business = null;
 
         //Will check if the data has been fetched correctly
-        if(items.user == undefined && business == undefined){
+        if(items.user === undefined && business === undefined){
             user = "not found"
             business = "business not found"
         }

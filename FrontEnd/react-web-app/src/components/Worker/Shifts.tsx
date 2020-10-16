@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './Worker.scss'
+import * as Constants from "../../../src/constants"
 
 class Shifts extends Component<any, any> {
 
@@ -13,7 +14,7 @@ class Shifts extends Component<any, any> {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8080/api/worker/' + this.props.workerId).then(res => res.json())
+        fetch(Constants.BACKEND_URL + '/api/worker/' + this.props.workerId).then(res => res.json())
         .then(json => {
             this.setState({
                 isLoaded: true,
@@ -32,7 +33,7 @@ class Shifts extends Component<any, any> {
         return (
             <div className="columns is-mobile shifts">
                 
-                {this.props.futureShiftCount == 0 ? <div className="center">No shifts for this now!</div> : shiftStartTimes.map((shiftInfo, i)=> {
+                {this.props.futureShiftCount === 0 ? <div className="center">No shifts for this now!</div> : shiftStartTimes.map((shiftInfo, i)=> {
 
                     var shiftStartDate = new Date(shiftStartTimes[i].toString());
                     var shiftEndDate = new Date(shiftEndTimes[i].toString());
@@ -45,9 +46,9 @@ class Shifts extends Component<any, any> {
                     var endAmPm = endHours >= 12 ? 'pm' : 'am';
 
                     startHours = startHours % 12;
-                    startHours = startHours == 0 ? 12 : startHours;
+                    startHours = startHours === 0 ? 12 : startHours;
                     endHours = endHours % 12;
-                    endHours = endHours == 0 ? 12 : endHours;
+                    endHours = endHours === 0 ? 12 : endHours;
                     
                     console.log(startMinutes < 10);
                     
