@@ -3,12 +3,17 @@ import "../../../src/App.scss"
 import { useParams } from 'react-router-dom';
 import HomePageHeader from '../HomePage/HomePageHeader';
 import { BrowserRouter as Router,Link } from "react-router-dom";
+import {getInstance} from "../../actions/axiosInstance";
+
+interface RouterParams {
+    id: string
+}
 
 export default function UserHomepage() {
     useEffect(() => {
         fetchUser();
     }, []);
-    const { id } = useParams();
+    const { id } = useParams<RouterParams>();
     const [user, setUser] = useState({
         userName: "",
         firstName: "",
@@ -19,9 +24,16 @@ export default function UserHomepage() {
     });
 
     const fetchUser = async () => {
-        const fetchUser = await fetch(`http://localhost:8080/api/user/${id}`);
-        const user = await fetchUser.json();
-        setUser(user);
+        console.log("HERE!!")
+        let axiostInst = getInstance();
+        try {
+            const fetchUser = await axiostInst.get(`http://localhost:8080/api/user/${id}`);
+            const user = fetchUser.data;
+            console.log(user);
+            setUser(user);
+        } catch {
+            // Do something
+        }
     };
 
     var history = <div>
