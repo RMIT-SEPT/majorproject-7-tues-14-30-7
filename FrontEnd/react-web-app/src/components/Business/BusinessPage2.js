@@ -66,7 +66,7 @@ export default class BusinessPage2 extends React.Component{
                                 else{
                                     var opening = new Date("2015-03-25T" + row[i].openingTime.toString());
                                     var closing = new Date("2015-03-25T" + row[i].closingTime.toString())
-                                    console.log(row[i].openingTime)
+                                    //console.log(row[i].openingTime)
                                     var openinghour = opening.getHours() % 12
                                     var closinghour = closing.getHours() % 12
                                     var openingmin;

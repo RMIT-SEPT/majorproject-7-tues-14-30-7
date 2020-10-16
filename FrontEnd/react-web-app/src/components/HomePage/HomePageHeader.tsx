@@ -74,7 +74,7 @@ export default class HomePageHeader extends Component<headerprops, headerstate> 
                                     <div className="button is-primary" id="signup">
                                         <Link to="/Signup"><span style={{fontWeight: "bold", color: "white"}}>Sign up</span></Link>
                                     </div>
-                                    <div className="button is-light">
+                                    <div className="button is-light" style={{border: "1px solid rgb(221, 221, 221)"}}>
                                         <Link to="/Login">Log in</Link>
                                     </div>
                                 </div>
