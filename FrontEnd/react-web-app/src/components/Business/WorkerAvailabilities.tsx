@@ -96,22 +96,27 @@ class WorkerAvailabilities extends Component<any, any> {
                                     Array.from(Array(daysInMonth), (e, j) => {
                                         currentDate.setDate(currentDate.getDate()+1);
                                         var uniqueDate = (currentDate.getDate() + "/" + (currentDate.getMonth()+1) + "/" + currentDate.getFullYear());
+                                        var link = uniqueDate.replace(/\//g, "")
                                         dateIncrement++;
                                         return(
                                         <div className="column worker-date-card">
                                             <div className="card" style={{width: "200px", height: "180px", border: "1px solid rgb(179, 179, 179)", borderRadius: "7px", overflowY: "auto"}}>
                                                 
-                                                
                                                 <Link to={{
-                                                    pathname: "/Booking/",
+                                                    pathname: "/Booking/" + link,
                                                     state: {
-                                                        v: "test"
-                                                    } // Should be received as props, but weirdly is this.props.location.state.v   
+                                                        bid: this.state.business.id,
+                                                        w: worker,
+                                                        bookingdate: uniqueDate,
+                                                        bookingstart: 0,
+                                                        bookingend: 0,
+                                                        customer: "worker from request",
+                                                    }
                                                 }}>
                                                     <div className="card-content" >
                                                         <div className="container" >
                                                             <span className="tag is-dark subtitle">{days[(currentDate.getDay())]}</span>
-                                                            <p id={uniqueDate+ " " + i}><span style={{fontWeight: "bold"}}>{uniqueDate}</span><p>Unavailable Times:</p></p>
+                                                            <p id={uniqueDate+ " " + i}><span style={{fontWeight: "bold"}}>{uniqueDate}<br></br></span>Unavailable Times:</p>
                                                         </div>
                                                     </div>
                                                 </Link>
