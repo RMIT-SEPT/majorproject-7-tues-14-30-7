@@ -3,6 +3,7 @@ import "../../../src/App.scss"
 import { useParams } from 'react-router-dom';
 import HomePageHeader from '../HomePage/HomePageHeader';
 import { BrowserRouter as Router,Link } from "react-router-dom";
+import * as Constants from "../../../src/constants"
 
 export default class EditUser extends Component {
     constructor() {
@@ -17,7 +18,7 @@ export default class EditUser extends Component {
 
     async componentDidMount() {
         const id = this.props.match.params.id;
-        await fetch("http://localhost:8080/api/user/" + id)
+        await fetch(Constants.BACKEND_URL + "/api/user/" + id)
             .then(response => response.json())
             .then(data => {
             this.setState({

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { start } from 'repl';
+// import { start } from 'repl';
 import "../../App.scss"
 import { BrowserRouter as Router,Link } from "react-router-dom";
 import axios from 'axios';
+import * as Constants from "../../../src/constants"
 
 class WorkerAvailabilities extends Component<any, any> {
 
@@ -18,7 +19,7 @@ class WorkerAvailabilities extends Component<any, any> {
     async componentDidMount() {
         var busId = this.props.busId;
         await axios
-        .get('http://localhost:8080/api/Business/findById=' + busId)
+        .get(Constants.BACKEND_URL + '/api/Business/findById=' + busId)
         .then(({ data })=>{
             this.setState({
                 business: data,
@@ -95,22 +96,27 @@ class WorkerAvailabilities extends Component<any, any> {
                                     Array.from(Array(daysInMonth), (e, j) => {
                                         currentDate.setDate(currentDate.getDate()+1);
                                         var uniqueDate = (currentDate.getDate() + "/" + (currentDate.getMonth()+1) + "/" + currentDate.getFullYear());
+                                        var link = uniqueDate.replace(/\//g, "")
                                         dateIncrement++;
                                         return(
                                         <div className="column worker-date-card">
                                             <div className="card" style={{width: "200px", height: "180px", border: "1px solid rgb(179, 179, 179)", borderRadius: "7px", overflowY: "auto"}}>
                                                 
-                                                
                                                 <Link to={{
-                                                    pathname: "/Booking/",
+                                                    pathname: "/Booking/" + link,
                                                     state: {
-                                                        v: "test"
-                                                    } // Should be received as props, but weirdly is this.props.location.state.v   
+                                                        bid: this.state.business.id,
+                                                        w: worker,
+                                                        bookingdate: uniqueDate,
+                                                        bookingstart: 0,
+                                                        bookingend: 0,
+                                                        customer: "worker from request",
+                                                    }
                                                 }}>
                                                     <div className="card-content" >
                                                         <div className="container" >
                                                             <span className="tag is-dark subtitle">{days[(currentDate.getDay())]}</span>
-                                                            <p id={uniqueDate+ " " + i}><span style={{fontWeight: "bold"}}>{uniqueDate}</span><p>Unavailable Times:</p></p>
+                                                            <p id={uniqueDate+ " " + i}><span style={{fontWeight: "bold"}}>{uniqueDate}<br></br></span>Unavailable Times:</p>
                                                         </div>
                                                     </div>
                                                 </Link>
@@ -138,9 +144,9 @@ class WorkerAvailabilities extends Component<any, any> {
                                         var endAmPm = endHours >= 12 ? 'pm' : 'am';
 
                                         startHours = startHours % 12;
-                                        startHours = startHours == 0 ? 12 : startHours;
+                                        startHours = startHours === 0 ? 12 : startHours;
                                         endHours = endHours % 12;
-                                        endHours = endHours == 0 ? 12 : endHours;
+                                        endHours = endHours === 0 ? 12 : endHours;
                                         
                                         var startMinutesToString;
                                         var endMinutesToString;
@@ -169,7 +175,7 @@ class WorkerAvailabilities extends Component<any, any> {
                                         pElement.style.fontSize = "0.8rem";
                                         if(theDiv != null){
                                             console.log(startHours);
-                                            if(theDiv.getElementsByClassName(workingTimes)[0] == null){
+                                            if(theDiv.getElementsByClassName(workingTimes)[0] === null){
                                                 theDiv.appendChild(pElement);
                                             }
                                         }

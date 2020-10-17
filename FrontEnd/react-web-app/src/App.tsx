@@ -34,6 +34,7 @@ function App() {
             <Route path="/Contact" component={ContactPage}/> 
             <Route path="/Login" component={LoginPage} />
             <Route path="/Signup" component={RegisterPage} />
+            <Route path="/Booking/:id" render={(props) => <Booking {...props}/>} />
 
             <Route path="/Booking" component={Booking} />
             

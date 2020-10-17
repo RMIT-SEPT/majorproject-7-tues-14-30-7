@@ -7,15 +7,12 @@ export const registerAction = (newUser, newBusiness, newWorkerDetails, form, his
         let axiosInst = getInstance();
         if (form == 1) {
             const res = await axiosInst.post("http://localhost:8080/api/user", newUser);
-            console.log(res.data.id);
-            const userID = res.data.id;
-            history.push(`/UserHomepage/${userID}`);
+            const userName = res.data.userName;
+            history.push(`/UserHomepage/${userName}`);
         }
         if (form == 2) {
-            console.log("here")
             const resbus = await axiosInst.post("http://localhost:8080/api/Business", newBusiness);
             const busID = resbus.data.id;
-            console.log(busID);
 
             for (var i = 1; i <= 7; i++) {
                 var postbusinessTime = {
