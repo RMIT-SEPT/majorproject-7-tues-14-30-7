@@ -33,12 +33,12 @@ public class UserController {
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
-    @GetMapping("/{id}")
-    @ApiOperation(value = "Get a user by ID", response = User.class, httpMethod = "GET")
-    public ResponseEntity<?> READUser(@PathVariable("id") Long id, Principal principal) throws Throwable {
-        User user = userService.getById(id);
+    @GetMapping("/{username}")
+    @ApiOperation(value = "Get a user by Username", response = User.class, httpMethod = "GET")
+    public ResponseEntity<?> READUser(@PathVariable("username") String username, Principal principal) throws Throwable {
+        User user = userService.getByUsername(username);
         if (user.getUserName().equals(principal.getName())) {
-            return new ResponseEntity<>(user, HttpStatus.FOUND);
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Client not Authorized to access this resource!", HttpStatus.UNAUTHORIZED);
         }
