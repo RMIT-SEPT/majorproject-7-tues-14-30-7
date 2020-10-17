@@ -27,7 +27,6 @@ mvn install
 * To run the program as a non-developer, please use the url [link](https://master.d30q05do7ya65m.amplifyapp.com) above to access the AWS Front End of our application
 * To run the application as a developer, do the following:
   * To run the back-end (assuming your using IntelliJ IDEA), click the "run 'SpringBootApiApplication'" button noted by the green arrow in the top right-hand corner:
-![alt text](readmePhoto\IntelliJ.PNG)
 
   * To run the front-end, type the following command into the terminal when in the "react-web-app" directory:
     ```
