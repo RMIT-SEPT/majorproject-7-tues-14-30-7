@@ -13,7 +13,7 @@ $is-primary: $red;
 $agmemain: rgb(255, 169, 98);
 $agmemain-invert: findColorInvert($agmemain);
 
-@import "../node_modules/bulma/sass/utilities/derived-variables.scss";
+@import "../node_modules/bulma/sass/utilities/derived-variables.sass";
 $addColors: (
   "agmemain": ($agmemain, $agmemain-invert)
 );

@@ -15,6 +15,7 @@ import EditUser from './components/User/EditUser';
 import ContactPage from './components/Contact/ContactPage';
 import Booking from './components/Booking/Booking'
 import NoMatch from './components/NoMatch/NoMatch';
+import NoAuth from './components/NoMatch/NoAuth';
 
 function App() {
   return (
@@ -24,8 +25,8 @@ function App() {
           <Switch>
             <Route exact path="/" component={HomePageContent} />
             <Route path="/Worker" component={Worker} />
-            <Route exact path='/UserHomepage/:id' component={UserHomepage}/>
-            <Route path = "/UserHomepage/EditUser/:id" render={(props) => <EditUser {...props}/>}/>
+            <Route exact path='/UserHomepage/:username' component={UserHomepage}/>
+            <Route path = "/UserHomepage/EditUser/:username" render={(props) => <EditUser {...props}/>}/>
             <Route exact path="/BusinessPage/:id" render={(props) => <BusinessPage2 {...props}/>}/>
             <Route path="/BusinessPage/edit/:id" render={(props) => <EditBusinessPage {...props}/>}/>
             <Route path="/Search/:searchid" render={(props) => <SearchPage {...props}/> } />
@@ -35,6 +36,9 @@ function App() {
             <Route path="/Signup" component={RegisterPage} />
             <Route path="/Booking/:id" render={(props) => <Booking {...props}/>} />
 
+            <Route path="/Booking" component={Booking} />
+            
+            <Route path="/Unauthorized" component={NoAuth} />
             <Route component={NoMatch}/>
           </Switch>
         </Router>
