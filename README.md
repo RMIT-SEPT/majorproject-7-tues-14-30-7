@@ -23,8 +23,6 @@ mvn package
 OR
 mvn install
 ```
-## Deploy
-* TBA
 ## Run
 * To run the program as a non-developer, please use the url [link](https://master.d30q05do7ya65m.amplifyapp.com) above to access the AWS Front End of our application
 * To run the application as a developer, do the following:
