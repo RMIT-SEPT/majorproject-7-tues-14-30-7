@@ -3,17 +3,18 @@ import "../../../src/App.scss"
 import { useParams } from 'react-router-dom';
 import HomePageHeader from '../HomePage/HomePageHeader';
 import { BrowserRouter as Router,Link } from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import {getInstance} from "../../actions/axiosInstance";
 
 interface RouterParams {
-    id: string
+    username: string
 }
 
 export default function UserHomepage() {
     useEffect(() => {
         fetchUser();
     }, []);
-    const { id } = useParams<RouterParams>();
+    const { username } = useParams<RouterParams>();
     const [user, setUser] = useState({
         userName: "",
         firstName: "",
@@ -24,15 +25,13 @@ export default function UserHomepage() {
     });
 
     const fetchUser = async () => {
-        console.log("HERE!!")
         let axiostInst = getInstance();
         try {
-            const fetchUser = await axiostInst.get(`http://localhost:8080/api/user/${id}`);
+            const fetchUser = await axiostInst.get(`http://localhost:8080/api/user/${username}`);
             const user = fetchUser.data;
-            console.log(user);
             setUser(user);
         } catch {
-            // Do something
+            window.location.href = '/Unauthorized';
         }
     };
 
@@ -96,7 +95,7 @@ export default function UserHomepage() {
                                 <div style={{textAlign: "left", paddingLeft: "20px", paddingTop: "20px"}}>
                                     {userinfo}
                                     <p></p>
-                                    <Link to={"/UserHomePage/EditUser/"+id}>
+                                    <Link to={"/UserHomePage/EditUser/"+username}>
                                         <div className="button" id="submitbutton" style={{marginLeft: "23%"}}>Change Password</div>
                                     </Link>
                                     <div id="bushide">{/*Placeholder*/}</div>
