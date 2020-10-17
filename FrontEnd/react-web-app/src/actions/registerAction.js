@@ -8,7 +8,7 @@ export const registerAction = (newUser, newBusiness, newWorkerDetails, form, his
         if (form == 1) {
             const res = await axiosInst.post("http://localhost:8080/api/user", newUser);
             const userName = res.data.userName;
-            history.push(`/UserHomepage/${userName}`);
+            history.push("/Login"); // just redirect to Login to log in 
         }
         if (form == 2) {
             const resbus = await axiosInst.post("http://localhost:8080/api/Business", newBusiness);
