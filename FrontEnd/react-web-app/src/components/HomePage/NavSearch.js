@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../../App.scss';
 import { BrowserRouter as Router,Link } from "react-router-dom";
+import * as Constants from "../../../src/constants"
 
 // Searchbar component within <HomePageHeader> to handle searches from any page the header is used in.
 export default class NavSearch extends Component {
@@ -36,7 +37,7 @@ export default class NavSearch extends Component {
     render() {
         return (
             <div className="field">
-                <form action={"http://localhost:3000/Search/"+this.state.search}>
+                <form action={Constants.FRONTEND_URL + "/Search/"+this.state.search}>
                     <div className="control">
                         <input className="text is-primary" id="navsearchbar" value={this.state.search} 
                             onChange={this.handleChange} placeholder="Search for a business" autoComplete="off"></input>

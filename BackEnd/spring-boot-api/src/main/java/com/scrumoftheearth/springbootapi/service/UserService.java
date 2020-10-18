@@ -26,10 +26,17 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User getById(Long Id) throws Throwable {
-        Optional<User> result = userRepository.findById(Id);
+    public User getById(Long id) throws Throwable {
+        Optional<User> result = userRepository.findById(id);
         return result.orElseThrow(() -> {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource " + Id.toString() + " Not Found!");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource " + id.toString() + " Not Found!");
+        });
+    }
+
+    public User getByUsername(String username) throws Throwable {
+        Optional<User> result = userRepository.findByUserName(username);
+        return result.orElseThrow(() -> {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource " + username + " Not Found!");
         });
     }
 

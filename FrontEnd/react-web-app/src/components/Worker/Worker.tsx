@@ -7,6 +7,7 @@ import ProfileInfo from './ProfileInfo'
 import ServiceInfo from './ServiceInfo'
 import HomePageHeader from '../HomePage/HomePageHeader'
 import queryString from 'query-string'
+import * as Constants from "../../../src/constants"
 
 class Worker extends Component<any, any> {
 
@@ -16,27 +17,39 @@ class Worker extends Component<any, any> {
             items: [],
             isLoaded: false,
             showShifts: true,
-            values: queryString.parse(this.props.location.search)
+            values: queryString.parse(this.props.location.search),
         };
     }
 
 
     componentDidMount() {
-        fetch('http://localhost:8080/api/worker/' + this.state.values.id).then(res => res.json())
-        .then(json => {
+        fetch(Constants.BACKEND_URL + '/api/worker/' + this.state.values.id).then(res => res.json())
+        .then(data => {
             this.setState({
                 isLoaded: true,
-                items: json,
+                items: data,
                 links: ["profile-link", "service-link", "shifts-link is-active","availability-link"],
                 link: null
             })
         });
     }
 
+    getFutureShiftsCount(){
+        var dateToday = new Date();
+        this.state.items.shiftEndTimes.map((shiftInfo, i)=> {
+            var shiftEndDate = new Date(shiftInfo.toString());
+            if(shiftEndDate >= dateToday){
+                this.setState({
+                    futureShiftCount: this.state.items.futureShiftCount + 1
+                })
+            }
+        })
+    }
+
 
     
     showOrHideShifts(){
-        if(this.state.showShifts == true){
+        if(this.state.showShifts === true){
             this.setState({
                 showShifts:false
             })
@@ -67,9 +80,10 @@ class Worker extends Component<any, any> {
         //Will be assigned based on whether the fetch was successful or not
         var firstName = null;
         var lastName = null;
+        var shifts = [];
 
         //Will check if the data has been fetched correctly
-        if(items.user == undefined){
+        if(items.user === undefined){
             firstName = "Worker not found";
             lastName = "worker not found";
         }
@@ -77,6 +91,15 @@ class Worker extends Component<any, any> {
         else{
             firstName = items.user.firstName;
             lastName = items.user.lastName;
+            shifts = items.shiftStartTimes;
+            var futureShiftCount = 0;
+            var dateToday = new Date();
+            this.state.items.shiftEndTimes.map((shiftInfo, i)=> {
+                var shiftEndDate = new Date(shiftInfo.toString());
+                if(shiftEndDate >= dateToday){
+                    futureShiftCount = futureShiftCount + 1;
+                }
+            })
         }
 
         //If fetch loading is not complete then continue loading
@@ -84,7 +107,7 @@ class Worker extends Component<any, any> {
             return <div>Loading...</div>
         }
 
-        else if(items.user == undefined){
+        else if(items.user === undefined){
             return <div className="worker-not-found">Worker not found!</div>
         }
 
@@ -102,52 +125,35 @@ class Worker extends Component<any, any> {
                             </div>
                             <div className="column is-4-tablet is-10-mobile name">
                                 <p>
-                                    <span className="title is-bold">{firstName + " " + lastName}</span>
+                                    <span className="title is-bold worker-name">{firstName + " " + lastName}</span>
                                     <br/>
-                                    <a className="button is-danger is-outlined edit-button" href="#" id="edit-preferences" onClick={()=>{alert("Your account as been deactivated")}}>
+                                    <div className="button is-danger is-outlined edit-button" id="edit-preferences" onClick={()=>{alert("Your account as been deactivated")}}>
                                                                                                         Deactivate Profile
-                                    </a>
+                                    </div>
                                     <br/>
                                 </p>
                             </div>
-                            <div className="column is-2-tablet is-4-mobile has-text-centered">
-                                <p className="stat-val">3</p>
-                                <p className="stat-key">Shifts</p>
+                            <div className="column is-1-tablet is-4-mobile has-text-centered">
+                                <p className="stat-val">{futureShiftCount}</p>
+                                <p className="stat-key">Shifts for this week</p>
                             </div>
-                            <div className="column is-2-tablet is-4-mobile has-text-centered">
+                            <div className="column is-1-tablet is-4-mobile has-text-centered">
+                                <p className="stat-val">{shifts.length}</p>
+                                <p className="stat-key">Total Shifts</p>
+                            </div>
+                            <div className="column is-1-tablet is-4-mobile has-text-centered">
                                 <p className="stat-val">4</p>
                                 <p className="stat-key">Services</p>
                             </div>
                             <div className="column is-2-tablet is-4-mobile has-text-centered">
-                                <p className="stat-val">99%</p>
-                                <p className="stat-key">Customer Satisfaction</p>
+                                <p className="stat-val">{this.state.items.createdAt}</p>
+                                <p className="stat-key">Date Created</p>
                             </div>
                         </div>
                     </div>
                     <div className="profile-options is-fullwidth">
                         <div className="tabs is-fullwidth is-medium">
                             <ul>
-                                <li className={this.state.links[0]}
-                                onClick={()=>{
-                                    this.activateLink(0);
-                                }}>
-                                    <a>
-                                        <span className="icon">
-                                            <i className="fa fa-list"></i>
-                                        </span>
-                                        <span>Profile Info</span>
-                                    </a>
-                                </li>
-                                <li className={this.state.links[1]} onClick={()=>{
-                                    this.activateLink(1);
-                                }}>
-                                    <a>
-                                        <span className="icon">
-                                            <i className="fa fa-list"></i>
-                                        </span>
-                                        <span>Services</span>
-                                    </a>
-                                </li>
                                 <li className={this.state.links[2]} onClick={()=>{
                                     this.activateLink(2);
                                 }}>
@@ -181,7 +187,7 @@ class Worker extends Component<any, any> {
                         }
                         {
                             this.state.links[2] === "shifts-link is-active"?
-                            <Shifts workerId={this.state.values.id}/>
+                            <Shifts workerId={this.state.values.id} futureShiftCount={this.state.futureShiftCount}/>
                             :null
                         }
                         { 

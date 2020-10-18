@@ -1,5 +1,6 @@
 package com.scrumoftheearth.springbootapi.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cascade;
@@ -11,18 +12,15 @@ import java.util.List;
 
 // POJO for business
 @Entity
-@NamedQueries({
-        @NamedQuery(name = "Business.findAllWorkers",
-                query = "SELECT b.worker FROM Business b WHERE b.id = :id")
-})
 @ApiModel(description = "Business Model")
+@Table(name = "table_business")
 public class Business {
-    // business ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(name="id",required = true,value = "1")
     // business ID
-    private Long id;
+    private long id;
+
     @OneToOne
     @JoinColumn(name = "BusinessBState_id")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
@@ -30,50 +28,48 @@ public class Business {
     // state of the business
     private BusinessBState businessBState;
 
-    @OneToMany
+    @JsonManagedReference
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
     @ApiModelProperty(name="worker")
     // list of worker for the business
-    private List<Worker> worker;
+    private List<Worker> workers;
 
     @NotBlank(message = "Business name is required")
     @ApiModelProperty(name="name",required = true,value = "Jim's Computer Service")
     // name of business
     private String name;
 
-    @NotBlank(message = "Business blurb is required")
     @ApiModelProperty(name="blurb",required = true,value = "We deliver quality IT services to your home or business")
-    // blurb the business provides
     @NotBlank(message = "Business blurb is required")
+    // blurb the business provides
     private String blurb;
 
     @NotBlank(message = "Business description is required")
     @ApiModelProperty(name="description",required = true,value = "We do new Networking configuration,computer repair and more")
     // description of the business
-    @NotBlank(message = "Business description is required")
     private String description;
 
     @NotBlank(message = "Business address is required")
-    // address of the business
     @ApiModelProperty(name="address",required = true,value = "56/115 Queensberry St, Carlton VIC 3053")
+    // address of the business
     private String address;
 
-    @NotBlank(message = "Business contact number is required")
     @ApiModelProperty(name="phoneNumber",required = true,value = "9925 4468")
-    // address of the business
-    @NotBlank(message = "Business address is required")
-
-    // contact info of the business
     @NotBlank(message = "Business contact number is required")
+    // contact info of the business
     private String phoneNumber;
 
-    // List of business hours
-    @OneToMany()
-    private List<BusinessHours> openinghours;
+    @OneToOne
+//    @MapsId
+//    @NotBlank(message = "Business must be tied with a User account")
+    @ApiModelProperty(name="Owner", required = false)
+    //The user account which this business is owned by belongs to
+    private User Owner;
 
     // blank constructor for production uses
-    protected Business() {
-        worker = new ArrayList<Worker>();
-        businessBState = new BusinessBState();
+    public Business() {
+        //workers = new ArrayList<Worker>();
+        //businessBState = new BusinessBState();
     }
 
     // constructor for junit testing
@@ -84,16 +80,16 @@ public class Business {
         this.description = description;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        worker = new ArrayList<Worker>();
+        workers = new ArrayList<Worker>();
         businessBState = new BusinessBState();
     }
 
     // getters and setters
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long busid) {
+    public void setId(long busid) {
         this.id = busid;
     }
 
@@ -101,16 +97,16 @@ public class Business {
         return name;
     }
 
-    public void setName(String busname) {
-        this.name = busname;
+    public void setName(String busName) {
+        this.name = busName;
     }
 
     public String getBlurb() {
         return blurb;
     }
 
-    public void setBlurb(String busservice) {
-        this.blurb = busservice;
+    public void setBlurb(String busService) {
+        this.blurb = busService;
     }
 
     public BusinessBState getBusinessBState() {
@@ -119,14 +115,6 @@ public class Business {
 
     public void setBusinessBState(BusinessBState businessBState) {
         this.businessBState = businessBState;
-    }
-
-    public List<Worker> getWorkerList() {
-        return worker;
-    }
-
-    public void setWorkerList(List<Worker> workerList) {
-        this.worker = workerList;
     }
 
     public String getDescription() {
@@ -151,5 +139,13 @@ public class Business {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public User getOwner() {
+        return Owner;
+    }
+
+    public void setOwner(User owner) {
+        Owner = owner;
     }
 }

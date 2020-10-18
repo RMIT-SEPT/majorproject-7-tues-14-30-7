@@ -1,6 +1,8 @@
 package com.scrumoftheearth.springbootapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -14,7 +16,12 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "worker")
+@NamedQueries({
+        // custom query for getting all workers tied by a busID
+        @NamedQuery(name = "Worker.findbybusid",
+        query = "SELECT w FROM Worker w WHERE w.busId = ?1")
+})
+@Table(name = "table_worker")
 @ApiModel(description = "Worker Model")
 public class Worker implements Serializable {
     @Id
@@ -27,10 +34,12 @@ public class Worker implements Serializable {
     @ApiModelProperty(name="User", required = false)
     //The user account which this worker belongs to
     private User user;
-    @ManyToMany
-    @ApiModelProperty(name="businesses")
-    //The businesses that this worker belongs to
-    private List<Business> businesses;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name="business_id")
+    @ApiModelProperty(name="business")
+    //The business that this worker belongs to
+    private Business business;
     @OneToOne
     @JoinColumn(name = "workerWState_id")
     @ApiModelProperty(name="WorkerWState")
@@ -72,23 +81,27 @@ public class Worker implements Serializable {
     @ApiModelProperty(name="updatedAt")
     //The Date that the worker was last updated
     private Date updatedAt;
+    //Holds business id that the worker belongs to
+    @ApiModelProperty(name="busId")
+    private long busId;
 
     public Worker(){
     }
 
     //Worker constructor for creating worker object
-    public Worker(User user, List<String> services, @NotBlank String description, List<Business> businesses,
+    public Worker(User user, List<String> services, @NotBlank String description, Business business,
                   List<java.sql.Time> availableStartTimes, List<java.sql.Time> availableEndTimes,
                   List<java.sql.Timestamp> shiftStartTimes, List<java.sql.Timestamp> shiftEndTimes) {
         //this.workerWState = workerWState;
         this.user = user;
-        this.businesses = businesses;
+        this.business = business;
         this.services = services;
         this.description = description;
         this.availableStartTimes = availableStartTimes;
         this.availableEndTimes = availableEndTimes;
         this.shiftStartTimes = shiftStartTimes;
         this.shiftEndTimes = shiftEndTimes;
+        this.busId = business.getId();
     }
     //Gets Identification number of Worker
     public Long getId(){
@@ -111,13 +124,13 @@ public class Worker implements Serializable {
     }
 
     //Gets the date value of when the worker was created
-    public Date getCreated_At(){
+    public Date getCreatedAt(){
         return createdAt;
     }
 
     //Sets the date value of when the worker was created
-    public void setCreated_at(Date created_At){
-        this.createdAt = created_At;
+    public void setCreatedAt(Date createdAt){
+        this.createdAt = createdAt;
     }
 
     //Gets the date value of when the worker was last updated
@@ -126,8 +139,8 @@ public class Worker implements Serializable {
     }
 
     //Sets the date value of when the worker was last updated
-    public void setUpdatedAt(Date updated_At){
-        this.updatedAt = updated_At;
+    public void setUpdatedAt(Date updatedAt){
+        this.updatedAt = updatedAt;
     }
 
     @PrePersist
@@ -177,14 +190,14 @@ public class Worker implements Serializable {
         this.user = user;
     }
 
-    //Gets the list of businesses that this worker belongs to
-    public List<Business> getBusinesses() {
-        return businesses;
+    //Gets the business that this worker belongs to
+    public Business getBusiness() {
+        return business;
     }
 
-    //Sets the list of businesses that this worker belongs to
-    public void setBusinesses (List<Business> business) {
-        this.businesses = business;
+    //Sets the business that this worker belongs to
+    public void setBusiness (Business business) {
+        this.business = business;
     }
 
     //Gets a list of all available end times for each day of the week of worker
@@ -227,6 +240,14 @@ public class Worker implements Serializable {
         this.shiftEndTimes = shiftEndTimes;
     }
 
-        
+    //Gets the id for the business that the worker belongs to
+    public long getBusId() {
+        return busId;
+    }
+
+    //Sets the id for the business that the worker belongs to
+    public void setBusId(long busId) {
+        this.busId = busId;
+    }
 
 }

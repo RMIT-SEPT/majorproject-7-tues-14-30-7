@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 
 /* https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/ */
 /* https://grobmeier.solutions/spring-security-5-jwt-basic-auth.html */
@@ -33,6 +34,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
         if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
             SecurityContextHolder.clearContext();
+            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("", null, Collections.emptyList()));
             filterChain.doFilter(request, response);
             return;
         }
@@ -44,6 +46,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
         if (userName == null || userName.isEmpty()) {
             SecurityContextHolder.clearContext();
+            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("", null, Collections.emptyList()));
             filterChain.doFilter(request, response);
             return;
         }

@@ -8,6 +8,7 @@ import javax.persistence.*;
 // Store the state of one business
 @Entity
 @ApiModel(description = "BusinessBState Model")
+@Table(name = "table_business_bstate")
 public class BusinessBState {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

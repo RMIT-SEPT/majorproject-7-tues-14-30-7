@@ -46,7 +46,7 @@ public class WorkerService {
     }
 
     public Worker saveWorker(WorkerWState workerWState, Long userId, @NotBlank String description,
-                             List<String> services, List<Business> businesses,
+                             List<String> services, Long businessId,
                              List<java.sql.Time> availableStartTimes, List<java.sql.Time> availableEndTimes,
                              List<java.sql.Timestamp> shiftStartTimes, List<java.sql.Timestamp> shiftEndTimes) {
 
@@ -78,21 +78,11 @@ public class WorkerService {
                 day++;
             }
         }
-        //For each business ID in the json request get the business from the repo then add it to the collection
-        for(Business b : businesses){
-            //Keep track of this businesses Id
-            long businessId = b.getId();
-            //Then use this id to get the business object stored in the database
-            Business business = businessRepository.findById(businessId).orElseThrow(() -> new RuntimeException(
-                    "Business  with id " + businessId + " does not exist"));
-            b.setName(business.getName());
-            b.setBlurb(business.getBlurb());
-            b.setDescription(business.getDescription());
-            b.setAddress(business.getAddress());
-            b.setPhoneNumber(business.getPhoneNumber());
-        }
 
-        return workerRepository.save(new Worker(user, services, description, businesses, availableStartTimes,
+        Business business = businessRepository.findById(businessId).orElseThrow(() ->
+                new RuntimeException("User does not exist: " + userId));
+
+        return workerRepository.save(new Worker(user, services, description, business, availableStartTimes,
                                                 availableEndTimes, shiftStartTimes, shiftEndTimes));
     }
 
@@ -103,5 +93,9 @@ public class WorkerService {
     public Worker addService(String service, Worker worker){
         worker.addService(service);
         return workerRepository.save(worker);
+    }
+
+    public List<Worker> getWorkerByBusId(long busid){
+        return workerRepository.findbybusid(busid);
     }
 }

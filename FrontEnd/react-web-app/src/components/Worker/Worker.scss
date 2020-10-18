@@ -9,6 +9,12 @@
 .section.profile-heading .column.is-2-tablet.has-text-centered + .has-text-centered {
     border-left: 1px dotted rgba(0, 0, 0, 0.2);
 }
+.column.is-1-tablet.has-text-centered{
+    border-left: 1px dotted rgba(0, 0, 0, 0.2);
+}
+.column.is-2-tablet.has-text-centered{
+    border-left: 1px dotted rgba(0, 0, 0, 0.2);
+}
 
 .container.profile {
     margin-top: 1%;
@@ -46,6 +52,7 @@
     overflow-x: scroll;
 }
 
+
 .shift-change-div {
     margin-bottom: 200px;
 }
@@ -56,8 +63,17 @@
     display: block;
 }
 
-.worker-not-found {
+.worker-profile-info {
     margin: auto;
     text-align: center;
-    font-size: 30px;
 }
+
+.worker-name {
+    float:left;
+}
+
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+  }

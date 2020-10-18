@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "table_user")
 @ApiModel(description = "User Model")
 public class User implements Serializable {
     @Id
@@ -64,6 +64,9 @@ public class User implements Serializable {
     private Worker worker;
 
     /* https://www.baeldung.com/spring-boot-formatting-json-dates */
+
+    @OneToOne(mappedBy = "Owner", cascade = CascadeType.ALL)
+    private Business business;
 
     @JsonFormat(pattern="yyyy-mm-dd")
     @ApiModelProperty(name="createdAt")

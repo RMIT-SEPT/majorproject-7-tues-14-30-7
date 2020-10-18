@@ -1,5 +1,5 @@
 import React from "react"
-import EditBusinessPage from "../components/Business/EditBusinessPage"
+import EditBusinessPage from "../../components/Business/EditBusinessPage"
 
 const { shallow, mount } = require("enzyme")
 const Enzyme = require("enzyme")
