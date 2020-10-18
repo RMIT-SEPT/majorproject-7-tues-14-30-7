@@ -1,6 +1,6 @@
 # RMIT SEPT 2020 Major Project
 
-# Group 07 - ![alt text](FrontEnd\react-web-app\src\components\HomePage\Images\brand.png)
+# Group 07 - Scrum Of The Earth
 
 ## Members
 * ACKLAND, Callum (s3791362)
@@ -17,21 +17,18 @@
 
 
 ## Build
-* To build the Application using Maven 3, we type the following command into the terminal when pointed at "spring-boot-api":
+* To build the Application using Maven 3, enter the following commands into the terminal when in the "spring-boot-api" directory (the 'cd' command will help navigate the project directories):
 ```
 mvn package
 OR
 mvn install
 ```
-## Deploy
-* TBA
 ## Run
-* To run the program as a non-developer, please use the url [link](https://master.d30q05do7ya65m.amplifyapp.com) above provided to us by AWS to access the homepage of our application
+* To run the program as a non-developer, please use the url [link](https://master.d30q05do7ya65m.amplifyapp.com) above to access the AWS Front End of our application
 * To run the application as a developer, do the following:
-  * for the back-end (assuming your using IntelliJ IDEA), click the "run 'SpringBootApiApplication'" button noted by the green arrow in the top right-hand corner:
-![alt text](readmePhoto\IntelliJ.PNG)
+  * To run the back-end (assuming your using IntelliJ IDEA), click the "run 'SpringBootApiApplication'" button noted by the green arrow in the top right-hand corner:
 
-  * for the front-end, type the following command into the terminal pointed at "react-web-app"
+  * To run the front-end, type the following command into the terminal when in the "react-web-app" directory:
     ```
     npm start
     ```
